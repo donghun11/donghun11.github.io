@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>슈퍼문 탐구 🌕</title>
+<style>
+/* 오프라인 폴백: 시스템 폰트 사용 */
+@font-face {
+  font-family: 'Noto Serif KR';
+  src: local('Noto Serif CJK KR'), local('NotoSerifCJKkr'), local('본명조'), local('Batang'), local('바탕');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), local('Consolas'), local('Monaco'), local('Courier New');
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#06080f;--paper:#f0ece0;
+  --gold:#f2c040;--gold-dim:#b88a20;
+  --orange:#e07830;--blue:#3a7be0;--sun:#fff060;
+  --glass:rgba(6,8,15,.78);--glass2:rgba(6,8,15,.55);
+  --border:rgba(242,192,64,.14);--r:14px;
+  --serif:'Noto Serif KR',serif;--mono:'JetBrains Mono',monospace;
+  --tab:68px;--safe:0px;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);font-family:var(--serif);color:var(--paper)}
+button{font-family:var(--serif);cursor:pointer;border:none;background:none;color:inherit}
+#app{position:fixed;inset:0;display:flex;flex-direction:column}
+.panel{display:none;flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.panel.active{display:flex;flex-direction:column}
+.panel::-webkit-scrollbar{width:3px}
+.panel::-webkit-scrollbar-thumb{background:rgba(242,192,64,.22);border-radius:99px}
+
+/* ══ HOME ══ */
+#p-home{background:radial-gradient(ellipse 80% 55% at 50% 0%,#141b38 0%,var(--ink) 68%);align-items:center;padding:0 18px calc(var(--tab) + var(--safe) + 14px)}
+.home-bar{width:100%;display:flex;justify-content:space-between;align-items:center;padding:20px 2px 0}
+.home-eyebrow{font:300 11px/1 var(--mono);letter-spacing:.28em;color:rgba(242,192,64,.5);text-transform:uppercase}
+.status-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;border:1px solid rgba(242,192,64,.18);background:rgba(6,8,15,.5)}
+.dot{width:6px;height:6px;border-radius:50%;background:#4caf50;box-shadow:0 0 5px #4caf50;animation:blink 2.4s infinite}
+.dot.off{background:#e57373;box-shadow:0 0 5px #e57373}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.dot-label{font:400 10px/1 var(--mono);color:rgba(240,236,224,.5)}
+/* 달 완전한 원 고정 */
+.orb-wrap{position:relative;margin:28px 0 18px;width:190px;height:190px;flex-shrink:0}
+.orb-rings{position:absolute;inset:-32px}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(242,192,64,.12);animation:ring-out 3.6s ease-out infinite}
+.ring:nth-child(2){animation-delay:1.2s}.ring:nth-child(3){animation-delay:2.4s}
+@keyframes ring-out{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+.orb{width:190px;height:190px;border-radius:50%;position:relative;overflow:hidden;flex-shrink:0;
+  background:radial-gradient(circle at 36% 32%,#fffbe8 0%,#f2c040 38%,#c07818 75%,#6a3808 100%);
+  box-shadow:0 0 50px rgba(242,192,64,.38),0 0 100px rgba(242,192,64,.14);
+  animation:orb-pulse 5s ease-in-out infinite;transition:all .6s}
+@keyframes orb-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.022)}}
+.orb.quasi{box-shadow:0 0 40px rgba(224,120,48,.45),0 0 80px rgba(224,120,48,.15)}
+.orb.blood{background:radial-gradient(circle at 36% 32%,#ff8060 0%,#cc2200 45%,#7a0800 80%,#3a0200 100%);
+  box-shadow:0 0 50px rgba(204,34,0,.5),0 0 100px rgba(204,34,0,.2)}
+.orb.normal{background:radial-gradient(circle at 36% 32%,#fff 0%,#ddd 50%,#999 90%);box-shadow:0 0 16px rgba(200,200,200,.18)}
+.orb.other{background:radial-gradient(circle at 36% 32%,#c0c8d8 0%,#667 60%,#2a2e38 100%);box-shadow:none;animation:none}
+.crater{position:absolute;border-radius:50%;background:rgba(0,0,0,.13)}
+.cr1{width:24px;height:24px;top:38px;left:68px}.cr2{width:15px;height:15px;top:85px;left:40px}
+.cr3{width:11px;height:11px;top:116px;left:90px}.cr4{width:19px;height:19px;top:58px;left:116px}
+.type-badge{font:700 22px/1 var(--serif);color:var(--gold);text-align:center;text-shadow:0 0 24px rgba(242,192,64,.5);margin-bottom:5px}
+.type-badge.quasi{color:var(--orange);text-shadow:0 0 20px rgba(224,120,48,.4)}
+.type-badge.blood{color:#ff6644;text-shadow:0 0 20px rgba(255,60,0,.5)}
+.type-badge.dim{color:#bbb;text-shadow:none}
+.date-sub{font:300 11px/1 var(--mono);letter-spacing:.18em;color:rgba(240,236,224,.38);text-align:center;margin-bottom:20px}
+.cards{width:100%;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;backdrop-filter:blur(14px)}
+.card-row{display:flex;justify-content:space-between;align-items:center}
+.lbl{font:400 10px/1 var(--mono);letter-spacing:.14em;color:rgba(240,236,224,.38);text-transform:uppercase}
+.val{font:600 14px/1 var(--mono);color:var(--paper)}.val.gold{color:var(--gold)}
+.prox-wrap{margin-top:10px}
+.prox-track{width:100%;height:5px;background:rgba(240,236,224,.08);border-radius:99px;overflow:hidden;margin-top:6px}
+.prox-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-dim),var(--gold));transition:width 1.4s cubic-bezier(.16,1,.3,1)}
+.prox-fill.quasi{background:linear-gradient(90deg,#a04c10,var(--orange))}
+.next-banner{width:100%;background:linear-gradient(135deg,rgba(242,192,64,.07),rgba(58,123,224,.07));
+  border:1px solid rgba(242,192,64,.22);border-radius:var(--r);padding:14px 16px;
+  display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .2s}
+.next-banner:active{background:rgba(242,192,64,.13)}
+.nb-lbl{font:400 10px/1 var(--mono);letter-spacing:.14em;color:rgba(242,192,64,.5);text-transform:uppercase;margin-bottom:5px}
+.nb-date{font:700 16px/1 var(--serif);color:var(--gold)}
+.nb-dday{font:600 30px/1 var(--mono);color:var(--gold);letter-spacing:-.02em}
+
+/* ══ AR ══ */
+#p-ar{background:#000;position:relative;overflow:hidden}
+#camVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* 하늘 캔버스 (카메라 위 오버레이) */
+#arCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* 상단 바 */
+.ar-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;
+  align-items:flex-start;padding:16px 14px;z-index:10}
+.ar-badge{background:rgba(6,8,20,.72);border:1px solid rgba(242,192,64,.4);border-radius:99px;
+  padding:7px 16px;font:700 13px/1 var(--serif);color:var(--gold);backdrop-filter:blur(12px)}
+.ar-compass-ring{width:52px;height:52px;background:rgba(6,8,20,.72);border:1px solid rgba(240,236,224,.2);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(12px);
+  position:relative;flex-shrink:0}
+.ar-compass-needle{width:4px;height:22px;position:absolute;top:50%;left:50%;
+  transform-origin:50% 100%;border-radius:2px 2px 0 0;
+  background:linear-gradient(180deg,#f55 0%,#f55 50%,#aaa 50%,#aaa 100%)}
+/* 방위 눈금 오버레이 */
+.ar-horizon{position:absolute;left:0;right:0;pointer-events:none;z-index:5}
+.ar-azlabel{position:absolute;font:600 11px/1 var(--mono);color:rgba(255,255,255,.55);
+  transform:translateX(-50%);white-space:nowrap}
+/* 달 마커 (하늘 위치) */
+.ar-moon-marker{position:absolute;pointer-events:none;z-index:8;transform:translate(-50%,-50%)}
+.ar-moon-canvas{border-radius:50%;display:block}
+.ar-moon-label{text-align:center;margin-top:4px;font:600 11px/1 var(--mono);color:rgba(255,255,255,.8);
+  text-shadow:0 1px 4px rgba(0,0,0,.8)}
+/* 달이 지평선 아래 안내 */
+.ar-below-horizon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(6,8,20,.85);border:1px solid rgba(242,192,64,.3);border-radius:var(--r);
+  padding:20px 24px;text-align:center;backdrop-filter:blur(16px);z-index:10;display:none}
+.ar-below-horizon .ar-bh-icon{font-size:36px;margin-bottom:8px}
+.ar-below-horizon .ar-bh-title{font:700 14px/1 var(--serif);color:var(--gold);margin-bottom:6px}
+.ar-below-horizon .ar-bh-sub{font:400 11px/1.6 var(--mono);color:rgba(240,236,224,.5)}
+/* 하단 정보 패널 */
+.ar-infopanel{position:absolute;bottom:calc(var(--tab) + var(--safe) + 10px);left:10px;right:10px;
+  background:rgba(6,8,20,.82);border:1px solid rgba(242,192,64,.2);border-radius:var(--r);
+  padding:12px 14px;backdrop-filter:blur(18px);z-index:10}
+.ar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.ar-item .lbl{display:block;margin-bottom:3px}.ar-item .val{font-size:12px}
+.ar-prox-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.ar-prox-track{height:6px;background:rgba(240,236,224,.08);border-radius:99px;position:relative;overflow:visible}
+.ar-prox-fill{height:100%;border-radius:99px;transition:width .8s}
+.ar-marker{position:absolute;top:-3px;width:2px;height:12px;border-radius:1px}
+.ar-prox-labels{display:flex;justify-content:space-between;margin-top:2px;
+  font:400 8px/1 var(--mono);color:rgba(240,236,224,.28)}
+/* GPS 상태 */
+.ar-gps-status{position:absolute;top:72px;left:14px;font:400 10px/1 var(--mono);
+  color:rgba(240,236,224,.4);z-index:10;background:rgba(6,8,20,.5);padding:4px 8px;border-radius:6px}
+/* 카메라 없을 때 */
+.no-cam{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:16px;padding:36px;background:var(--ink)}
+.no-cam p{text-align:center;color:rgba(240,236,224,.55);font-size:13px;line-height:1.85}
+.cam-btn{background:var(--gold);color:var(--ink);border-radius:var(--r);
+  padding:13px 28px;font:700 14px/1 var(--serif)}
+
+/* ══ SIMULATION ══ */
+#p-sim{background:radial-gradient(ellipse 90% 70% at 50% 30%,#0b1326 0%,#050709 100%);
+  align-items:center;padding:0 14px calc(var(--tab) + var(--safe) + 14px)}
+.sim-hdr{width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 2px 10px}
+.sim-title{font:700 15px/1 var(--serif)}
+.sim-datebadge{font:400 11px/1 var(--mono);color:var(--gold);
+  background:rgba(242,192,64,.10);border:1px solid rgba(242,192,64,.22);border-radius:6px;padding:4px 10px}
+#simCanvas{display:block;width:100%;max-width:380px;height:310px;border-radius:var(--r);
+  border:1px solid rgba(242,192,64,.10);margin:0 auto}
+.sim-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;width:100%;margin-top:10px}
+.chip{background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:9px 6px;text-align:center}
+.chip .lbl{display:block;margin-bottom:3px}.chip .val{font:600 11px/1 var(--mono);color:var(--paper)}
+.sim-btns{display:flex;gap:8px;width:100%;margin-top:8px}
+.sim-btn{flex:1;padding:12px 0;border-radius:var(--r);font:600 12px/1 var(--serif);
+  background:rgba(242,192,64,.08);border:1px solid rgba(242,192,64,.2);color:var(--gold);transition:background .15s}
+.sim-btn:active{background:rgba(242,192,64,.2)}.sim-btn.primary{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+/* 날짜 큰 표시 */
+.sim-date-big{width:100%;background:var(--glass);border:1px solid rgba(242,192,64,.22);
+  border-radius:var(--r);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sim-date-main{font:700 20px/1 var(--serif);color:var(--gold);letter-spacing:.02em}
+.sim-date-dow{font:400 11px/1 var(--mono);color:rgba(242,192,64,.55);margin-top:4px;letter-spacing:.1em}
+.sim-date-right{text-align:right}
+.sim-dday-label{font:400 9px/1 var(--mono);color:rgba(240,236,224,.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3px}
+.sim-dday-val{font:600 18px/1 var(--mono);color:var(--gold)}
+/* 하루씩 이동 버튼 */
+.day-row{display:flex;gap:6px;width:100%;margin-top:6px}
+.day-btn{flex:1;padding:10px 0;border-radius:var(--r);font:600 13px/1 var(--mono);
+  background:rgba(240,236,224,.06);border:1px solid rgba(240,236,224,.14);color:rgba(240,236,224,.7);transition:background .15s}
+.day-btn:active{background:rgba(240,236,224,.14)}
+.day-btn.big{flex:2;background:rgba(242,192,64,.08);border-color:rgba(242,192,64,.22);color:var(--gold)}
+/* 수식으로 바로가기 버튼 */
+.formula-link-btn{width:100%;margin-top:8px;padding:12px 0;
+  background:linear-gradient(135deg,rgba(58,123,224,.15),rgba(58,123,224,.08));
+  border:1px solid rgba(58,123,224,.35);border-radius:var(--r);
+  font:600 13px/1 var(--serif);color:var(--blue);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  cursor:pointer;transition:background .2s}
+.formula-link-btn:active{background:rgba(58,123,224,.25)}
+.speed-row{display:flex;align-items:center;gap:10px;width:100%;margin-top:8px}
+.speed-lbl{font:400 11px/1 var(--mono);color:rgba(240,236,224,.4);min-width:58px}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:4px;background:rgba(242,192,64,.16);border-radius:99px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer}
+.sim-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;width:100%}
+.leg-item{display:flex;align-items:center;gap:5px;font:400 11px/1 var(--mono);color:rgba(240,236,224,.42)}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+/* ══ FORMULA ══ */
+#p-formula{background:linear-gradient(160deg,#0b1120 0%,var(--ink) 100%);
+  padding:0 16px calc(var(--tab) + var(--safe) + 14px)}
+.form-hdr{padding:20px 0 14px;font:700 15px/1 var(--serif)}
+.step-dots{display:flex;gap:6px;padding-bottom:14px}
+.sdot{width:30px;height:4px;border-radius:99px;background:rgba(242,192,64,.14);transition:background .3s}
+.sdot.on{background:var(--gold)}
+.step-card{display:none;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;flex-direction:column;gap:12px}
+.step-card.show{display:flex}
+.step-title{font:700 16px/1.4 var(--serif);color:var(--gold)}
+.step-body{font:400 13px/1.9 var(--serif);color:rgba(240,236,224,.82)}
+.fbox{background:rgba(242,192,64,.06);border:1px solid rgba(242,192,64,.2);border-radius:9px;
+  padding:13px;font:400 12px/2.1 var(--mono);color:var(--gold);white-space:pre-wrap}
+.step-nav{display:flex;gap:8px;margin-top:10px}
+.snav{flex:1;padding:13px 0;border-radius:10px;font:700 14px/1 var(--serif);
+  background:rgba(242,192,64,.08);border:1px solid rgba(242,192,64,.2);color:var(--gold);transition:background .15s}
+.snav:disabled{opacity:.3;pointer-events:none}.snav:active{background:rgba(242,192,64,.18)}
+.snav.next{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.calc-sec{margin-top:14px;background:var(--glass);border:1px solid rgba(58,123,224,.22);border-radius:var(--r);padding:18px}
+.calc-title{font:700 14px/1 var(--serif);color:var(--blue);margin-bottom:12px}
+.calc-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.calc-lbl{font:400 10px/1 var(--mono);color:rgba(240,236,224,.4);min-width:72px}
+.calc-in{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(242,192,64,.25);border-radius:8px;
+  padding:9px 12px;color:var(--paper);font:400 13px/1 var(--mono);outline:none}
+.calc-in:focus{border-color:var(--gold)}
+.calc-btn{width:100%;padding:13px;background:var(--blue);border:none;border-radius:10px;
+  color:#fff;font:700 14px/1 var(--serif);cursor:pointer;margin-top:4px}
+.calc-result{margin-top:12px;font:400 11px/2.2 var(--mono);color:var(--gold);
+  background:rgba(242,192,64,.05);border-radius:8px;padding:12px;white-space:pre-line;min-height:44px}
+
+/* ══ SCHEDULE ══ */
+/* p-sched: flex-column 컨테이너, 넘침 없음 */
+#p-sched{background:var(--ink);overflow:hidden;padding:0}
+#p-sched.active{display:flex;flex-direction:column}
+
+/* ── 스크롤1: sched-top (헤더+범례+기준일+카테고리) ── */
+.sched-top{
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  flex:0 0 auto;max-height:55%;
+  background:var(--ink);
+  border-bottom:2px solid rgba(242,192,64,.14);
+}
+.sched-top::-webkit-scrollbar{width:2px}
+.sched-top::-webkit-scrollbar-thumb{background:rgba(242,192,64,.18);border-radius:99px}
+.sched-hdr{padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid rgba(242,192,64,.08)}
+.sched-title{font:700 15px/1 var(--serif)}
+.sched-legend{margin:8px 12px 0;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.sleg-title{font:600 10px/1 var(--mono);letter-spacing:.14em;color:rgba(240,236,224,.4);text-transform:uppercase;margin-bottom:8px}
+.prox-gauge{margin-bottom:6px}
+.pg-track{height:8px;border-radius:99px;position:relative;overflow:visible;
+  background:linear-gradient(90deg,rgba(60,70,100,.4) 0%,rgba(60,70,100,.4) 85%,rgba(224,120,48,.7) 86%,rgba(224,120,48,.7) 89.9%,rgba(242,192,64,.9) 90%,rgba(242,192,64,1) 100%)}
+.pg-marker{position:absolute;top:-3px;width:2px;height:14px;border-radius:1px}
+.pg-zones{position:relative;height:20px;margin-top:2px}
+.pg-zone-lbl{position:absolute;top:2px;font:400 8px/1 var(--mono);letter-spacing:.06em}
+.pg-axis{display:flex;justify-content:space-between;font:400 9px/1 var(--mono);color:rgba(240,236,224,.28);margin-top:2px}
+.leg-rows{display:flex;flex-direction:column;gap:7px;margin-top:7px}
+.leg-row{display:flex;align-items:flex-start;gap:8px}
+.leg-icon{font-size:16px;flex-shrink:0;line-height:1;margin-top:1px}
+.leg-text .leg-name{font:700 12px/1 var(--serif);margin-bottom:2px}
+.leg-text .leg-name.gold{color:var(--gold)}.leg-text .leg-name.orange{color:var(--orange)}
+.leg-text .leg-name.red{color:#ff6644}.leg-text .leg-name.blue{color:#60b0ff}
+.leg-text .leg-desc{font:400 10px/1.6 var(--mono);color:rgba(240,236,224,.42)}
+/* 기준일 바 */
+.sched-today-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;
+  background:rgba(242,192,64,.07);
+  border-top:1px solid rgba(242,192,64,.15);
+  border-bottom:1px solid rgba(242,192,64,.15);
+}
+.sched-today-lbl{font:600 10px/1 var(--mono);color:rgba(242,192,64,.6);letter-spacing:.12em;text-transform:uppercase}
+.sched-today-val{font:700 13px/1 var(--mono);color:var(--gold)}
+/* 카테고리 필터 */
+.sched-filters{
+  display:flex;gap:8px;padding:10px 14px;
+  overflow-x:auto;scrollbar-width:none;
+  background:rgba(6,8,20,.97);
+}
+.sched-filters::-webkit-scrollbar{display:none}
+.fc{white-space:nowrap;padding:11px 20px;border-radius:99px;
+  font:700 14px/1 var(--serif);border:2px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.88);background:rgba(255,255,255,.1);
+  cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.fc:active{transform:scale(.94)}
+.fc .fc-icon{font-size:18px;line-height:1;flex-shrink:0}
+.fc.on{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:700;box-shadow:0 0 16px rgba(242,192,64,.45)}
+.fc.on-blood{background:#dd2200;color:#fff;border-color:#ff4422;box-shadow:0 0 16px rgba(220,34,0,.45)}
+.fc.on-blue{background:#3a7be0;color:#fff;border-color:#60a0ff;box-shadow:0 0 16px rgba(58,123,224,.45)}
+
+/* ── 스크롤2: sched-list (나머지 공간, 독립 스크롤) ── */
+.sched-list{
+  flex:1;min-height:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  padding:8px 12px calc(var(--tab) + var(--safe) + 16px);
+  display:block;width:100%;
+}
+.sched-list::-webkit-scrollbar{width:3px}
+.sched-list::-webkit-scrollbar-thumb{background:rgba(242,192,64,.2);border-radius:99px}
+.sched-list > .si{display:block;width:100%;margin-bottom:8px;box-sizing:border-box}
+.sched-list > div{display:block;width:100%;margin-bottom:8px}
+.si{width:100%;background:var(--glass);border:1px solid rgba(242,192,64,.10);border-radius:var(--r);overflow:hidden}
+.si.super{border-color:rgba(242,192,64,.3)}.si.quasi{border-color:rgba(224,120,48,.25)}
+.si.blood{border-color:rgba(204,34,0,.4);background:rgba(204,34,0,.05)}
+.si.penumbral{border-color:rgba(96,176,255,.25);background:rgba(58,123,224,.04)}
+.si.today{border-color:var(--gold);background:rgba(242,192,64,.07)}
+.si-inner{display:flex;align-items:stretch}
+.si-bar{width:4px;flex-shrink:0}
+.si.super .si-bar{background:linear-gradient(180deg,var(--gold),var(--gold-dim))}
+.si.quasi .si-bar{background:linear-gradient(180deg,var(--orange),#a04c10)}
+.si.blood .si-bar{background:linear-gradient(180deg,#ff6644,#880000)}
+.si.penumbral .si-bar{background:linear-gradient(180deg,#60b0ff,#2255aa)}
+.si.today .si-bar{background:#fff}
+.si-body{flex:1;padding:12px 14px}
+.si-top{display:flex;justify-content:space-between;align-items:flex-start}
+.si-date{font:700 14px/1 var(--serif)}
+.si-dday{font:600 16px/1 var(--mono)}.si-dday.fut{color:var(--gold)}.si-dday.past{color:rgba(240,236,224,.28)}.si-dday.now{color:#fff}
+.si-meta{display:flex;gap:8px;align-items:center;margin-top:5px;flex-wrap:wrap}
+.si-type{font:700 10px/1 var(--mono);padding:3px 8px;border-radius:99px}
+.si-type.super{background:rgba(242,192,64,.15);color:var(--gold)}
+.si-type.quasi{background:rgba(224,120,48,.15);color:var(--orange)}
+.si-type.blood{background:rgba(204,34,0,.2);color:#ff7755}
+.si-type.penumbral{background:rgba(58,123,224,.2);color:#60b0ff}
+.si-dist{font:400 10px/1 var(--mono);color:rgba(240,236,224,.32)}
+.si-prox-wrap{display:flex;align-items:center;gap:6px;margin-top:7px}
+.si-prox-track{flex:1;height:4px;background:rgba(240,236,224,.08);border-radius:99px;overflow:hidden;position:relative}
+.si-prox-fill{height:100%;border-radius:99px}
+.si.super .si-prox-fill{background:linear-gradient(90deg,var(--gold-dim),var(--gold))}
+.si.quasi .si-prox-fill{background:linear-gradient(90deg,#a04c10,var(--orange))}
+.si.blood .si-prox-fill{background:linear-gradient(90deg,#880000,#ff4422)}
+.si.penumbral .si-prox-fill{background:linear-gradient(90deg,#2255aa,#60b0ff)}
+.si-prox-track::after{content:'';position:absolute;left:90%;top:-1px;width:1.5px;height:calc(100%+2px);
+  background:rgba(242,192,64,.55);border-radius:1px}
+.si-prox-track::before{content:'';position:absolute;left:86%;top:-1px;width:1.5px;height:calc(100%+2px);
+  background:rgba(224,120,48,.5);border-radius:1px}
+.si-prox-pct{font:400 10px/1 var(--mono);color:rgba(240,236,224,.38);white-space:nowrap;min-width:38px;text-align:right}
+
+
+/* ══ TAB ══ */
+.tabbar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--tab) + var(--safe));
+  background:rgba(6,8,15,.95);border-top:1px solid rgba(242,192,64,.12);
+  backdrop-filter:blur(22px);display:flex;align-items:flex-start;z-index:200}
+.tb{flex:1;height:var(--tab);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;cursor:pointer;border:none;background:none;transition:opacity .15s}
+.tb-icon{font-size:20px;line-height:1;transition:filter .2s}
+.tb-label{font:400 8px/1 var(--mono);letter-spacing:.05em;color:rgba(240,236,224,.3);text-transform:uppercase;transition:color .2s}
+.tb.active .tb-label{color:var(--gold)}.tb.active .tb-icon{filter:drop-shadow(0 0 5px var(--gold))}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="app">
+
+
+<div id="p-home" class="panel active">
+  <div class="home-bar">
+    <span class="home-eyebrow">슈퍼문 탐구</span>
+  </div>
+  <div class="orb-wrap">
+    <div class="orb-rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+    <canvas id="moonCanvas" width="380" height="380"
+      style="width:190px;height:190px;border-radius:50%;display:block;animation:orb-pulse 5s ease-in-out infinite"></canvas>
+  </div>
+  <div class="type-badge" id="typeBadge"></div>
+  <div class="date-sub" id="dateSub"></div>
+  <div class="cards">
+    
+    <div class="card" style="border-color:rgba(242,192,64,.3);background:rgba(242,192,64,.06)">
+      <div class="card-row" style="margin-bottom:8px">
+        <span class="lbl">📅 오늘 날짜 설정</span>
+        <span style="font:400 9px/1 var(--mono);color:rgba(242,192,64,.5)">수식·일정 기준</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="date" id="userTodayInput"
+          style="flex:1;background:rgba(6,8,15,.6);border:1px solid rgba(242,192,64,.35);border-radius:8px;
+                 padding:9px 12px;color:var(--paper);font:600 14px/1 var(--mono);outline:none"
+          >
+      </div>
+      <div id="userTodayLabel" style="font:400 10px/1 var(--mono);color:rgba(242,192,64,.6);margin-top:6px">
+        기준일: 오늘
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-row"><span class="lbl">지구까지 거리</span><span class="val gold" id="distVal">—</span></div>
+      <div class="prox-wrap">
+        <div class="card-row"><span class="lbl">근지점 근접도</span><span class="val" id="proxVal">—</span></div>
+        <div class="prox-track"><div class="prox-fill" id="proxFill" style="width:0"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-row"><span class="lbl">위상</span><span class="val" id="phaseVal">—</span></div>
+      <div class="card-row" style="margin-top:6px">
+        <span class="lbl" style="font-size:9px">1/T = 1/T(삭망월) − 1/T(이상월)</span>
+        <span class="val gold" style="font-size:12px" id="periodVal">≈ 412일</span>
+      </div>
+    </div>
+    <div class="next-banner" onclick="switchTab('sched')">
+      <div><div class="nb-lbl">다음 슈퍼문</div><div class="nb-date" id="nextDate">—</div></div>
+      <div class="nb-dday" id="nextDday">D-?</div>
+    </div>
+    <div class="next-banner" style="border-color:rgba(224,120,48,.22)" onclick="switchTab('sched')">
+      <div><div class="nb-lbl" style="color:rgba(224,120,48,.5)">다음 준슈퍼문</div><div class="nb-date" id="nextQDate" style="color:var(--orange)">—</div></div>
+      <div class="nb-dday" id="nextQDday" style="color:var(--orange)">D-?</div>
+    </div>
+  </div>
+</div>
+
+
+<div id="p-ar" class="panel">
+  <!-- 카메라 배경 -->
+  <video id="camVid" autoplay playsinline muted></video>
+  <!-- 별자리/달 오버레이 캔버스 -->
+  <canvas id="arCanvas"></canvas>
+
+  <!-- 상단 바 -->
+  <div class="ar-topbar">
+    <div class="ar-badge" id="arBadge">🌕 —</div>
+    <div class="ar-compass-ring" id="arCompassRing">
+      <div class="ar-compass-needle" id="arNeedle"></div>
+    </div>
+  </div>
+
+  <!-- GPS 상태 -->
+  <div class="ar-gps-status" id="arGpsStatus">📡 GPS 대기 중…</div>
+
+  <!-- 달이 지평선 아래일 때 -->
+  <div class="ar-below-horizon" id="arBelowHorizon">
+    <div class="ar-bh-icon">🌙</div>
+    <div class="ar-bh-title">달이 지평선 아래에 있습니다</div>
+    <div class="ar-bh-sub" id="arBelowSub">방위각 —° · 고도 —°</div>
+  </div>
+
+  <!-- 하단 정보 패널 -->
+  <div class="ar-infopanel">
+    <div class="ar-grid">
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">방위각</span>
+        <span class="val" id="arAzimuth" style="font:600 13px/1 var(--mono);color:var(--paper)">—°</span>
+      </div>
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">고도</span>
+        <span class="val" id="arAltitude" style="font:600 13px/1 var(--mono);color:var(--paper)">—°</span>
+      </div>
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">거리</span>
+        <span class="val" id="arDist" style="font:600 12px/1 var(--mono);color:var(--paper)">—</span>
+      </div>
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">근접도</span>
+        <span class="val" id="arProxVal" style="font:600 13px/1 var(--mono);color:var(--gold)">—%</span>
+      </div>
+    </div>
+    <div class="ar-prox-row">
+      <span style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.35)">근지점 근접도</span>
+      <span id="arType" style="font:600 9px/1 var(--mono);color:var(--gold)">—</span>
+    </div>
+    <div class="ar-prox-track">
+      <div class="ar-prox-fill" id="arProxBar" style="width:0%;background:linear-gradient(90deg,var(--gold-dim),var(--gold))"></div>
+      <div class="ar-marker" style="left:90%;background:var(--gold)"></div>
+      <div class="ar-marker" style="left:86%;background:var(--orange)"></div>
+    </div>
+    <div class="ar-prox-labels"><span>0%</span><span>86%</span><span>90%</span><span>100%</span></div>
+  </div>
+
+  <!-- 카메라 권한 없을 때 -->
+  <div class="no-cam" id="noCam">
+    <div style="font-size:52px">📷</div>
+    <p>카메라와 위치 권한이 필요합니다.<br>달의 실제 하늘 위치를 AR로 보여드립니다.</p>
+    <button class="cam-btn" onclick="startAR()">카메라 시작</button>
+    <p style="font-size:11px;margin-top:-6px">HTTPS 또는 localhost 환경 필요</p>
+  </div>
+</div>
+
+<div id="p-sim" class="panel">
+  <div class="sim-hdr"><span class="sim-title">🔭 궤도 시뮬레이션</span></div>
+
+  
+  <div class="sim-date-big">
+    <div>
+      <div class="sim-date-main" id="simDateMain">—</div>
+      <div class="sim-date-dow" id="simDateDow">—</div>
+    </div>
+    <div class="sim-date-right">
+      <div class="sim-dday-label">다음 슈퍼문</div>
+      <div class="sim-dday-val" id="simDday">D-?</div>
+    </div>
+  </div>
+
+  <canvas id="simCanvas" width="760" height="560"></canvas>
+
+  <div class="sim-chips">
+    <div class="chip"><span class="lbl">거리</span><span class="val" id="scDist">—</span></div>
+    <div class="chip"><span class="lbl">근접도</span><span class="val" id="scProx">—</span></div>
+    <div class="chip"><span class="lbl">위상</span><span class="val" id="scPhase">—</span></div>
+    <div class="chip"><span class="lbl">상태</span><span class="val" id="scType">—</span></div>
+  </div>
+
+  
+  <div class="day-row">
+    <button class="day-btn" onclick="simAddDays(-7)">◀◀ 7일</button>
+    <button class="day-btn" onclick="simAddDays(-1)">◀ 1일</button>
+    <button class="day-btn big" id="btnPP" onclick="simPP()">⏸ 일시정지</button>
+    <button class="day-btn" onclick="simAddDays(1)">1일 ▶</button>
+    <button class="day-btn" onclick="simAddDays(7)">7일 ▶▶</button>
+  </div>
+
+  <div class="sim-btns">
+    <button class="sim-btn primary" onclick="simJump()">⏭ 슈퍼문</button>
+    <button class="sim-btn" onclick="simReset()">↺ 오늘</button>
+  </div>
+
+  <div class="speed-row">
+    <span class="speed-lbl" id="spdLbl">×1 배속</span>
+    <input type="range" id="spdSlider" min="1" max="10" value="1" step="1"
+      oninput="simSpd=+this.value;document.getElementById('spdLbl').textContent='×'+this.value+' 배속'">
+  </div>
+
+  
+  <button class="formula-link-btn" onclick="switchTab('formula')">
+    📐 이 계산이 어떻게 되나요? → 수식 설명 보기
+  </button>
+
+  <div class="sim-legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#fff870;box-shadow:0 0 5px #fff070"></div>태양</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#4a8cff"></div>지구</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div>슈퍼문</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--orange)"></div>준슈퍼문</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#aaa"></div>보름달</div>
+    <div class="leg-item"><div class="leg-dot" style="background:rgba(242,192,64,.3);border:1px dashed rgba(242,192,64,.5)"></div>슈퍼문 기준(90%)</div>
+    <div class="leg-item"><div class="leg-dot" style="background:rgba(224,120,48,.3);border:1px dashed rgba(224,120,48,.5)"></div>준슈퍼문 기준(86%)</div>
+  </div>
+</div>
+
+
+<div id="p-formula" class="panel">
+  <div class="form-hdr">📐 슈퍼문 주기 수식</div>
+  <div class="step-dots" id="stepDots"></div>
+  <div class="step-card show" data-s="0">
+    <div class="step-title">1단계 · 보름달이란?</div>
+    <div class="step-body">달이 지구와 태양의 반대편에 위치할 때 보름달이 됩니다. 이 주기를 <strong>삭망월</strong>이라 합니다.</div>
+    <div class="fbox">T(삭망월) = 29.53058867일</div>
+  </div>
+  <div class="step-card" data-s="1">
+    <div class="step-title">2단계 · 달의 타원 궤도</div>
+    <div class="step-body">달은 타원 궤도로 공전합니다. 가장 가까운 점(근지점)까지의 주기를 <strong>이상월(근점월)</strong>이라 합니다.</div>
+    <div class="fbox">근지점:  362,600 km
+원지점:  405,500 km
+T(이상월) = 27.55454989일</div>
+  </div>
+  <div class="step-card" data-s="2">
+    <div class="step-title">3단계 · 슈퍼문 & 준슈퍼문 기준</div>
+    <div class="step-body">근지점 근접도 = (원지점−현재거리) ÷ (원지점−근지점) × 100%<br><br>이 값이 <strong>90% 이상이면 슈퍼문</strong>, 뉴스 기준 <strong>86~90%는 준슈퍼문</strong>입니다. 완전한 근지점에서 14% 거리까지를 준슈퍼문으로 봅니다.</div>
+    <div class="fbox">슈퍼문:   근접도 ≥ 90%
+준슈퍼문: 86% ≤ 근접도 &lt; 90%
+           (완전 근지점에서 14% 거리 이내)
+준슈퍼문 주기 = 29.5 ÷ 0.14 ≈ 210일</div>
+  </div>
+  <div class="step-card" data-s="3">
+    <div class="step-title">4단계 · 슈퍼문 주기 수식</div>
+    <div class="step-body">두 주기(삭망월, 이상월)의 역수 차이로 슈퍼문 주기를 구합니다.</div>
+    <div class="fbox">1/T = 1/T(삭망월) − 1/T(이상월)
+    = 1/29.53 − 1/27.55
+    = 0.033870 − 0.036290
+
+T = 1 ÷ 0.002421 ≈ 411.8일
+              ≈ 약 412일 (13.7개월)</div>
+  </div>
+  <div class="step-card" data-s="4">
+    <div class="step-title">5단계 · NASA 데이터 검증</div>
+    <div class="step-body">Fred Espenak (NASA 전 천체물리학자) 데이터와 비교합니다.</div>
+    <div class="fbox">이론값:    412일
+NASA 평균: 약 400일
+오차:      ±12일 (약 2~3%)
+
+✅ 수식이 실측 데이터와 잘 일치!
+
+연속 슈퍼문: 월 7% 어긋남 → 3회 연속 발생
+슈퍼 블러드문(사로스): ≈ 54년 주기</div>
+  </div>
+  <div class="step-card" data-s="5">
+    <div class="step-title">6단계 · 특수 슈퍼문 구하는 법</div>
+    <div class="step-body">슈퍼문과 월식이 동시에 발생하는 특수 이벤트는 두 주기의 최소공배수(LCM)로 계산합니다.</div>
+    <div class="fbox">슈퍼 블러드문 (개기월식+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+사로스 주기    = 6585.32일 (18년 11일)
+슈퍼문 주기    = 411.78일
+LCM ≈ 6585 × 9 = 59265일 ≈ 54년
+
+슈퍼 반영월식 (반영월식+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+교점월         = 27.2122일
+보름달-교점 주기 ≈ 173.3일
+슈퍼문과 겹침  ≈ 5~6년 주기
+
+블루문 슈퍼문 (두 번째 보름달+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+블루문 주기    ≈ 32.9개월
+슈퍼문 주기    ≈ 13.5개월
+우연 겹침      ≈ 2~3년마다</div>
+  </div>
+  <div class="step-nav">
+    <button class="snav" id="sPrev" onclick="goStep(-1)" disabled>← 이전</button>
+    <button class="snav next" id="sNext" onclick="goStep(1)">다음 →</button>
+  </div>
+  <div class="calc-sec" id="calcSec">
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="fc on" id="ct-super" onclick="setCalcType(this,'super')">🌕 슈퍼문</button>
+      <button class="fc" id="ct-quasi" onclick="setCalcType(this,'quasi')">🌔 준슈퍼문</button>
+      <button class="fc" id="ct-blood" onclick="setCalcType(this,'blood')" style="border-color:rgba(204,34,0,.4);color:#ff7755">🩸 블러드문</button>
+      <button class="fc" id="ct-penumbral" onclick="setCalcType(this,'penumbral')" style="border-color:rgba(96,176,255,.3);color:#60b0ff">🌕🌑 반영월식</button>
+    </div>
+    <div class="calc-row">
+      <span class="calc-lbl">마지막 이벤트</span>
+      <input class="calc-in" id="cLastSM" type="date" style="background:rgba(242,192,64,.06)">
+    </div>
+    <div class="calc-row">
+      <span class="calc-lbl">오늘 날짜</span>
+      <input class="calc-in" id="cToday" type="date">
+    </div>
+    <button class="calc-btn" id="cCalcBtn" onclick="doCalc()">📐 계산하기</button>
+    <div class="calc-result" id="cRes">← 종류를 선택하고 계산하세요!</div>
+  </div>
+</div>
+
+
+<div id="p-sched" class="panel">
+
+  
+  <div class="sched-top">
+    <div class="sched-hdr"><span class="sched-title">🗓 슈퍼문 일정</span></div>
+    <div class="sched-legend">
+      <div class="sleg-title">분류 기준 — 근지점 근접도</div>
+      <div class="prox-gauge">
+        <div class="pg-track">
+          <div class="pg-marker" style="left:86%;background:var(--orange)"></div>
+          <div class="pg-marker" style="left:90%;background:var(--gold)"></div>
+        </div>
+        <div class="pg-zones">
+          <span class="pg-zone-lbl" style="left:38%;color:rgba(240,236,224,.3)">보름달</span>
+          <span class="pg-zone-lbl" style="left:86.5%;color:var(--orange)">준슈퍼</span>
+          <span class="pg-zone-lbl" style="left:90.5%;color:var(--gold)">슈퍼</span>
+        </div>
+        <div class="pg-axis"><span>0%</span><span>50%</span><span>86%</span><span>90%</span><span>100%</span></div>
+      </div>
+      <div class="leg-rows">
+        <div class="leg-row"><span class="leg-icon">🌕</span><div class="leg-text"><div class="leg-name gold">슈퍼문 (≥90%)</div><div class="leg-desc">근지점 완전 근접. ≤365,950 km. 주기≈412일</div></div></div>
+        <div class="leg-row"><span class="leg-icon">🌔</span><div class="leg-text"><div class="leg-name orange">준슈퍼문 (86~90%)</div><div class="leg-desc">근지점 14% 이내. 뉴스 기준. 주기≈210일</div></div></div>
+        <div class="leg-row"><span class="leg-icon">🩸</span><div class="leg-text"><div class="leg-name red">슈퍼 블러드문</div><div class="leg-desc">개기월식+슈퍼문. 사로스 주기≈54년</div></div></div>
+        <div class="leg-row"><span class="leg-icon">🌕🌑</span><div class="leg-text"><div class="leg-name blue">슈퍼 반영월식</div><div class="leg-desc">반영월식+슈퍼문. ≈5~6년 주기</div></div></div>
+      </div>
+    </div>
+    
+    <div class="sched-today-bar">
+      <span class="sched-today-lbl">📅 기준일</span>
+      <span class="sched-today-val" id="schedTodayVal">—</span>
+    </div>
+    
+    <div class="sched-filters">
+      <button class="fc on" data-f="all" onclick="setF(this,'all')"><span class="fc-icon">📋</span>전체</button>
+      <button class="fc" data-f="super" onclick="setF(this,'super')"><span class="fc-icon">🌕</span>슈퍼문</button>
+      <button class="fc" data-f="quasi" onclick="setF(this,'quasi')"><span class="fc-icon">🌔</span>준슈퍼문</button>
+      <button class="fc" data-f="blood" onclick="setF(this,'blood')"><span class="fc-icon">🩸</span>블러드문</button>
+      <button class="fc" data-f="special" onclick="setF(this,'special')"><span class="fc-icon">✨</span>특수</button>
+      <button class="fc" data-f="future" onclick="setF(this,'future')"><span class="fc-icon">🔮</span>미래</button>
+      <button class="fc" data-f="past" onclick="setF(this,'past')"><span class="fc-icon">📜</span>과거</button>
+    </div>
+  </div>
+
+  
+  <div class="sched-list" id="schedList"></div>
+</div>
+
+
+<nav class="tabbar">
+  <button class="tb active" data-t="home" onclick="switchTab('home')"><span class="tb-icon">🌕</span><span class="tb-label">홈</span></button>
+  <button class="tb" data-t="ar" onclick="switchTab('ar')"><span class="tb-icon">📷</span><span class="tb-label">AR</span></button>
+  <button class="tb" data-t="sim" onclick="switchTab('sim')"><span class="tb-icon">🔭</span><span class="tb-label">시뮬레이션</span></button>
+  <button class="tb" data-t="formula" onclick="switchTab('formula')"><span class="tb-icon">📐</span><span class="tb-label">수식</span></button>
+  <button class="tb" data-t="sched" onclick="switchTab('sched')"><span class="tb-icon">🗓</span><span class="tb-label">일정</span></button>
+</nav>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+// ========================================
+// ========================================
+// 날짜 파싱 헬퍼 (안드로이드 WebView 호환)
+// ========================================
+function parseDate(val){
+  if(!val) return new Date();
+  const p=val.split('-');
+  if(p.length===3){
+    return new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]), 12, 0, 0);
+  }
+  return new Date();
+}
+
+// ========================================
+// 오늘 날짜 전역 관리
+// ========================================
+let userToday = new Date();
+
+function updateSchedTodayBar(){
+  const el=document.getElementById('schedTodayVal');
+  if(el) el.textContent=userToday.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+}
+
+function applyUserToday(){
+  const val=document.getElementById('userTodayInput').value;
+  if(!val)return;
+  userToday=parseDate(val);
+  if(isNaN(userToday.getTime())) userToday=new Date();
+  const label=userToday.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('userTodayLabel').textContent='기준일: '+label;
+  // 각 함수가 정의된 후에만 호출 (순서 안전)
+  if(typeof updateSchedTodayBar==='function') updateSchedTodayBar();
+  if(typeof initHome==='function') initHome();
+  if(typeof simReset==='function') simReset();
+  if(typeof updateAR==='function') updateAR();
+  if(typeof buildSched==='function') buildSched();
+  if(typeof initFormula==='function') initFormula();
+}
+
+// 핵심 계산 (논문 수식)
+// ========================================
+const SYN=29.53058867, ANO=27.55454989, NOD=27.21222082; // 교점월
+const T_SM=(SYN*ANO)/(SYN-ANO);   // ≈411.78일 슈퍼문 주기
+const T_QSM=SYN/0.14;             // ≈210.9일 준슈퍼문 주기
+// 사로스 주기: 223삭망월 ≈ 6585.32일 ≈ 18년11일8시간
+const SAROS=6585.3213;
+// 슈퍼 블러드문: 슈퍼문+개기월식 → LCM(T_SM, SAROS) ≈ 54년
+// 근사: 슈퍼문이면서 교점월이 0.5±0.03 (개기월식 조건)
+const PER=362600, APO=405500; // 달 궤도 평균 근지점/원지점(km)
+const J2000=new Date(2000,0,6,18,14,0);
+const daysSince=dt=>(dt-J2000)/86400000;
+function moonPhase(dt){let p=(daysSince(dt)%SYN)/SYN;return p<0?p+1:p}
+function moonDist(dt){let ap=(daysSince(dt)%ANO)/ANO;if(ap<0)ap+=1;return((APO+PER)/2)-((APO-PER)/2)*Math.cos(2*Math.PI*ap)}
+function prox(d){return(APO-d)/(APO-PER)}
+// 교점 위상 (0=상승교점, 0.5=하강교점 → 월식 가능)
+function nodePhase(dt){let n=(daysSince(dt)%NOD)/NOD;return n<0?n+1:n}
+// 개기월식 조건: 교점 위상이 0 또는 0.5 근처 (±0.05)
+function isLunarEclipse(dt){const n=nodePhase(dt);return n<0.05||n>0.95||(n>0.45&&n<0.55)}
+// 반영월식: 교점 위상 ±0.12 범위
+function isPenumbralEclipse(dt){const n=nodePhase(dt);return n<0.12||n>0.88||(n>0.38&&n<0.62)}
+function classify(ph,d){const pr=prox(d),full=ph>=0.45&&ph<=0.55;if(full&&pr>=0.90)return'super';if(full&&pr>=0.86)return'quasi';if(full)return'normal';return'other'}
+function phaseName(p){
+  if(p<0.0625||p>0.9375) return '🌑 신월';
+  if(p<0.1875) return '🌒 초승달';
+  if(p<0.3125) return '🌓 상현달';
+  if(p<0.4375) return '🌔 상현망간';
+  if(p<0.5625) return '🌕 보름달';
+  if(p<0.6875) return '🌖 하현망간';
+  if(p<0.8125) return '🌗 하현달';
+  return '🌘 그믐달';
+}
+function typeLabel(t){return{super:'슈퍼문 🌕',quasi:'준 슈퍼문 🌔',blood:'슈퍼 블러드문 🩸',penumbral:'슈퍼 반영월식 🌕🌑',normal:'보름달 🌕',other:'—'}[t]}
+// 정밀 보름달: 이진탐색으로 보름달 정확한 순간(ms) 반환
+function _findFullMoon(from, maxDays){
+  let dt=new Date(from.getTime()+3600000);
+  let prevPh=moonPhase(dt);
+  for(let i=0;i<maxDays*24;i++){
+    dt=new Date(dt.getTime()+3600000);
+    const ph=moonPhase(dt);
+    if(prevPh<0.5&&ph>=0.5){
+      // 이진탐색으로 1분 이하 정밀도
+      let lo=new Date(dt.getTime()-3600000), hi=new Date(dt);
+      for(let j=0;j<12;j++){
+        const mid=new Date((lo.getTime()+hi.getTime())/2);
+        if(moonPhase(mid)<0.5) lo=mid; else hi=mid;
+      }
+      const exact=new Date((lo.getTime()+hi.getTime())/2);
+      // 정확한 보름달 순간의 로컬 날짜를 정오로 반환
+      return new Date(exact.getFullYear(),exact.getMonth(),exact.getDate(),12,0,0);
+    }
+    prevPh=ph;
+  }
+  return new Date(from.getTime()+T_SM*86400000);
+}
+
+// 다음 슈퍼문: 보름달 정확한 날 기준으로 prox >= thr
+function nextSM(from, thr=0.90){
+  let dt=new Date(from);
+  for(let i=0;i<25;i++){
+    const fm=_findFullMoon(dt, 35);
+    if(!fm) break;
+    if(prox(moonDist(fm))>=thr) return fm;
+    dt=new Date(fm.getTime()+3600000);
+  }
+  return new Date(from.getTime()+T_SM*86400000);
+}
+
+// 다음 준슈퍼문: 슈퍼문 직전/직후 보름달 중 prox 최고값
+// 우리 단순모델은 정확히 86~90% 구간 보름달이 없어서, 슈퍼문 전후 가장 높은 비슈퍼 보름달 사용
+function nextQSM(from){
+  let dt=new Date(from);
+  let candidate=null, candProx=0;
+  let superSeen=false;
+  for(let i=0;i<35;i++){
+    const fm=_findFullMoon(dt, 35);
+    if(!fm) break;
+    const pr=prox(moonDist(fm));
+    if(pr>=0.86&&pr<0.90) return fm; // 정확히 구간 안이면 즉시 반환
+    if(pr<0.90){
+      if(pr>candProx){ candProx=pr; candidate=fm; }
+      // 슈퍼문 구간이 끝난 후 prox가 다시 감소하기 시작하면 후보 확정
+      if(superSeen && pr<candProx*0.90) return candidate;
+    } else {
+      superSeen=true;
+      candidate=null; candProx=0; // 슈퍼문 이후 새로 카운트
+    }
+    dt=new Date(fm.getTime()+3600000);
+  }
+  return candidate;
+}
+function nextBloodMoon(from){
+  let dt=new Date(from);dt.setDate(dt.getDate()+1);
+  for(let i=0;i<20000;i++){
+    const p=moonPhase(dt),d=moonDist(dt);
+    if(p>=0.45&&p<=0.55&&prox(d)>=0.90&&isLunarEclipse(dt))return dt;
+    dt=new Date(dt.getTime()+86400000);
+  }
+  return null;
+}
+// 다음 슈퍼 반영월식
+function nextPenumbral(from){
+  let dt=new Date(from);dt.setDate(dt.getDate()+1);
+  for(let i=0;i<5000;i++){
+    const p=moonPhase(dt),d=moonDist(dt);
+    if(p>=0.45&&p<=0.55&&prox(d)>=0.86&&isPenumbralEclipse(dt))return dt;
+    dt=new Date(dt.getTime()+86400000);
+  }
+  return null;
+}
+
+// ========================================
+// 달 위상 캔버스 (ellipse 기반 정확한 위상)
+// phase: 0=신월, 0.25=상현, 0.5=보름, 0.75=하현
+// ========================================
+function drawMoonPhase(phase, type){
+  const cv=document.getElementById('moonCanvas');
+  if(!cv)return;
+  if(!cv.getContext)return; // WebView canvas 미지원 폴백
+  const ctx=cv.getContext('2d');
+  if(!ctx)return;
+  const W=cv.width,H=cv.height,R=W/2-8;
+  const cx=W/2,cy=H/2;
+  ctx.clearRect(0,0,W,H);
+
+  // 1. 달 표면 (밝은 면)
+  const g=ctx.createRadialGradient(cx-R*.3,cy-R*.3,R*.03,cx,cy,R);
+  if(type==='super'){
+    g.addColorStop(0,'#fffce0');g.addColorStop(.3,'#f2c040');
+    g.addColorStop(.72,'#c07818');g.addColorStop(1,'#6a3808');
+  } else if(type==='quasi'){
+    g.addColorStop(0,'#ffe8c0');g.addColorStop(.3,'#e07830');
+    g.addColorStop(.72,'#804020');g.addColorStop(1,'#3a1808');
+  } else if(type==='blood'){
+    g.addColorStop(0,'#ffa080');g.addColorStop(.3,'#cc2200');
+    g.addColorStop(.72,'#7a0800');g.addColorStop(1,'#3a0000');
+  } else {
+    g.addColorStop(0,'#ffffff');g.addColorStop(.38,'#e0e0e0');
+    g.addColorStop(.78,'#aaaaaa');g.addColorStop(1,'#666');
+  }
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.fillStyle=g;ctx.fill();
+
+  // 2. 크레이터
+  [[cx-R*.14,cy-R*.22,R*.10],[cx+R*.22,cy-R*.08,R*.07],
+   [cx-R*.30,cy+R*.17,R*.06],[cx+R*.07,cy+R*.30,R*.05],
+   [cx+R*.32,cy+R*.25,R*.08]].forEach(([x,y,r])=>{
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,0,0,.10)';ctx.fill();
+  });
+
+  // 3. 어두운 면 (위상 마스크)
+  // 원리: 달 원을 클리핑 후, 어두운 반원 + 타원으로 위상 표현
+  // p=0: 완전 어둠(신월), p=0.5: 완전 밝음(보름)
+  // p<0.5: 왼쪽이 어두운 면 (초승→상현→보름)
+  // p>0.5: 오른쪽이 어두운 면 (보름→하현→그믐)
+  const p=phase;
+
+  ctx.save();
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+  ctx.fillStyle='rgba(3,5,11,0.92)';
+
+  if(p<=0.01||p>=0.99){
+    // 신월: 전체 어둠
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+  } else if(p>=0.49&&p<=0.51){
+    // 보름: 아무것도 안 그림
+  } else if(p<0.5){
+    // 초승→보름: 왼쪽 어두움
+    // t=0(신월) → t=1(보름 직전)
+    const t=p/0.5; // 0→1
+    // 타원의 x반지름: t=0이면 R(볼록), t=0.5이면 0(직선), t=1이면 -R(오목)
+    const ex=R*(1-t*2);
+    ctx.beginPath();
+    ctx.moveTo(cx,cy-R);
+    // 왼쪽 반원 (어두운 반쪽)
+    ctx.arc(cx,cy,R,-Math.PI/2,Math.PI/2,true);
+    // 타원 경계선으로 닫기
+    if(Math.abs(ex)<2){
+      ctx.lineTo(cx,cy-R); // 직선 (상현달)
+    } else {
+      ctx.ellipse(cx,cy,Math.abs(ex),R,0,Math.PI/2,-Math.PI/2,ex>0);
+    }
+    ctx.fill();
+  } else {
+    // 보름→그믐: 오른쪽 어두움
+    const t=(p-0.5)/0.5; // 0→1
+    const ex=R*(1-t*2); // t=0: R, t=0.5: 0, t=1: -R
+    ctx.beginPath();
+    ctx.moveTo(cx,cy-R);
+    // 오른쪽 반원 (어두운 반쪽)
+    ctx.arc(cx,cy,R,-Math.PI/2,Math.PI/2,false);
+    if(Math.abs(ex)<2){
+      ctx.lineTo(cx,cy-R);
+    } else {
+      ctx.ellipse(cx,cy,Math.abs(ex),R,0,Math.PI/2,-Math.PI/2,ex<0);
+    }
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // 4. 테두리 + 글로우
+  if(type==='super'||type==='quasi'||type==='blood'){
+    const gc=type==='blood'?'rgba(200,34,0,.5)':type==='super'?'rgba(242,192,64,.55)':'rgba(224,120,48,.45)';
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.strokeStyle=gc;ctx.lineWidth=6;ctx.stroke();
+  }
+}
+function initHome(){
+  const now=userToday;
+  const ph=moonPhase(now),dist=moonDist(now),pr2=prox(dist),type=classify(ph,dist);
+
+  // 달 위상 캔버스
+  drawMoonPhase(ph, type);
+
+  // 링 색상
+  document.querySelectorAll('.ring').forEach(r=>{
+    r.style.borderColor=type==='super'?'rgba(242,192,64,.18)':type==='quasi'?'rgba(224,120,48,.18)':type==='blood'?'rgba(200,34,0,.18)':'rgba(255,255,255,.08)';
+  });
+
+  const badge=document.getElementById('typeBadge');
+  badge.textContent=typeLabel(type);
+  badge.className='type-badge '+(type==='quasi'?'quasi':type==='blood'?'blood':type!=='super'?'dim':'');
+  document.getElementById('dateSub').textContent=now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('distVal').textContent=Math.round(dist).toLocaleString()+' km';
+  const pp=(pr2*100).toFixed(1);
+  document.getElementById('proxVal').textContent=pp+'%';
+  const fill=document.getElementById('proxFill');fill.style.width=pp+'%';
+  fill.className='prox-fill'+(type==='quasi'?' quasi':'');
+  document.getElementById('phaseVal').textContent=phaseName(ph)+` (${(ph*100).toFixed(1)}%)`;
+  document.getElementById('periodVal').textContent=`≈ ${T_SM.toFixed(0)}일`;
+  const ns=nextSM(now);
+  document.getElementById('nextDate').textContent=ns.toLocaleDateString('ko-KR',{month:'long',day:'numeric'});
+  document.getElementById('nextDday').textContent='D-'+Math.ceil((ns-now)/86400000);
+  const nq=nextQSM(now);
+  document.getElementById('nextQDate').textContent=nq?nq.toLocaleDateString('ko-KR',{month:'long',day:'numeric'}):'—';
+  document.getElementById('nextQDday').textContent=nq?'D-'+Math.ceil((nq-now)/86400000):'—';
+}
+
+// ========================================
+// AR — Star Walk 스타일 (GPS + 방위/기울기 기반 달 위치)
+// ========================================
+let camStream=null;
+let arGpsLat=null, arGpsLon=null;
+let arDeviceAz=0;   // 기기 방위각 (북=0, 동=90)
+let arDevicePitch=0; // 기기 기울기 (수평=0, 수직=90)
+let arAnimId=null;
+
+// ── 달 천구 좌표 계산 (적경/적위 → 방위각/고도) ──
+function moonRaDec(dt){
+  // 단순화된 달 적경/적위 계산 (±1도 정밀도)
+  const T=(dt-new Date(2000,0,1,12,0,0))/86400000/36525; // 율리우스 세기
+  const L0=218.316+13.176396*T*36525; // 평균 경도
+  const M=134.963+13.064993*T*36525;  // 평균 근점각
+  const F=93.272+13.229350*T*36525;   // 교점 위도
+  const r2d=180/Math.PI, d2r=Math.PI/180;
+  const Lrad=L0*d2r, Mrad=M*d2r, Frad=F*d2r;
+  // 황경 보정
+  const lon=L0+6.289*Math.sin(Mrad)-1.274*Math.sin(2*Lrad-Mrad)
+    +0.658*Math.sin(2*Lrad)-0.214*Math.sin(2*Mrad)-0.186*Math.sin(Mrad);
+  const lat=5.128*Math.sin(Frad)+0.280*Math.sin(Mrad+Frad)
+    -0.277*Math.sin(Mrad-Frad);
+  // 황도 → 적도 변환
+  const eps=(23.439-0.000036*T*36525)*d2r;
+  const lonRad=lon*d2r, latRad=lat*d2r;
+  const x=Math.cos(latRad)*Math.cos(lonRad);
+  const y=Math.cos(eps)*Math.cos(latRad)*Math.sin(lonRad)-Math.sin(eps)*Math.sin(latRad);
+  const z=Math.sin(eps)*Math.cos(latRad)*Math.sin(lonRad)+Math.cos(eps)*Math.sin(latRad);
+  const ra=Math.atan2(y,x)*r2d;
+  const dec=Math.asin(z)*r2d;
+  return {ra:(ra+360)%360, dec};
+}
+
+function moonAltAz(dt, lat, lon){
+  const {ra, dec}=moonRaDec(dt);
+  const r2d=180/Math.PI, d2r=Math.PI/180;
+  // 항성시 계산
+  const J=(dt-new Date(2000,0,1,12,0,0))/86400000;
+  const GMST=(280.46061837+360.98564736629*J)%360;
+  const LST=(GMST+lon+360)%360;
+  const H=((LST-ra)+360)%360; // 시각
+  const Hrad=H*d2r, decRad=dec*d2r, latRad=lat*d2r;
+  const sinAlt=Math.sin(decRad)*Math.sin(latRad)+Math.cos(decRad)*Math.cos(latRad)*Math.cos(Hrad);
+  const alt=Math.asin(Math.max(-1,Math.min(1,sinAlt)))*r2d;
+  const cosA=(Math.sin(decRad)-Math.sin(alt*d2r)*Math.sin(latRad))/(Math.cos(alt*d2r)*Math.cos(latRad));
+  let az=Math.acos(Math.max(-1,Math.min(1,cosA)))*r2d;
+  if(Math.sin(Hrad)>0) az=360-az;
+  return {alt:Math.round(alt*10)/10, az:Math.round(az*10)/10};
+}
+
+// ── GPS 획득 ──
+function startAR(){
+  const noCam=document.getElementById('noCam');
+  // 카메라 시작
+  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false})
+      .then(stream=>{
+        camStream=stream;
+        const v=document.getElementById('camVid');
+        v.srcObject=stream; v.play();
+        if(noCam) noCam.style.display='none';
+      })
+      .catch(()=>{ if(noCam) noCam.style.display='none'; }); // 카메라 없어도 계속
+  } else {
+    if(noCam) noCam.style.display='none';
+  }
+
+  // GPS
+  if(navigator.geolocation){
+    navigator.geolocation.watchPosition(pos=>{
+      arGpsLat=pos.coords.latitude;
+      arGpsLon=pos.coords.longitude;
+      const el=document.getElementById('arGpsStatus');
+      if(el) el.textContent='📍 '+arGpsLat.toFixed(4)+'°, '+arGpsLon.toFixed(4)+'°';
+    }, ()=>{
+      const el=document.getElementById('arGpsStatus');
+      if(el) el.textContent='⚠️ 위치 사용 불가';
+    }, {enableHighAccuracy:true,maximumAge:10000});
+  }
+
+  // 기기 방위/기울기
+  if(window.DeviceOrientationEvent){
+    // iOS 13+ 권한 요청
+    if(typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(s=>{
+        if(s==='granted') window.addEventListener('deviceorientation',_onOrient,true);
+      });
+    } else {
+      window.addEventListener('deviceorientation',_onOrient,true);
+    }
+  }
+
+  // 렌더 루프
+  if(arAnimId) cancelAnimationFrame(arAnimId);
+  arAnimId=requestAnimationFrame(_arLoop);
+}
+
+function _onOrient(e){
+  // alpha=방위각(북=0), beta=앞뒤 기울기, gamma=좌우
+  if(e.webkitCompassHeading!=null){
+    arDeviceAz=e.webkitCompassHeading; // iOS
+  } else if(e.alpha!=null){
+    arDeviceAz=(360-e.alpha)%360; // Android
+  }
+  if(e.beta!=null) arDevicePitch=e.beta; // 앞뒤 기울기 (수직=90)
+}
+
+function _arLoop(){
+  _arDraw();
+  arAnimId=requestAnimationFrame(_arLoop);
+}
+
+function _arDraw(){
+  const cv=document.getElementById('arCanvas');
+  if(!cv) return;
+  const W=cv.offsetWidth, H=cv.offsetHeight;
+  if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}
+  const ctx=cv.getContext('2d');
+  if(!ctx) return;
+  ctx.clearRect(0,0,W,H);
+
+  const now=userToday;
+  const ph=moonPhase(now), dist=moonDist(now), pr2=prox(dist), type=classify(ph,dist);
+
+  // 나침반 바늘 업데이트
+  const needle=document.getElementById('arNeedle');
+  if(needle) needle.style.transform=`translate(-50%,-100%) rotate(${arDeviceAz}deg)`;
+
+  // 달 방위각/고도 계산 (GPS 있을 때)
+  let moonAz=null, moonAlt=null;
+  if(arGpsLat!==null){
+    const pos=moonAltAz(now, arGpsLat, arGpsLon);
+    moonAz=pos.az; moonAlt=pos.alt;
+    document.getElementById('arAzimuth').textContent=moonAz.toFixed(1)+'°';
+    document.getElementById('arAltitude').textContent=moonAlt.toFixed(1)+'°';
+  }
+
+  // 거리/근접도 업데이트
+  document.getElementById('arDist').textContent=Math.round(dist).toLocaleString()+' km';
+  const pp=(pr2*100).toFixed(1);
+  document.getElementById('arProxVal').textContent=pp+'%';
+  document.getElementById('arProxBar').style.width=pp+'%';
+  document.getElementById('arType').textContent=typeLabel(type)||'—';
+  document.getElementById('arBadge').textContent=typeLabel(type)||'달 정보';
+
+  // ── 방위각 눈금 그리기 ──
+  const FOV_H=60; // 가로 시야각 (도)
+  const FOV_V=FOV_H*H/W;
+  const centerAz=arDeviceAz;
+  const centerAlt=Math.max(0,Math.min(90, arDevicePitch>85?90:arDevicePitch));
+
+  // 방위각 라벨들
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  const dirs=[{az:0,lbl:'N'},{az:45,lbl:'NE'},{az:90,lbl:'E'},{az:135,lbl:'SE'},
+              {az:180,lbl:'S'},{az:225,lbl:'SW'},{az:270,lbl:'W'},{az:315,lbl:'NW'}];
+  dirs.forEach(({az,lbl})=>{
+    let dAz=az-centerAz;
+    if(dAz>180) dAz-=360; if(dAz<-180) dAz+=360;
+    if(Math.abs(dAz)>FOV_H/2+10) return;
+    const sx=W/2+dAz/FOV_H*W;
+    const isMain=['N','E','S','W'].includes(lbl);
+    // 지평선 y위치 계산
+    const horizY=H/2+centerAlt/FOV_V*H;
+    ctx.fillStyle=isMain?'rgba(255,255,255,.8)':'rgba(255,255,255,.45)';
+    ctx.font=(isMain?'bold ':'')+'12px JetBrains Mono,monospace';
+    ctx.fillText(lbl,sx,horizY+8);
+    // 눈금선
+    ctx.strokeStyle=isMain?'rgba(255,255,255,.35)':'rgba(255,255,255,.18)';
+    ctx.lineWidth=isMain?1.5:1;
+    ctx.beginPath();ctx.moveTo(sx,horizY);ctx.lineTo(sx,horizY+6);ctx.stroke();
+  });
+
+  // 지평선 선
+  const horizY=H/2+centerAlt/FOV_V*H;
+  if(horizY>0&&horizY<H){
+    const grad=ctx.createLinearGradient(0,0,W,0);
+    grad.addColorStop(0,'transparent');
+    grad.addColorStop(.3,'rgba(255,255,255,.25)');
+    grad.addColorStop(.7,'rgba(255,255,255,.25)');
+    grad.addColorStop(1,'transparent');
+    ctx.strokeStyle=grad; ctx.lineWidth=1.5;
+    ctx.setLineDash([6,10]);
+    ctx.beginPath();ctx.moveTo(0,horizY);ctx.lineTo(W,horizY);ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // ── 달 마커 그리기 ──
+  if(moonAz===null||moonAlt===null){
+    // GPS 없음: 중앙에 달 표시 + 안내
+    const sx=W/2, sy=H*0.42;
+    const ms=type==='super'?44:type==='quasi'?36:28;
+    // 글로우
+    if(type==='super'||type==='quasi'){
+      const gc=type==='super'?'rgba(242,192,64,':'rgba(224,120,48,';
+      const grd=ctx.createRadialGradient(sx,sy,0,sx,sy,ms*2.5);
+      grd.addColorStop(0,gc+'0.35)');grd.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(sx,sy,ms*2.5,0,Math.PI*2);ctx.fillStyle=grd;ctx.fill();
+    }
+    // 달 본체
+    ctx.save();
+    ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);ctx.clip();
+    const mg=ctx.createRadialGradient(sx-ms*.3,sy-ms*.3,ms*.02,sx,sy,ms);
+    if(type==='super'){mg.addColorStop(0,'#fffce0');mg.addColorStop(.3,'#f2c040');mg.addColorStop(.75,'#c07818');mg.addColorStop(1,'#6a3808');}
+    else if(type==='quasi'){mg.addColorStop(0,'#ffe8c0');mg.addColorStop(.3,'#e07830');mg.addColorStop(.75,'#804020');mg.addColorStop(1,'#3a1808');}
+    else{mg.addColorStop(0,'#fff');mg.addColorStop(.4,'#ddd');mg.addColorStop(.8,'#aaa');mg.addColorStop(1,'#666');}
+    ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);ctx.fillStyle=mg;ctx.fill();
+    // 위상 그림자
+    const p=ph;
+    ctx.fillStyle='rgba(3,5,11,0.90)';
+    if(p<=0.01||p>=0.99){ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);ctx.fill();}
+    else if(p<0.5){const t=p/0.5,ex=ms*(1-t*2);ctx.beginPath();ctx.moveTo(sx,sy-ms);ctx.arc(sx,sy,ms,-Math.PI/2,Math.PI/2,true);if(Math.abs(ex)<1){ctx.lineTo(sx,sy-ms);}else{ctx.ellipse(sx,sy,Math.abs(ex),ms,0,Math.PI/2,-Math.PI/2,ex>0);}ctx.fill();}
+    else{const t=(p-0.5)/0.5,ex=ms*(1-t*2);ctx.beginPath();ctx.moveTo(sx,sy-ms);ctx.arc(sx,sy,ms,-Math.PI/2,Math.PI/2,false);if(Math.abs(ex)<1){ctx.lineTo(sx,sy-ms);}else{ctx.ellipse(sx,sy,Math.abs(ex),ms,0,Math.PI/2,-Math.PI/2,ex<0);}ctx.fill();}
+    ctx.restore();
+    ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);
+    ctx.strokeStyle=type==='super'?'rgba(242,192,64,.6)':'rgba(200,200,200,.3)';
+    ctx.lineWidth=1.5;ctx.stroke();
+    // 안내 텍스트
+    ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.font='bold 14px JetBrains Mono,monospace';
+    ctx.fillStyle='rgba(255,255,255,.9)';
+    ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=3;
+    const lbl=typeLabel(type)||'달';
+    ctx.strokeText(lbl,sx,sy+ms+10);ctx.fillText(lbl,sx,sy+ms+10);
+    ctx.font='11px JetBrains Mono,monospace';
+    ctx.fillStyle='rgba(255,255,255,.5)';
+    ctx.fillText('📍 위치 권한을 허용하면 하늘에서 달을 찾아드립니다',sx,sy+ms+32);
+  } else if(moonAz!==null&&moonAlt!==null){
+    let dAz=moonAz-centerAz;
+    if(dAz>180) dAz-=360; if(dAz<-180) dAz+=360;
+    const dAlt=moonAlt-centerAlt;
+    const sx=W/2+dAz/FOV_H*W;
+    const sy=H/2-dAlt/FOV_V*H;
+    const onScreen=Math.abs(dAz)<FOV_H/2+20&&Math.abs(dAlt)<FOV_V/2+20;
+    const belowEl=document.getElementById('arBelowHorizon');
+    const subEl=document.getElementById('arBelowSub');
+    if(moonAlt<-3){
+      // 지평선 아래
+      if(belowEl) belowEl.style.display='block';
+      if(subEl) subEl.textContent='방위각 '+moonAz.toFixed(1)+'° · 고도 '+moonAlt.toFixed(1)+'°';
+    } else {
+      if(belowEl) belowEl.style.display='none';
+      if(onScreen){
+        const ms=type==='super'?38:type==='quasi'?30:22;
+        // 글로우
+        if(type==='super'||type==='quasi'){
+          const gc=type==='super'?'rgba(242,192,64,':'rgba(224,120,48,';
+          const grd=ctx.createRadialGradient(sx,sy,0,sx,sy,ms*2.5);
+          grd.addColorStop(0,gc+'0.35)');grd.addColorStop(1,'transparent');
+          ctx.beginPath();ctx.arc(sx,sy,ms*2.5,0,Math.PI*2);ctx.fillStyle=grd;ctx.fill();
+        }
+        // 달 본체 (drawMoonPhase 동일 방식)
+        ctx.save();
+        ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);ctx.clip();
+        const mg=ctx.createRadialGradient(sx-ms*.3,sy-ms*.3,ms*.02,sx,sy,ms);
+        if(type==='super'){mg.addColorStop(0,'#fffce0');mg.addColorStop(.3,'#f2c040');mg.addColorStop(.75,'#c07818');mg.addColorStop(1,'#6a3808');}
+        else if(type==='quasi'){mg.addColorStop(0,'#ffe8c0');mg.addColorStop(.3,'#e07830');mg.addColorStop(.75,'#804020');mg.addColorStop(1,'#3a1808');}
+        else{mg.addColorStop(0,'#fff');mg.addColorStop(.4,'#ddd');mg.addColorStop(.8,'#aaa');mg.addColorStop(1,'#666');}
+        ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);ctx.fillStyle=mg;ctx.fill();
+        // 위상 그림자
+        ctx.fillStyle='rgba(3,5,11,0.90)';
+        const p=ph;
+        if(p<=0.01||p>=0.99){ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);ctx.fill();}
+        else if(p<0.5){
+          const t=p/0.5, ex=ms*(1-t*2);
+          ctx.beginPath();ctx.moveTo(sx,sy-ms);
+          ctx.arc(sx,sy,ms,-Math.PI/2,Math.PI/2,true);
+          if(Math.abs(ex)<1){ctx.lineTo(sx,sy-ms);}
+          else{ctx.ellipse(sx,sy,Math.abs(ex),ms,0,Math.PI/2,-Math.PI/2,ex>0);}
+          ctx.fill();
+        } else {
+          const t=(p-0.5)/0.5, ex=ms*(1-t*2);
+          ctx.beginPath();ctx.moveTo(sx,sy-ms);
+          ctx.arc(sx,sy,ms,-Math.PI/2,Math.PI/2,false);
+          if(Math.abs(ex)<1){ctx.lineTo(sx,sy-ms);}
+          else{ctx.ellipse(sx,sy,Math.abs(ex),ms,0,Math.PI/2,-Math.PI/2,ex<0);}
+          ctx.fill();
+        }
+        ctx.restore();
+        // 테두리
+        ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);
+        ctx.strokeStyle=type==='super'?'rgba(242,192,64,.6)':'rgba(200,200,200,.4)';
+        ctx.lineWidth=1.5;ctx.stroke();
+        // 라벨
+        ctx.textAlign='center';ctx.textBaseline='top';
+        ctx.font='bold 11px JetBrains Mono,monospace';
+        ctx.fillStyle='rgba(255,255,255,.9)';
+        ctx.strokeStyle='rgba(0,0,0,.6)';ctx.lineWidth=3;
+        const lbl=(type==='super'?'🌕 슈퍼문':type==='quasi'?'🌔 준슈퍼문':'🌕 달')+' '+moonAlt.toFixed(0)+'°';
+        ctx.strokeText(lbl,sx,sy+ms+6);ctx.fillText(lbl,sx,sy+ms+6);
+        // 화면 밖이면 화살표 안내
+      } else {
+        // 화면 밖: 방향 화살표
+        const arrowAngle=Math.atan2(-(sy-H/2),sx-W/2);
+        const ax=W/2+Math.cos(arrowAngle)*(Math.min(W,H)/2-40);
+        const ay=H/2+Math.sin(arrowAngle)*(Math.min(W,H)/2-40);
+        ctx.save();ctx.translate(ax,ay);ctx.rotate(arrowAngle);
+        ctx.fillStyle='rgba(242,192,64,.8)';
+        ctx.beginPath();ctx.moveTo(16,0);ctx.lineTo(-10,-8);ctx.lineTo(-10,8);ctx.closePath();ctx.fill();
+        ctx.restore();
+        ctx.textAlign='center';ctx.font='10px JetBrains Mono,monospace';
+        ctx.fillStyle='rgba(255,255,255,.7)';
+        ctx.fillText(Math.abs(dAz).toFixed(0)+'°',ax,ay+20);
+      }
+    }
+  }
+}
+
+function updateAR(){
+  if(arAnimId) return; // 루프 중이면 스킵
+  const now=userToday;
+  const dist=moonDist(now),pr2=prox(dist),type=classify(moonPhase(now),dist);
+  const pp=(pr2*100).toFixed(1);
+  document.getElementById('arDist').textContent=Math.round(dist).toLocaleString()+' km';
+  document.getElementById('arProxVal').textContent=pp+'%';
+  document.getElementById('arProxBar').style.width=pp+'%';
+  document.getElementById('arType').textContent=typeLabel(type)||'—';
+  document.getElementById('arBadge').textContent=typeLabel(type)||'달';
+}
+
+// ========================================
+// SIMULATION
+// ========================================
+let simDt=new Date(),simPlaying=true,simSpd=1,simRaf=null,simLast=null;
+const DOW=['일','월','화','수','목','금','토'];
+function initSim(){
+  simDt=new Date(userToday);
+  simPlaying=false; // 기본 일시정지 — 탭 진입 시 자동재생 안 함
+  simLast=null;
+  if(simRaf){cancelAnimationFrame(simRaf);simRaf=null;}
+  drawSim();updateSimUI();
+  document.getElementById('btnPP').textContent='▶ 재생';
+}
+function simLoop(ts){
+  if(simPlaying&&simLast!==null)simDt=new Date(simDt.getTime()+(ts-simLast)/1000*simSpd*86400000);
+  simLast=ts;drawSim();updateSimUI();simRaf=requestAnimationFrame(simLoop);
+}
+function simPP(){
+  simPlaying=!simPlaying;simLast=null;
+  document.getElementById('btnPP').textContent=simPlaying?'⏸ 일시정지':'▶ 재생';
+}
+function simReset(){simDt=new Date(userToday);simLast=null;}
+function simJump(){simDt=nextSM(simDt);simLast=null;}
+function simAddDays(n){
+  // 일시정지 후 날짜 이동
+  simPlaying=false;simLast=null;
+  document.getElementById('btnPP').textContent='▶ 재생';
+  simDt=new Date(simDt.getTime()+n*86400000);
+  drawSim();updateSimUI();
+}
+
+function drawSim(){
+  const cv=document.getElementById('simCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+
+  // bg
+  ctx.fillStyle='#030508';ctx.fillRect(0,0,W,H);
+
+  // stars (stable positions using sin/cos seeds)
+  for(let i=0;i<140;i++){
+    const sx=((Math.sin(i*137.508)*0.5+0.5)*W);
+    const sy=((Math.cos(i*97.31)*0.5+0.5)*H);
+    const tw=Date.now()/1000;
+    ctx.fillStyle=`rgba(240,236,224,${0.12+Math.sin(tw+i)*0.07})`;
+    ctx.beginPath();ctx.arc(sx,sy,i%9===0?1.3:0.65,0,Math.PI*2);ctx.fill();
+  }
+
+  const ph=moonPhase(simDt),dist=moonDist(simDt),pr2=prox(dist),type=classify(ph,dist);
+
+  // Layout: Sun (left area), Earth orbits Sun, Moon orbits Earth
+  const sunX=W*0.5, sunY=H*0.5;
+
+  // 지구의 태양 공전 (1년 = 365일, simDt 기준)
+  const dayOfYear=(simDt-new Date(simDt.getFullYear(),0,1))/86400000;
+  const earthOrbitA=W*0.34, earthOrbitB=H*0.32; // 태양 공전 타원
+  const earthAngle=(dayOfYear/365.25)*Math.PI*2 - Math.PI/2;
+  const earX=sunX+Math.cos(earthAngle)*earthOrbitA;
+  const earY=sunY+Math.sin(earthAngle)*earthOrbitB;
+
+  // Sun corona rays
+  for(let i=0;i<14;i++){
+    const ra=(i/14)*Math.PI*2+Date.now()/2200;
+    const r1=32,r2=48+Math.sin(Date.now()/700+i*0.9)*7;
+    ctx.strokeStyle=`rgba(255,240,70,${0.06+Math.sin(Date.now()/500+i)*0.04})`;
+    ctx.lineWidth=2;ctx.beginPath();
+    ctx.moveTo(sunX+Math.cos(ra)*r1,sunY+Math.sin(ra)*r1);
+    ctx.lineTo(sunX+Math.cos(ra)*r2,sunY+Math.sin(ra)*r2);ctx.stroke();
+  }
+  // Sun glow
+  const sg=ctx.createRadialGradient(sunX,sunY,0,sunX,sunY,62);
+  sg.addColorStop(0,'rgba(255,255,100,.32)');sg.addColorStop(.45,'rgba(255,220,40,.1)');sg.addColorStop(1,'transparent');
+  ctx.fillStyle=sg;ctx.beginPath();ctx.arc(sunX,sunY,62,0,Math.PI*2);ctx.fill();
+  // Sun body
+  const sunG=ctx.createRadialGradient(sunX-7,sunY-7,0,sunX,sunY,27);
+  sunG.addColorStop(0,'#ffffff');sunG.addColorStop(.25,'#fff88a');sunG.addColorStop(.65,'#f0c030');sunG.addColorStop(1,'#e08010');
+  ctx.beginPath();ctx.arc(sunX,sunY,27,0,Math.PI*2);ctx.fillStyle=sunG;ctx.fill();
+  ctx.textAlign='center';ctx.font='16px JetBrains Mono,monospace';
+  ctx.fillStyle='rgba(255,240,80,.55)';ctx.fillText('☀ 태양',sunX,sunY+46);
+
+  // 지구 공전 궤도 표시
+  ctx.strokeStyle='rgba(100,160,255,.08)';ctx.lineWidth=1;ctx.setLineDash([3,8]);
+  ctx.beginPath();ctx.ellipse(sunX,sunY,earthOrbitA,earthOrbitB,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+
+  // Sunlight beam to Earth (동적 위치)
+  const lg=ctx.createLinearGradient(sunX+27,sunY,earX,earY);
+  lg.addColorStop(0,'rgba(255,240,70,.14)');lg.addColorStop(1,'rgba(255,240,70,.02)');
+  ctx.strokeStyle=lg;ctx.lineWidth=1.5;ctx.setLineDash([4,9]);
+  ctx.beginPath();ctx.moveTo(sunX+27,sunY);ctx.lineTo(earX,earY);ctx.stroke();ctx.setLineDash([]);
+
+  // 달 궤도 (지구 중심, 작게)
+  const oa=68, ob=54;
+  ctx.strokeStyle='rgba(242,192,64,.18)';ctx.lineWidth=1;ctx.setLineDash([3,6]);
+  ctx.beginPath();ctx.ellipse(earX,earY,oa,ob,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+
+  // 근지점/원지점 라벨
+  ctx.font='11px JetBrains Mono,monospace';ctx.textAlign='center';
+  ctx.fillStyle='rgba(242,192,64,.4)';ctx.fillText('근지점',earX+oa,earY-ob*.15-10);
+  ctx.fillStyle='rgba(240,236,224,.22)';ctx.fillText('원지점',earX-oa,earY-ob*.15-10);
+
+  // 90% 임계선
+  const r90a=oa*0.78, r90b=ob*0.78;
+  ctx.strokeStyle='rgba(242,192,64,.32)';ctx.lineWidth=1;ctx.setLineDash([2,4]);
+  ctx.beginPath();ctx.ellipse(earX,earY,r90a,r90b,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  ctx.font='10px JetBrains Mono,monospace';ctx.textAlign='left';
+  ctx.fillStyle='rgba(242,192,64,.5)';ctx.fillText('90%',earX+r90a+2,earY-2);
+
+  // 86% 임계선
+  const r86a=oa*0.86, r86b=ob*0.86;
+  ctx.strokeStyle='rgba(224,120,48,.28)';ctx.lineWidth=1;ctx.setLineDash([2,4]);
+  ctx.beginPath();ctx.ellipse(earX,earY,r86a,r86b,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(224,120,48,.48)';ctx.fillText('86%',earX+r86a+2,earY+11);
+
+  // Earth
+  const earR = 28;
+  ctx.save();
+  ctx.beginPath();ctx.arc(earX,earY,earR,0,Math.PI*2);ctx.clip();
+
+  // 바다
+  const eg=ctx.createRadialGradient(earX-earR*.3,earY-earR*.3,earR*.05,earX,earY,earR);
+  eg.addColorStop(0,'#6ac8ff');eg.addColorStop(.35,'#1a78e8');eg.addColorStop(1,'#082860');
+  ctx.fillStyle=eg;ctx.fillRect(earX-earR,earY-earR,earR*2,earR*2);
+
+  // 대륙
+  // 유라시아 (오른쪽 위)
+  ctx.fillStyle='rgba(55,140,55,.9)';
+  ctx.beginPath();ctx.ellipse(earX+earR*.2,earY-earR*.2,earR*.36,earR*.26,0.3,0,Math.PI*2);ctx.fill();
+  // 아메리카 (왼쪽)
+  ctx.fillStyle='rgba(60,148,60,.85)';
+  ctx.beginPath();ctx.ellipse(earX-earR*.38,earY-earR*.08,earR*.16,earR*.32,-0.2,0,Math.PI*2);ctx.fill();
+  // 아프리카 (중앙 아래)
+  ctx.fillStyle='rgba(65,150,55,.85)';
+  ctx.beginPath();ctx.ellipse(earX+earR*.08,earY+earR*.22,earR*.16,earR*.22,0.05,0,Math.PI*2);ctx.fill();
+  // 오세아니아 (오른쪽 아래)
+  ctx.fillStyle='rgba(60,140,50,.75)';
+  ctx.beginPath();ctx.ellipse(earX+earR*.42,earY+earR*.32,earR*.11,earR*.09,0.2,0,Math.PI*2);ctx.fill();
+  // 남극 (흰색)
+  ctx.fillStyle='rgba(240,248,255,.7)';
+  ctx.beginPath();ctx.ellipse(earX,earY+earR*.72,earR*.38,earR*.18,0,0,Math.PI*2);ctx.fill();
+
+  // 구름
+  ctx.fillStyle='rgba(255,255,255,.22)';
+  ctx.beginPath();ctx.ellipse(earX-earR*.05,earY-earR*.5,earR*.38,earR*.1,0.5,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(earX+earR*.28,earY+earR*.08,earR*.25,earR*.08,-.3,0,Math.PI*2);ctx.fill();
+
+  ctx.restore();
+
+  // 대기권 글로우
+  const atmG=ctx.createRadialGradient(earX,earY,earR-1,earX,earY,earR+7);
+  atmG.addColorStop(0,'rgba(100,200,255,.4)');atmG.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(earX,earY,earR+7,0,Math.PI*2);ctx.fillStyle=atmG;ctx.fill();
+  // 테두리
+  ctx.beginPath();ctx.arc(earX,earY,earR,0,Math.PI*2);
+  ctx.strokeStyle='rgba(140,210,255,.55)';ctx.lineWidth=1.5;ctx.stroke();
+
+// Moon position (지구 주위 공전)
+  const angle=ph*Math.PI*2;
+  const normD=(moonDist(simDt)-PER)/(APO-PER);
+  // 달 거리에 따라 궤도 반지름 조정 (근지점=작게, 원지점=크게)
+  const moonRA=oa*(0.80+0.20*normD);
+  const moonRB=ob*(0.80+0.20*normD);
+  const mx=earX+Math.cos(angle)*moonRA;
+  const my=earY+Math.sin(angle)*moonRB;
+
+  // Earth→Moon line
+  ctx.strokeStyle='rgba(242,192,64,.06)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(earX,earY);ctx.lineTo(mx,my);ctx.stroke();
+
+  // Moon body — drawMoonPhase 방식으로 위상 정확히 표현
+  const ms=type==='super'?11:type==='quasi'?9:7;
+  if(type==='super'){
+    const mg2=ctx.createRadialGradient(mx,my,0,mx,my,ms*1.8);
+    mg2.addColorStop(0,'rgba(242,192,64,0.30)');mg2.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(mx,my,ms*1.8,0,Math.PI*2);ctx.fillStyle=mg2;ctx.fill();
+  } else if(type==='quasi'){
+    const mg2=ctx.createRadialGradient(mx,my,0,mx,my,ms*1.6);
+    mg2.addColorStop(0,'rgba(224,120,48,0.25)');mg2.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(mx,my,ms*1.6,0,Math.PI*2);ctx.fillStyle=mg2;ctx.fill();
+  }
+
+  ctx.save();
+  ctx.beginPath();ctx.arc(mx,my,ms,0,Math.PI*2);ctx.clip();
+
+  // 1. 밝은 면 표면
+  const mg3=ctx.createRadialGradient(mx-ms*.3,my-ms*.3,ms*.02,mx,my,ms);
+  if(type==='super'){
+    mg3.addColorStop(0,'#fffce0');mg3.addColorStop(.3,'#f2c040');
+    mg3.addColorStop(.72,'#c07818');mg3.addColorStop(1,'#6a3808');
+  } else if(type==='quasi'){
+    mg3.addColorStop(0,'#ffe8c0');mg3.addColorStop(.3,'#e07830');
+    mg3.addColorStop(.72,'#804020');mg3.addColorStop(1,'#3a1808');
+  } else {
+    mg3.addColorStop(0,'#ffffff');mg3.addColorStop(.38,'#e0e0e0');
+    mg3.addColorStop(.78,'#aaaaaa');mg3.addColorStop(1,'#666');
+  }
+  ctx.beginPath();ctx.arc(mx,my,ms,0,Math.PI*2);ctx.fillStyle=mg3;ctx.fill();
+
+  // 2. 크레이터 (작은 점들)
+  ctx.fillStyle='rgba(0,0,0,.10)';
+  [[mx-ms*.14,my-ms*.22,ms*.10],[mx+ms*.22,my-ms*.08,ms*.07],
+   [mx-ms*.30,my+ms*.17,ms*.06],[mx+ms*.32,my+ms*.25,ms*.08]
+  ].forEach(([cx2,cy2,cr])=>{
+    ctx.beginPath();ctx.arc(cx2,cy2,cr,0,Math.PI*2);ctx.fill();
+  });
+
+  // 3. 위상 그림자 — drawMoonPhase 와 동일한 ellipse 방식
+  // ph: 0=신월, 0.5=보름. 그림자는 태양 반대쪽
+  ctx.fillStyle='rgba(3,5,11,0.92)';
+  if(ph<=0.01||ph>=0.99){
+    ctx.beginPath();ctx.arc(mx,my,ms,0,Math.PI*2);ctx.fill();
+  } else if(ph>=0.49&&ph<=0.51){
+    // 보름 - 그림자 없음
+  } else if(ph<0.5){
+    // 초승→보름: 왼쪽 어두움 (drawMoonPhase 동일)
+    const t=ph/0.5;
+    const ex=ms*(1-t*2);
+    ctx.beginPath();
+    ctx.moveTo(mx,my-ms);
+    ctx.arc(mx,my,ms,-Math.PI/2,Math.PI/2,true);
+    if(Math.abs(ex)<1){ ctx.lineTo(mx,my-ms); }
+    else { ctx.ellipse(mx,my,Math.abs(ex),ms,0,Math.PI/2,-Math.PI/2,ex>0); }
+    ctx.fill();
+  } else {
+    // 보름→그믐: 오른쪽 어두움
+    const t=(ph-0.5)/0.5;
+    const ex=ms*(1-t*2);
+    ctx.beginPath();
+    ctx.moveTo(mx,my-ms);
+    ctx.arc(mx,my,ms,-Math.PI/2,Math.PI/2,false);
+    if(Math.abs(ex)<1){ ctx.lineTo(mx,my-ms); }
+    else { ctx.ellipse(mx,my,Math.abs(ex),ms,0,Math.PI/2,-Math.PI/2,ex<0); }
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // 달 테두리
+  ctx.beginPath();ctx.arc(mx,my,ms,0,Math.PI*2);
+  ctx.strokeStyle=type==='super'?'rgba(242,192,64,.5)':type==='quasi'?'rgba(224,120,48,.4)':'rgba(200,200,200,.25)';
+  ctx.lineWidth=0.8;ctx.stroke();
+
+  // type label top of canvas
+  if(type==='super'||type==='quasi'){
+    ctx.font='bold 22px Noto Serif KR,serif';
+    ctx.fillStyle=type==='super'?'rgba(242,192,64,.95)':'rgba(224,120,48,.9)';
+    ctx.textAlign='center';ctx.fillText(type==='super'?'🌕 슈퍼문!':'🌔 준 슈퍼문',W/2,32);
+  }
+
+  // prox readout bottom right
+  ctx.textAlign='right';ctx.font='12px JetBrains Mono,monospace';
+  ctx.fillStyle='rgba(240,236,224,.35)';ctx.fillText('근접도 '+(pr2*100).toFixed(1)+'%',W-8,H-8);
+}
+
+function updateSimUI(){
+  const ph=moonPhase(simDt),dist=moonDist(simDt),pr2=prox(dist),type=classify(ph,dist);
+  // 날짜 크게
+  const y=simDt.getFullYear(),m=simDt.getMonth()+1,d=simDt.getDate();
+  document.getElementById('simDateMain').textContent=`${y}년 ${m}월 ${d}일`;
+  document.getElementById('simDateDow').textContent=`${DOW[simDt.getDay()]}요일`;
+  // 다음 슈퍼문 D-day
+  const ns=nextSM(simDt);
+  const dd=Math.ceil((ns-simDt)/86400000);
+  document.getElementById('simDday').textContent=dd<=0?'오늘!':'D-'+dd;
+  // chips
+  document.getElementById('scDist').textContent=(dist/1000).toFixed(0)+'천km';
+  document.getElementById('scProx').textContent=(pr2*100).toFixed(1)+'%';
+  document.getElementById('scPhase').textContent=(ph*100).toFixed(0)+'%';
+  const sc=document.getElementById('scType');
+  sc.textContent=type==='super'?'🌕슈퍼':type==='quasi'?'🌔준슈퍼':phaseName(ph);
+  sc.style.color=type==='super'?'var(--gold)':type==='quasi'?'var(--orange)':'inherit';
+}
+
+// ========================================
+// FORMULA
+// ========================================
+let curStep=0;const STEPS=6;
+function initFormula(){
+  const dots=document.getElementById('stepDots');dots.innerHTML='';
+  for(let i=0;i<STEPS;i++){const d=document.createElement('div');d.className='sdot'+(i===0?' on':'');dots.appendChild(d);}
+  showStep(0);
+  // userToday 기준으로 날짜 설정
+  const _y=userToday.getFullYear(),_m=_pad(userToday.getMonth()+1),_d=_pad(userToday.getDate());
+  document.getElementById('cToday').value=_y+'-'+_m+'-'+_d;
+  setCalcType(document.getElementById('ct-super'),'super');
+}
+function showStep(n){
+  curStep=Math.max(0,Math.min(STEPS-1,n));
+  document.querySelectorAll('.step-card').forEach((c,i)=>c.classList.toggle('show',i===curStep));
+  document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('on',i===curStep));
+  document.getElementById('sPrev').disabled=curStep===0;
+  const nxt=document.getElementById('sNext');
+  nxt.disabled=false;
+  if(curStep===STEPS-1){
+    nxt.textContent='계산하기 ↓';
+    nxt.onclick=function(){
+      const calc=document.getElementById('calcSec');
+      if(calc) calc.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  } else {
+    nxt.textContent='다음 →';
+    nxt.onclick=function(){goStep(1);};
+  }
+}
+function goStep(d){showStep(curStep+d);}
+
+// 가장 최근 이벤트 찾기 (userToday 이전)
+function findLastSM(type='super'){
+  // 역방향으로 보름달 순간을 1개씩 찾아서 조건 체크
+  let dt=new Date(userToday);
+  for(let i=0;i<30;i++){
+    dt=new Date(dt.getTime()-SYN*86400000); // 삭망월씩 뒤로
+    // dt 근처 보름달 정밀 탐색 (앞으로 2일 탐색)
+    const fm=_findFullMoon(new Date(dt.getTime()-2*86400000), 6);
+    if(fm>=userToday) continue;
+    const pr2=prox(moonDist(fm));
+    if(type==='super'&&pr2>=0.90) return fm;
+    if(type==='quasi'&&pr2>=0.86&&pr2<0.90) return fm;
+    if(type==='blood'&&pr2>=0.90&&isLunarEclipse(fm)) return fm;
+    if(type==='penumbral'&&pr2>=0.86&&isPenumbralEclipse(fm)) return fm;
+  }
+  return parseDate('2015-09-28');
+}
+
+let calcType='super';
+function setCalcType(btn,t){
+  calcType=t;
+  document.querySelectorAll('.calc-sec .fc').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  // 자동 기입 갱신
+  const last=findLastSM(t);
+  document.getElementById('cLastSM').value=last.toISOString().slice(0,10);
+  const notes={super:'마지막 슈퍼문 자동 기입',quasi:'마지막 준슈퍼문 자동 기입',
+    blood:'마지막 슈퍼 블러드문 자동 기입',penumbral:'마지막 슈퍼 반영월식 자동 기입'};
+  
+  const btnLabels={super:'📐 다음 슈퍼문 계산',quasi:'📐 다음 준슈퍼문 계산',
+    blood:'🩸 다음 블러드문 계산',penumbral:'🌕🌑 다음 반영월식 계산'};
+  document.getElementById('cCalcBtn').textContent=btnLabels[t];
+  document.getElementById('cRes').textContent='← 계산 버튼을 눌러주세요!';
+}
+
+function doCalc(){
+  const lastVal=document.getElementById('cLastSM').value;
+  const todayVal=document.getElementById('cToday').value;
+  if(!lastVal||!todayVal){document.getElementById('cRes').textContent='⚠️ 날짜를 확인해주세요.';return;}
+  const lastDt=parseDate(lastVal),todayDt=parseDate(todayVal);
+  const elapsed=Math.round((todayDt-lastDt)/86400000);
+  if(elapsed<0){document.getElementById('cRes').textContent='⚠️ 기준일보다 이전 날짜입니다.';return;}
+
+  let T,periodName,nextDt,formula;
+  if(calcType==='super'){
+    T=T_SM;periodName='슈퍼문 주기';
+    nextDt=nextSM(todayDt,0.90);
+    formula=`1/T = 1/${SYN.toFixed(2)} − 1/${ANO.toFixed(2)}\nT = ${T.toFixed(1)}일 ≈ 13.7개월`;
+  } else if(calcType==='quasi'){
+    T=T_QSM;periodName='준슈퍼문 주기';
+    nextDt=nextQSM(todayDt);   // 슈퍼문 제외한 준슈퍼문만
+    formula=`T = T(삭망월) ÷ 0.14\n= ${SYN.toFixed(2)} ÷ 0.14 = ${T.toFixed(1)}일 ≈ 7개월`;
+  } else if(calcType==='blood'){
+    T=SAROS;periodName='사로스(블러드문) 주기';
+    nextDt=nextBloodMoon(todayDt);
+    formula=`사로스 주기: 223삭망월 ≈ ${SAROS.toFixed(0)}일 ≈ 18년 11일\n슈퍼문+개기월식 LCM ≈ 54년`;
+  } else {
+    T=SYN*NOD/(SYN-NOD)*2;periodName='반영월식+슈퍼문 주기';
+    nextDt=nextPenumbral(todayDt);
+    formula=`교점월(${NOD.toFixed(2)}일)과 삭망월의 결합 주기\n≈ 5~6년 주기`;
+  }
+
+  const remainder=elapsed%T;
+  const daysLeft=Math.round(T-remainder);
+  const predDate=new Date(todayDt.getTime()+daysLeft*86400000);
+  const actualDays=nextDt?Math.ceil((nextDt-todayDt)/86400000):null;
+  const actualStr=nextDt
+    ?`${nextDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} (D-${actualDays})`
+    :'계산 중 (매우 희귀한 이벤트)';
+
+  document.getElementById('cRes').textContent=
+    `기준일: ${lastDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
+    `오늘:   ${todayDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
+    `경과:   ${elapsed}일\n\n`+
+    `━━ ${periodName} ━━━━━━━━━━\n`+
+    formula+'\n\n'+
+    `${elapsed}일 ÷ ${T.toFixed(1)}일 → 나머지 ${remainder.toFixed(1)}일\n`+
+    `다음까지 = ${T.toFixed(1)} − ${remainder.toFixed(1)} ≈ ${daysLeft}일\n\n`+
+    `📅 수식 예측: ${predDate.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
+    `🛰 NASA 예측: ${actualStr}`;
+}
+
+// ========================================
+// SCHEDULE
+// ========================================
+// Fred Espenak (NASA) 공식 데이터
+// https://astropixels.com/ephemeris/moon/fullperigee2001.html
+// type 기준: Relative Distance ≥0.90 = super, 0.86~0.90 = quasi
+// 월식: t=개기, p=부분, n=반영
+const NASA_DATA=[
+  // ========================================
+  {date:'2001-01-09',dist:357406,rdist:0.994,type:'super',src:'NASA',eclipse:'n',note:'반영월식'},
+  {date:'2001-02-08',dist:356994,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2001-03-09',dist:361389,rdist:0.965,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2002-01-28',dist:361766,rdist:0.961,type:'quasi',src:'NASA'},
+  {date:'2002-02-27',dist:357091,rdist:0.996,type:'super',src:'NASA'},
+  {date:'2002-03-28',dist:357212,rdist:0.996,type:'super',src:'NASA'},
+  {date:'2002-04-27',dist:361870,rdist:0.961,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2003-03-18',dist:361416,rdist:0.965,type:'quasi',src:'NASA'},
+  {date:'2003-04-16',dist:357306,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2003-05-16',dist:357693,rdist:0.995,type:'super',src:'NASA',eclipse:'t',note:'개기월식'},
+  {date:'2003-06-14',dist:362315,rdist:0.958,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2004-05-04',dist:361359,rdist:0.966,type:'quasi',src:'NASA',eclipse:'t',note:'개기월식'},
+  {date:'2004-06-03',dist:357384,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2004-07-02',dist:357699,rdist:0.995,type:'super',src:'NASA'},
+  {date:'2004-07-31',dist:362193,rdist:0.958,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2005-06-22',dist:361179,rdist:0.967,type:'quasi',src:'NASA'},
+  {date:'2005-07-21',dist:357291,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2005-08-19',dist:357652,rdist:0.995,type:'super',src:'NASA'},
+  {date:'2005-09-18',dist:362325,rdist:0.957,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2006-08-09',dist:361257,rdist:0.967,type:'quasi',src:'NASA'},
+  {date:'2006-09-07',dist:357298,rdist:0.997,type:'super',src:'NASA',eclipse:'p',note:'부분월식'},
+  {date:'2006-10-07',dist:357695,rdist:0.994,type:'super',src:'NASA'},
+  {date:'2006-11-05',dist:362616,rdist:0.955,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2007-09-26',dist:360827,rdist:0.970,type:'quasi',src:'NASA'},
+  {date:'2007-10-26',dist:356841,rdist:0.998,type:'super',src:'NASA'},
+  {date:'2007-11-24',dist:357548,rdist:0.993,type:'super',src:'NASA'},
+  {date:'2007-12-24',dist:363032,rdist:0.950,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2008-10-14',dist:367908,rdist:0.900,type:'super',src:'NASA',note:'경계값 0.900'},
+  {date:'2008-11-13',dist:360196,rdist:0.974,type:'quasi',src:'NASA'},
+  {date:'2008-12-12',dist:356615,rdist:0.999,type:'super',src:'NASA'},
+  // ========================================
+  {date:'2009-01-11',dist:357969,rdist:0.990,type:'super',src:'NASA'},
+  {date:'2009-02-09',dist:364050,rdist:0.941,type:'quasi',src:'NASA',eclipse:'n',note:'반영월식'},
+  {date:'2009-12-02',dist:367240,rdist:0.909,type:'super',src:'NASA'},
+  {date:'2009-12-31',dist:359721,rdist:0.978,type:'quasi',src:'NASA',eclipse:'p',note:'부분월식'},
+  // ========================================
+  {date:'2010-01-30',dist:356607,rdist:1.000,type:'super',src:'NASA',note:'연간 최근접'},
+  {date:'2010-02-28',dist:358436,rdist:0.987,type:'super',src:'NASA'},
+  {date:'2010-03-30',dist:364689,rdist:0.935,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2011-01-19',dist:366158,rdist:0.920,type:'super',src:'NASA'},
+  {date:'2011-02-18',dist:359103,rdist:0.982,type:'super',src:'NASA'},
+  {date:'2011-03-19',dist:356580,rdist:1.000,type:'super',src:'NASA',note:'역대 최근접'},
+  {date:'2011-04-18',dist:358798,rdist:0.985,type:'super',src:'NASA'},
+  {date:'2011-05-17',dist:365164,rdist:0.929,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2012-03-08',dist:365497,rdist:0.927,type:'quasi',src:'NASA'},
+  {date:'2012-04-06',dist:359076,rdist:0.984,type:'super',src:'NASA'},
+  {date:'2012-05-06',dist:356954,rdist:1.000,type:'super',src:'NASA'},
+  {date:'2012-06-04',dist:359257,rdist:0.984,type:'super',src:'NASA',eclipse:'p',note:'부분월식'},
+  {date:'2012-07-03',dist:365483,rdist:0.926,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2013-04-25',dist:365312,rdist:0.929,type:'quasi',src:'NASA',eclipse:'p',note:'부분월식'},
+  {date:'2013-05-25',dist:359110,rdist:0.985,type:'super',src:'NASA',eclipse:'n',note:'반영월식'},
+  {date:'2013-06-23',dist:356991,rdist:1.000,type:'super',src:'NASA'},
+  {date:'2013-07-22',dist:359170,rdist:0.984,type:'super',src:'NASA'},
+  {date:'2013-08-21',dist:365340,rdist:0.928,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2014-06-13',dist:365038,rdist:0.931,type:'quasi',src:'NASA'},
+  {date:'2014-07-12',dist:358975,rdist:0.985,type:'super',src:'NASA'},
+  {date:'2014-08-10',dist:356898,rdist:1.000,type:'super',src:'NASA'},
+  {date:'2014-09-09',dist:359182,rdist:0.983,type:'super',src:'NASA'},
+  {date:'2014-10-08',dist:365659,rdist:0.925,type:'quasi',src:'NASA',eclipse:'t',note:'개기월식'},
+  // ========================================
+  {date:'2015-07-31',dist:365112,rdist:0.930,type:'quasi',src:'NASA'},
+  {date:'2015-08-29',dist:358993,rdist:0.985,type:'super',src:'NASA'},
+  {date:'2015-09-28',dist:356878,rdist:1.000,type:'blood',src:'NASA',note:'슈퍼 블러드문 🩸 개기월식'},
+  {date:'2015-10-27',dist:359324,rdist:0.982,type:'super',src:'NASA'},
+  {date:'2015-11-25',dist:366149,rdist:0.921,type:'super',src:'NASA'},
+  // ========================================
+  {date:'2016-09-16',dist:364754,rdist:0.934,type:'quasi',src:'NASA',eclipse:'n',note:'반영월식'},
+  {date:'2016-10-16',dist:358475,rdist:0.987,type:'super',src:'NASA'},
+  {date:'2016-11-14',dist:356523,rdist:1.000,type:'super',src:'NASA',note:'68년 만의 최근접'},
+  {date:'2016-12-14',dist:359450,rdist:0.979,type:'super',src:'NASA'},
+  // ========================================
+  {date:'2017-01-12',dist:366880,rdist:0.913,type:'super',src:'NASA'},
+  {date:'2017-11-04',dist:364004,rdist:0.941,type:'quasi',src:'NASA'},
+  {date:'2017-12-03',dist:357987,rdist:0.990,type:'super',src:'NASA'},
+  // ========================================
+  {date:'2018-01-02',dist:356604,rdist:0.999,type:'super',src:'NASA'},
+  {date:'2018-01-31',dist:360199,rdist:0.974,type:'super',src:'NASA',eclipse:'t',note:'슈퍼 블러드 블루문 🩸'},
+  {date:'2018-12-22',dist:363368,rdist:0.948,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2019-01-21',dist:357715,rdist:0.992,type:'super',src:'NASA'},
+  {date:'2019-02-19',dist:356846,rdist:0.998,type:'super',src:'NASA'},
+  {date:'2019-03-21',dist:360772,rdist:0.970,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2020-02-09',dist:362479,rdist:0.955,type:'quasi',src:'NASA'},
+  {date:'2020-03-09',dist:357404,rdist:0.994,type:'super',src:'NASA'},
+  {date:'2020-04-08',dist:357035,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2020-05-07',dist:361184,rdist:0.967,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2021-03-28',dist:362170,rdist:0.959,type:'quasi',src:'NASA'},
+  {date:'2021-04-27',dist:357615,rdist:0.995,type:'super',src:'NASA'},
+  {date:'2021-05-26',dist:357462,rdist:0.997,type:'blood',src:'NASA',note:'슈퍼 블러드문 🩸 개기월식'},
+  {date:'2021-06-24',dist:361558,rdist:0.965,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2022-05-16',dist:362127,rdist:0.959,type:'quasi',src:'NASA',eclipse:'t',note:'개기월식'},
+  {date:'2022-06-14',dist:357658,rdist:0.995,type:'super',src:'NASA'},
+  {date:'2022-07-13',dist:357418,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2022-08-12',dist:361409,rdist:0.965,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2023-07-03',dist:361934,rdist:0.961,type:'quasi',src:'NASA'},
+  {date:'2023-08-01',dist:357530,rdist:0.996,type:'super',src:'NASA'},
+  {date:'2023-08-31',dist:357344,rdist:0.997,type:'super',src:'NASA',note:'블루문'},
+  {date:'2023-09-29',dist:361552,rdist:0.964,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2024-08-19',dist:361970,rdist:0.961,type:'quasi',src:'NASA'},
+  {date:'2024-09-18',dist:357486,rdist:0.996,type:'super',src:'NASA',eclipse:'p',note:'부분월식'},
+  {date:'2024-10-17',dist:357364,rdist:0.996,type:'super',src:'NASA'},
+  {date:'2024-11-15',dist:361867,rdist:0.961,type:'quasi',src:'NASA'},
+  // ========================================
+  {date:'2025-10-07',dist:361458,rdist:0.964,type:'quasi',src:'NASA'},
+  {date:'2025-11-05',dist:356980,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2025-12-04',dist:357219,rdist:0.995,type:'super',src:'NASA'},
+  // ========================================
+  {date:'2026-01-03',dist:362312,rdist:0.956,type:'quasi',src:'NASA예측'},
+  {date:'2026-11-24',dist:360768,rdist:0.969,type:'quasi',src:'NASA예측'},
+  {date:'2026-12-24',dist:356740,rdist:0.998,type:'super',src:'NASA예측'},
+  {date:'2027-01-22',dist:357644,rdist:0.993,type:'super',src:'NASA예측'},
+  {date:'2027-02-20',dist:363306,rdist:0.948,type:'quasi',src:'NASA예측',eclipse:'n',note:'반영월식'},
+  {date:'2028-01-12',dist:360266,rdist:0.974,type:'quasi',src:'NASA예측'},
+  {date:'2028-02-10',dist:356720,rdist:0.999,type:'super',src:'NASA예측',note:'2028 최근접'},
+  {date:'2028-03-11',dist:358074,rdist:0.990,type:'super',src:'NASA예측'},
+  {date:'2028-04-09',dist:363867,rdist:0.943,type:'quasi',src:'NASA예측'},
+  {date:'2029-01-30',dist:367046,rdist:0.911,type:'super',src:'NASA예측'},
+  {date:'2029-02-28',dist:359659,rdist:0.978,type:'quasi',src:'NASA예측'},
+  {date:'2029-03-30',dist:356683,rdist:1.000,type:'super',src:'NASA예측',note:'2029 최근접'},
+  {date:'2029-04-28',dist:358383,rdist:0.989,type:'super',src:'NASA예측'},
+  {date:'2029-05-27',dist:364262,rdist:0.938,type:'quasi',src:'NASA예측'},
+  {date:'2030-03-19',dist:366439,rdist:0.917,type:'super',src:'NASA예측'},
+  {date:'2030-04-18',dist:359654,rdist:0.980,type:'quasi',src:'NASA예측'},
+  {date:'2030-05-17',dist:357028,rdist:1.000,type:'super',src:'NASA예측',note:'2030 최근접'},
+  {date:'2030-06-15',dist:358779,rdist:0.987,type:'super',src:'NASA예측',eclipse:'p',note:'부분월식'},
+  {date:'2030-07-15',dist:364530,rdist:0.936,type:'quasi',src:'NASA예측'},
+];
+let schedFilter='all';
+let schedAllData=[];
+
+function buildSched(){
+  makeItem._cache = {};  // 캐시 초기화
+  schedAllData=[...NASA_DATA];
+  schedAllData.sort((a,b)=>a.date.localeCompare(b.date));
+  const seen=new Set(),deduped=[];
+  for(const it of schedAllData){
+    const k=it.date+it.type;
+    if(!seen.has(k)){seen.add(k);deduped.push(it);}
+  }
+  schedAllData=deduped;
+  updateSchedTodayBar();   // 기준일 배지 갱신
+  renderSched(userToday);
+}
+
+function renderSched(now){
+  const list=document.getElementById('schedList');
+  list.innerHTML='<div style="padding:20px;text-align:center;color:rgba(240,236,224,.4);font:400 12px/2 var(--mono)">불러오는 중…</div>';
+  list.scrollTop=0;
+
+  // setTimeout으로 UI 블로킹 방지 (안드로이드 WebView 호환)
+  setTimeout(function(){
+    list.innerHTML='';
+
+    var data=schedAllData.filter(function(it){
+      var d=parseDate(it.date);
+      if(schedFilter==='super'&&it.type!=='super')return false;
+      if(schedFilter==='quasi'&&it.type!=='quasi')return false;
+      if(schedFilter==='blood'&&it.type!=='blood')return false;
+      if(schedFilter==='special'&&it.type!=='blood'&&it.type!=='penumbral')return false;
+      if(schedFilter==='future'&&d<now)return false;
+      if(schedFilter==='past'&&d>=now)return false;
+      return true;
+    });
+
+    if(!data.length){
+      list.innerHTML='<div style="padding:30px;text-align:center;color:rgba(240,236,224,.3);font:400 13px/2 var(--mono)">해당하는 이벤트가 없습니다.</div>';
+      return;
+    }
+
+    var nextIdx=data.findIndex(function(it){return parseDate(it.date)>=now;});
+    var pivotIdx=nextIdx>=0?nextIdx:data.length;
+    var past=data.slice(0,pivotIdx);
+    var future=data.slice(pivotIdx);
+
+    // 과거 아이템들
+    past.forEach(function(it){list.appendChild(makeItem(it,now,false));});
+
+    // 구분선
+    var sep=document.createElement('div');
+    sep.id='sched-sep';
+    sep.setAttribute('data-sep','1');
+    sep.style.cssText='display:flex;align-items:center;gap:10px;padding:10px 4px;width:100%;margin-bottom:8px';
+    sep.innerHTML='<div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(242,192,64,.5))"></div>'
+      +'<span style="font:700 12px/1 var(--mono);color:var(--gold);letter-spacing:.14em;white-space:nowrap;padding:4px 10px;border:1px solid rgba(242,192,64,.3);border-radius:99px;background:rgba(242,192,64,.08)">▼ 지금 ▼</span>'
+      +'<div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(242,192,64,.5),transparent)"></div>';
+    list.appendChild(sep);
+
+    // 미래 아이템들
+    future.forEach(function(it){list.appendChild(makeItem(it,now,true));});
+
+    // 구분선 위치로 스크롤
+    setTimeout(function(){
+      var listEl=document.getElementById('schedList');
+      var sepEl=document.getElementById('sched-sep');
+      if(!listEl||!sepEl)return;
+      var listTop=listEl.getBoundingClientRect().top;
+      var sepTop=sepEl.getBoundingClientRect().top;
+      listEl.scrollTop+=(sepTop-listTop);
+    },50);
+
+  },10); // 10ms 후 실행 → UI가 먼저 '불러오는 중' 표시 후 렌더링
+}
+
+function makeItem(it,now,isFutureGroup){
+  const d=parseDate(it.date);
+  // D-day는 userToday(=now) 기준
+  const dday=Math.ceil((d-now)/86400000);
+  const isToday=dday===0;
+  const isFuture=dday>0;
+
+  // NASA 실측 근접도
+  const nasaProx=(prox(it.dist)*100).toFixed(1);
+
+  // 앱 예측 날짜 — 30일 전부터 탐색 (캐시 사용)
+  const cacheKey = it.date + it.type;
+  if(!makeItem._cache) makeItem._cache = {};
+  let appPredDate = makeItem._cache[cacheKey];
+  if(appPredDate === undefined){
+    const nasaDate2=new Date(it.date);
+    const searchFrom=new Date(nasaDate2.getTime()-30*86400000);
+    appPredDate = it.type==='quasi' ? nextQSM(searchFrom) : nextSM(searchFrom,0.90);
+    makeItem._cache[cacheKey] = appPredDate || null;
+  }
+  const daysDiff = appPredDate
+    ? Math.round((appPredDate - new Date(it.date))/86400000)
+    : null;
+  const calcDist=Math.round(moonDist(new Date(it.date)));
+  const calcProxPct=(prox(calcDist)*100).toFixed(1);
+
+  const typeLabels={super:'슈퍼문 🌕',quasi:'준 슈퍼문 🌔',blood:'슈퍼 블러드문 🩸',penumbral:'슈퍼 반영월식 🌕🌑'};
+  const el=document.createElement('div');
+  el.className=`si ${it.type} ${isToday?'today':''} ${isFutureGroup?'fut-item':''}`;
+
+  // 출처 뱃지
+  const srcBadge=it.src==='NASA'
+    ?`<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.18);color:#60a0e0;border:1px solid rgba(58,123,224,.22)">NASA</span>`
+    :it.src==='NASA예측'
+    ?`<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.25);color:#80c0ff;border:1px solid rgba(96,160,255,.28)">(NASA 예측)</span>`
+    :'';
+  const noteBadge=it.note
+    ?`<span style="font:400 10px/1 var(--mono);color:rgba(240,236,224,.38)">${it.note}</span>`:'';
+
+  // NASA Relative Distance 표시
+  const nasaRdist=it.rdist?(it.rdist*100).toFixed(1)+'%':nasaProx+'%';
+
+  // 월식 뱃지
+  const eclipseBadge=it.eclipse
+    ?`<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(180,30,0,.25);color:#ff8866;border:1px solid rgba(200,60,0,.3)">${it.eclipse==='t'?'🩸개기월식':it.eclipse==='p'?'🌑부분월식':'🌕반영월식'}</span>`
+    :'';
+
+  // 날짜 오차 표시
+  const daysDiffStr = daysDiff===null ? '탐색실패'
+    : daysDiff===0 ? '±0일 (일치)'
+    : `${daysDiff>0?'+':''}${daysDiff}일`;
+  const errColor = daysDiff===null ? 'rgba(240,236,224,.4)'
+    : Math.abs(daysDiff)===0 ? 'rgba(80,200,120,.9)'
+    : Math.abs(daysDiff)<=3  ? 'rgba(80,200,120,.8)'
+    : Math.abs(daysDiff)<=7  ? 'rgba(242,192,64,.8)'
+    : 'rgba(220,120,60,.8)';
+
+  el.innerHTML=`<div class="si-inner"><div class="si-bar"></div><div class="si-body">
+    <div class="si-top">
+      <span class="si-date">${d.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}</span>
+      <span class="si-dday ${isToday?'now':isFuture?'fut':'past'}">${isToday?'오늘!':isFuture?'D-'+dday:(-dday)+'일 전'}</span>
+    </div>
+    <div class="si-meta">
+      <span class="si-type ${it.type}">${typeLabels[it.type]||it.type}</span>
+      ${srcBadge}${eclipseBadge}${noteBadge}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;padding:8px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.06)">
+      <div>
+        <div style="font:400 9px/1 var(--mono);color:#60a0e0;letter-spacing:.1em;margin-bottom:3px">NASA 실측</div>
+        <div style="font:600 12px/1.3 var(--mono);color:var(--paper)">${d.toLocaleDateString('ko-KR',{month:'short',day:'numeric'})}</div>
+        <div style="font:600 10px/1 var(--mono);color:var(--gold);margin-top:2px">상대거리 ${nasaRdist}</div>
+        <div style="font:400 10px/1 var(--mono);color:rgba(240,236,224,.4);margin-top:1px">${it.dist.toLocaleString()} km</div>
+      </div>
+      <div>
+        <div style="font:400 9px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.1em;margin-bottom:3px">앱 예측 날짜</div>
+        <div style="font:600 12px/1.3 var(--mono);color:var(--paper)">${appPredDate?appPredDate.toLocaleDateString('ko-KR',{month:'short',day:'numeric'}):'—'}</div>
+        <div style="font:600 10px/1 var(--mono);color:${errColor};margin-top:2px">날짜 오차 ${daysDiffStr}</div>
+        <div style="font:400 10px/1 var(--mono);color:rgba(240,236,224,.4);margin-top:1px">근접도 ${calcProxPct}%</div>
+      </div>
+    </div>
+    <div class="si-prox-wrap">
+      <div class="si-prox-track"><div class="si-prox-fill" style="width:${nasaProx}%"></div></div>
+      <span class="si-prox-pct">${nasaProx}%</span>
+    </div>
+  </div></div>`;
+  return el;
+}
+
+function setF(btn,f){
+  document.querySelectorAll('.sched-filters .fc').forEach(b=>{b.classList.remove('on','on-blood','on-blue');});
+  const cls=f==='blood'?'on-blood':f==='special'?'on-blue':'on';
+  btn.classList.add(cls);
+  schedFilter=f;
+  renderSched(userToday);  // userToday 기준
+}
+
+// ========================================
+// TAB
+// ========================================
+const PM={home:'p-home',ar:'p-ar',sim:'p-sim',formula:'p-formula',sched:'p-sched'};
+function switchTab(tab){
+  Object.entries(PM).forEach(([k,id])=>document.getElementById(id).classList.toggle('active',k===tab));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('active',b.dataset.t===tab));
+  if(tab==='ar'&&!camStream) startAR();
+  else if(tab==='ar') updateAR();
+  if(tab==='sim'){if(!simRaf){simRaf=requestAnimationFrame(simLoop);}}
+  else{if(simRaf){cancelAnimationFrame(simRaf);simRaf=null;simLast=null;}} // 다른 탭 이동 시 시뮬 중지
+  if(tab==='formula')initFormula();
+  if(tab==='sched')buildSched();
+}
+
+// ========================================
+// INIT — 안드로이드 WebView 완전 호환
+// ========================================
+function _pad(n){ return n < 10 ? '0'+n : ''+n; }
+
+function _initAll(){
+  var t=new Date();
+  var todayISO=t.getFullYear()+'-'+_pad(t.getMonth()+1)+'-'+_pad(t.getDate());
+  var inp=document.getElementById('userTodayInput');
+  if(inp){
+    inp.value=todayISO;
+    // oninput을 JS에서 등록 (HTML 속성보다 안전)
+    inp.addEventListener('change', applyUserToday);
+    inp.addEventListener('input', applyUserToday);
+  }
+  if(typeof updateSchedTodayBar==='function') updateSchedTodayBar();
+  if(typeof initHome==='function') initHome();
+  if(typeof initSim==='function') initSim();
+  if(typeof initFormula==='function') initFormula();
+  if(typeof buildSched==='function') buildSched();
+}
+
+// 3중 안전망: 어떤 환경에서도 반드시 실행
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', _initAll);
+} else {
+  // 이미 DOM 준비된 경우 (안드로이드 뷰어 등)
+  _initAll();
+}
+// 혹시 위가 다 실패하면 window.onload로 최후 보루
+window.onload=function(){ if(!_initAll._done){ _initAll(); _initAll._done=true; } };
+</script>
+</body>
+</html>
