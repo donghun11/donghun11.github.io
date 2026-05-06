@@ -736,15 +736,26 @@ function isLunarEclipse(dt){const n=nodePhase(dt);return n<0.05||n>0.95||(n>0.45
 // 반영월식: 교점 위상 ±0.12 범위
 function isPenumbralEclipse(dt){const n=nodePhase(dt);return n<0.12||n>0.88||(n>0.38&&n<0.62)}
 function classify(ph,d){const pr=prox(d),full=ph>=0.45&&ph<=0.55;if(full&&pr>=0.90)return'super';if(full&&pr>=0.86)return'quasi';if(full)return'normal';return'other'}
+function phaseIcon(p){
+  if(p<0.0625||p>0.9375) return '🌑';
+  if(p<0.1875) return '🌒';
+  if(p<0.3125) return '🌓';
+  if(p<0.4375) return '🌔';
+  if(p<0.5625) return '🌕';
+  if(p<0.6875) return '🌖';
+  if(p<0.8125) return '🌗';
+  return '🌘';
+}
 function phaseName(p){
-  if(p<0.0625||p>0.9375) return '🌑 신월';
-  if(p<0.1875) return '🌒 초승달';
-  if(p<0.3125) return '🌓 상현달';
-  if(p<0.4375) return '🌔 상현망간';
-  if(p<0.5625) return '🌕 보름달';
-  if(p<0.6875) return '🌖 하현망간';
-  if(p<0.8125) return '🌗 하현달';
-  return '🌘 그믐달';
+  const icon = phaseIcon(p);
+  if(p<0.0625||p>0.9375) return icon+' 신월';
+  if(p<0.1875) return icon+' 초승달';
+  if(p<0.3125) return icon+' 상현달';
+  if(p<0.4375) return icon+' 상현망간';
+  if(p<0.5625) return icon+' 보름달';
+  if(p<0.6875) return icon+' 하현망간';
+  if(p<0.8125) return icon+' 하현달';
+  return icon+' 그믐달';
 }
 function typeLabel(t){return{super:'슈퍼문 🌕',quasi:'준 슈퍼문 🌔',blood:'슈퍼 블러드문 🩸',penumbral:'슈퍼 반영월식 🌕🌑',normal:'보름달 🌕',other:'—'}[t]}
 // 정밀 보름달: 이진탐색으로 보름달 정확한 순간(ms) 반환
@@ -928,6 +939,10 @@ function initHome(){
 
   // 달 위상 캔버스
   drawMoonPhase(ph, type);
+
+  // 홈 탭 아이콘을 실제 위상에 맞춰 표시
+  const homeIcon=document.querySelector('.tb[data-t="home"] .tb-icon');
+  if(homeIcon) homeIcon.textContent=phaseIcon(ph);
 
   // 링 색상
   document.querySelectorAll('.ring').forEach(r=>{
