@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>슈퍼문 탐구 🌕</title>
+
+<!-- ======= CSS 섹션별 로드 ======= -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/ar.css">
+<link rel="stylesheet" href="css/sim.css">
+<link rel="stylesheet" href="css/formula.css">
+<link rel="stylesheet" href="css/schedule.css">
+</head>
+<body>
+<div id="app">
+  <!-- HTML 패널들이 여기에 동적 삽입됨 -->
+</div>
+
+<!-- ======= JS 섹션별 로드 (의존 순서 유지) ======= -->
+<script src="js/core.js"></script>
+<script src="js/phase.js"></script>
+<script src="js/home.js"></script>
+<script src="js/ar.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/formula.js"></script>
+<script src="js/schedule.js"></script>
+<script src="js/tab.js"></script>
+
+<script>
+// ── HTML 패널 동적 로드 후 앱 초기화 ──
+(async function(){
+  const app = document.getElementById('app');
+  const panels = [
+    'html/home.html',
+    'html/ar.html',
+    'html/sim.html',
+    'html/formula.html',
+    'html/schedule.html',
+    'html/tabbar.html',
+  ];
+  const htmls = await Promise.all(
+    panels.map(url => fetch(url).then(r => r.text()))
+  );
+  app.innerHTML = htmls.join('\n');
+  if (typeof initApp === 'function') initApp();
+})();
+</script>
+</body>
+</html>

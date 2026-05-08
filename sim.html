@@ -1,0 +1,65 @@
+<div id="p-sim" class="panel">
+  <div class="sim-hdr"><span class="sim-title">🔭 궤도 시뮬레이션</span></div>
+
+  
+  <div class="sim-date-big">
+    <div>
+      <div class="sim-date-main" id="simDateMain">—</div>
+      <div class="sim-date-dow" id="simDateDow">—</div>
+    </div>
+    <div class="sim-date-right">
+      <div class="sim-dday-label">다음 슈퍼문</div>
+      <div class="sim-dday-val" id="simDday">D-?</div>
+    </div>
+  </div>
+
+  <canvas id="simCanvas" width="760" height="560"></canvas>
+
+  <div class="sim-chips">
+    <div class="chip"><span class="lbl">거리</span><span class="val" id="scDist">—</span></div>
+    <div class="chip"><span class="lbl">근접도</span><span class="val" id="scProx">—</span></div>
+    <div class="chip"><span class="lbl">위상</span><span class="val" id="scPhase">—</span></div>
+    <div class="chip"><span class="lbl">상태</span><span class="val" id="scType">—</span></div>
+  </div>
+
+  
+  <div class="day-row">
+    <button class="day-btn" onclick="simAddDays(-7)">◀◀ 7일</button>
+    <button class="day-btn" onclick="simAddDays(-1)">◀ 1일</button>
+    <button class="day-btn big" id="btnPP" onclick="simPP()">⏸ 일시정지</button>
+    <button class="day-btn" onclick="simAddDays(1)">1일 ▶</button>
+    <button class="day-btn" onclick="simAddDays(7)">7일 ▶▶</button>
+  </div>
+
+  <div class="sim-btns">
+    <button class="sim-btn primary" onclick="simJump()">⏭ 슈퍼문</button>
+    <button class="sim-btn" onclick="simReset()">↺ 오늘</button>
+  </div>
+
+  <div class="speed-row">
+    <span class="speed-lbl">⚡ 재생 배속</span>
+    <div class="spd-chips">
+      <button class="spd-chip on" onclick="setSpd(this,1)">×1</button>
+      <button class="spd-chip" onclick="setSpd(this,3)">×3</button>
+      <button class="spd-chip" onclick="setSpd(this,7)">×7</button>
+      <button class="spd-chip" onclick="setSpd(this,15)">×15</button>
+      <button class="spd-chip" onclick="setSpd(this,30)">×30</button>
+      <button class="spd-chip" onclick="setSpd(this,90)">×90</button>
+    </div>
+  </div>
+
+  
+  <button class="formula-link-btn" onclick="switchTab('formula')">
+    📐 이 계산이 어떻게 되나요? → 수식 설명 보기
+  </button>
+
+  <div class="sim-legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#fff870;box-shadow:0 0 5px #fff070"></div>태양</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#4a8cff"></div>지구</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div>슈퍼문</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--orange)"></div>준슈퍼문</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#aaa"></div>보름달</div>
+    <div class="leg-item"><div class="leg-dot" style="background:rgba(242,192,64,.3);border:1px dashed rgba(242,192,64,.5)"></div>슈퍼문 기준(90%)</div>
+    <div class="leg-item"><div class="leg-dot" style="background:rgba(224,120,48,.3);border:1px dashed rgba(224,120,48,.5)"></div>준슈퍼문 기준(86%)</div>
+  </div>
+</div>

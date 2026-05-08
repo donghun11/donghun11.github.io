@@ -1,0 +1,91 @@
+<div id="p-formula" class="panel">
+  <div class="form-hdr">📐 슈퍼문 주기 수식</div>
+  <div class="step-dots" id="stepDots"></div>
+  <div class="step-card show" data-s="0">
+    <div class="step-title">1단계 · 보름달이란?</div>
+    <div class="step-body">달이 지구와 태양의 반대편에 위치할 때 보름달이 됩니다. 이 주기를 <strong>삭망월</strong>이라 합니다.</div>
+    <div class="fbox">T(삭망월) = 29.53058867일</div>
+  </div>
+  <div class="step-card" data-s="1">
+    <div class="step-title">2단계 · 달의 타원 궤도</div>
+    <div class="step-body">달은 타원 궤도로 공전합니다. 가장 가까운 점(근지점)까지의 주기를 <strong>이상월(근점월)</strong>이라 합니다.</div>
+    <div class="fbox">근지점:  362,600 km
+원지점:  405,500 km
+T(이상월) = 27.55454989일</div>
+  </div>
+  <div class="step-card" data-s="2">
+    <div class="step-title">3단계 · 슈퍼문 & 준슈퍼문 기준</div>
+    <div class="step-body">근지점 근접도 = (원지점−현재거리) ÷ (원지점−근지점) × 100%<br><br>이 값이 <strong>90% 이상이면 슈퍼문</strong>, 뉴스 기준 <strong>86~90%는 준슈퍼문</strong>입니다. 완전한 근지점에서 14% 거리까지를 준슈퍼문으로 봅니다.</div>
+    <div class="fbox">슈퍼문:   근접도 ≥ 90%
+준슈퍼문: 86% ≤ 근접도 &lt; 90%
+           (완전 근지점에서 14% 거리 이내)
+준슈퍼문 주기 = 29.5 ÷ 0.14 ≈ 210일</div>
+  </div>
+  <div class="step-card" data-s="3">
+    <div class="step-title">4단계 · 슈퍼문 주기 수식</div>
+    <div class="step-body">두 주기(삭망월, 이상월)의 역수 차이로 슈퍼문 주기를 구합니다.</div>
+    <div class="fbox">1/T = 1/T(삭망월) − 1/T(이상월)
+    = 1/29.53 − 1/27.55
+    = 0.033870 − 0.036290
+
+T = 1 ÷ 0.002421 ≈ 411.8일
+              ≈ 약 412일 (13.7개월)</div>
+  </div>
+  <div class="step-card" data-s="4">
+    <div class="step-title">5단계 · NASA 데이터 검증</div>
+    <div class="step-body">Fred Espenak (NASA 전 천체물리학자) 데이터와 비교합니다.</div>
+    <div class="fbox">이론값:    412일
+NASA 평균: 약 400일
+오차:      ±12일 (약 2~3%)
+
+✅ 수식이 실측 데이터와 잘 일치!
+
+연속 슈퍼문 주기: ≈ 413.5일 (T_SM과 거의 동일)
+  → 매년 3~4개월간 연속으로 슈퍼문 발생
+  → 그룹 간격: 413~414일 실측
+슈퍼 블러드문(사로스): ≈ 54년 주기</div>
+  </div>
+  <div class="step-card" data-s="5">
+    <div class="step-title">6단계 · 특수 슈퍼문 구하는 법</div>
+    <div class="step-body">슈퍼문과 월식이 동시에 발생하는 특수 이벤트는 두 주기의 최소공배수(LCM)로 계산합니다.</div>
+    <div class="fbox">슈퍼 블러드문 (개기월식+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+사로스 주기    = 6585.32일 (18년 11일)
+슈퍼문 주기    = 411.78일
+LCM ≈ 6585 × 9 = 59265일 ≈ 54년
+
+슈퍼 반영월식 (반영월식+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+교점월         = 27.2122일
+보름달-교점 주기 ≈ 173.3일
+슈퍼문과 겹침  ≈ 5~6년 주기
+
+블루문 슈퍼문 (두 번째 보름달+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+블루문 주기    ≈ 32.9개월
+슈퍼문 주기    ≈ 13.5개월
+우연 겹침      ≈ 2~3년마다</div>
+  </div>
+  <div class="step-nav">
+    <button class="snav" id="sPrev" onclick="goStep(-1)" disabled>← 이전</button>
+    <button class="snav next" id="sNext" onclick="goStep(1)">다음 →</button>
+  </div>
+  <div class="calc-sec" id="calcSec">
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="fc on" id="ct-super" onclick="setCalcType(this,'super')">🌕 슈퍼문</button>
+      <button class="fc" id="ct-quasi" onclick="setCalcType(this,'quasi')">🌔 준슈퍼문</button>
+      <button class="fc" id="ct-blood" onclick="setCalcType(this,'blood')" style="border-color:rgba(204,34,0,.4);color:#ff7755">🩸 블러드문</button>
+      <button class="fc" id="ct-penumbral" onclick="setCalcType(this,'penumbral')" style="border-color:rgba(96,176,255,.3);color:#60b0ff">🌕🌑 반영월식</button>
+    </div>
+    <div class="calc-row">
+      <span class="calc-lbl">마지막 이벤트</span>
+      <input class="calc-in" id="cLastSM" type="date" style="background:rgba(242,192,64,.06)">
+    </div>
+    <div class="calc-row">
+      <span class="calc-lbl">오늘 날짜</span>
+      <input class="calc-in" id="cToday" type="date">
+    </div>
+    <button class="calc-btn" id="cCalcBtn" onclick="doCalc()">📐 계산하기</button>
+    <div class="calc-result" id="cRes">← 종류를 선택하고 계산하세요!</div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div id="p-ar" class="panel">
+  <!-- 카메라 배경 -->
+  <video id="camVid" autoplay playsinline muted></video>
+  <!-- 별자리/달 오버레이 캔버스 -->
+  <canvas id="arCanvas"></canvas>
+
+  <!-- 상단 바 -->
+  <div class="ar-topbar">
+    <div class="ar-badge" id="arBadge">🌕 —</div>
+    <div class="ar-compass-ring" id="arCompassRing">
+      <div class="ar-compass-needle" id="arNeedle"></div>
+    </div>
+  </div>
+
+  <!-- GPS 상태 -->
+  <div class="ar-gps-status" id="arGpsStatus">📡 GPS 대기 중…</div>
+
+  <!-- 달이 지평선 아래일 때 -->
+  <div class="ar-below-horizon" id="arBelowHorizon">
+    <div class="ar-bh-icon">🌙</div>
+    <div class="ar-bh-title">달이 지평선 아래에 있습니다</div>
+    <div class="ar-bh-sub" id="arBelowSub">방위각 —° · 고도 —°</div>
+  </div>
+
+  <!-- 하단 정보 패널 -->
+  <div class="ar-infopanel">
+    <div class="ar-grid">
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">방위각</span>
+        <span class="val" id="arAzimuth" style="font:600 13px/1 var(--mono);color:var(--paper)">—°</span>
+      </div>
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">고도</span>
+        <span class="val" id="arAltitude" style="font:600 13px/1 var(--mono);color:var(--paper)">—°</span>
+      </div>
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">거리</span>
+        <span class="val" id="arDist" style="font:600 12px/1 var(--mono);color:var(--paper)">—</span>
+      </div>
+      <div class="ar-item">
+        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">근접도</span>
+        <span class="val" id="arProxVal" style="font:600 13px/1 var(--mono);color:var(--gold)">—%</span>
+      </div>
+    </div>
+    <div class="ar-prox-row">
+      <span style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.35)">근지점 근접도</span>
+      <span id="arType" style="font:600 9px/1 var(--mono);color:var(--gold)">—</span>
+    </div>
+    <div class="ar-prox-track">
+      <div class="ar-prox-fill" id="arProxBar" style="width:0%;background:linear-gradient(90deg,var(--gold-dim),var(--gold))"></div>
+      <div class="ar-marker" style="left:90%;background:var(--gold)"></div>
+      <div class="ar-marker" style="left:86%;background:var(--orange)"></div>
+    </div>
+    <div class="ar-prox-labels"><span>0%</span><span>86%</span><span>90%</span><span>100%</span></div>
+  </div>
+
+  <!-- 카메라 권한 없을 때 -->
+  <div class="no-cam" id="noCam">
+    <div style="font-size:52px">📷</div>
+    <p>카메라와 위치 권한이 필요합니다.<br>달의 실제 하늘 위치를 AR로 보여드립니다.</p>
+    <button class="cam-btn" onclick="startAR()">카메라 시작</button>
+    <p style="font-size:11px;margin-top:-6px">HTTPS 또는 localhost 환경 필요</p>
+  </div>
+</div>
