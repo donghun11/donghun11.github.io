@@ -682,9 +682,10 @@ function moonPhase(dt){
 function moonDist(dt){
   let ap = (daysSince(dt) % ANO) / ANO;
   if(ap < 0) ap += 1;
-  return ((APO+PER)/2) - ((APO-PER)/2) * Math.cos(2*Math.PI*ap);
+  const d = ((APO+PER)/2) - ((APO-PER)/2) * Math.cos(2*Math.PI*ap);
+  return Math.max(PER, Math.min(APO, d)); // 항상 [PER, APO] 범위로 클램프
 }
-function prox(d){ return (APO-d)/(APO-PER); }
+function prox(d){ return Math.max(0, Math.min(1, (APO-d)/(APO-PER))); }
 
 function dayBestPhase(dt){
   const y=dt.getFullYear(), m=dt.getMonth(), d=dt.getDate();
@@ -731,23 +732,44 @@ function classify(ph, dt){
   return 'other';
 }
 
-// 다음 슈퍼문: NASA_DATA에서 from 이후 첫 super/blood 찾기
+// 궤도 모델로 다음 슈퍼문 날짜 탐색 (NASA 범위 초과용)
+// 6시간 단위로 위상 0.5 교차 순간을 찾아 prox 체크
+function _findNextSMByModel(from, proxThreshold){
+  const MS6H = 6*3600000;
+  let dt = new Date(from.getTime() + MS6H);
+  let prevPh = moonPhase(dt);
+  const limit = from.getTime() + 30*365.25*86400000; // 최대 30년
+  while(dt.getTime() < limit){
+    dt = new Date(dt.getTime() + MS6H);
+    const ph = moonPhase(dt);
+    if(prevPh < 0.5 && ph >= 0.5){
+      const pr = prox(moonDist(dt));
+      if(pr >= proxThreshold){
+        return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 12, 0, 0);
+      }
+    }
+    prevPh = ph;
+  }
+  return new Date(from.getTime() + T_SM*86400000);
+}
+
+// 다음 슈퍼문: NASA_DATA 우선, 초과 시 궤도 모델로 탐색
 function nextSM(from){
   const t = from.getTime();
   const fut = NASA_DATA
     .filter(r => (r.type==='super'||r.type==='blood') && _nd(r.date).getTime() > t)
     .sort((a,b) => _nd(a.date) - _nd(b.date));
   if(fut.length) return _nd(fut[0].date);
-  // 범위 초과: T_SM 주기로 추정
-  return new Date(from.getTime() + T_SM*86400000);
+  return _findNextSMByModel(from, 0.90);
 }
-// 다음 준슈퍼문
+// 다음 준슈퍼문: NASA_DATA 우선, 초과 시 궤도 모델로 탐색
 function nextQSM(from){
   const t = from.getTime();
   const fut = NASA_DATA
     .filter(r => r.type==='quasi' && _nd(r.date).getTime() > t)
     .sort((a,b) => _nd(a.date) - _nd(b.date));
-  return fut.length ? _nd(fut[0].date) : null;
+  if(fut.length) return _nd(fut[0].date);
+  return _findNextSMByModel(from, 0.86);
 }
 
 // 교점월 관련 (simplified)
@@ -1262,7 +1284,10 @@ function drawSim(){
     ctx.beginPath(); ctx.arc(sx,sy,i%9===0?1.3:0.65,0,Math.PI*2); ctx.fill();
   }
 
-  const ph=dayBestPhase(simDt), dist=moonDistReal(simDt), pr2=proxReal(simDt), type=classify(ph,simDt);
+  const ph=dayBestPhase(simDt), dist=moonDistReal(simDt), pr2=proxReal(simDt);
+  // 시뮬레이션은 위상 무관하게 항상 달 표시 — 'other' 대신 'normal' 폴백
+  const _rawType=classify(ph,simDt);
+  const type=_rawType==='other'?'normal':_rawType;
 
   const moonOA=52, moonOB=40;
   const margin=14;
@@ -1366,7 +1391,9 @@ function drawSim(){
 }
 
 function updateSimUI(){
-  const ph=dayBestPhase(simDt), dist=moonDistReal(simDt), pr2=proxReal(simDt), type=classify(ph,simDt);
+  const ph=dayBestPhase(simDt), dist=moonDistReal(simDt), pr2=proxReal(simDt);
+  const _rawType=classify(ph,simDt);
+  const type=_rawType==='other'?'normal':_rawType;
   const y=simDt.getFullYear(), m=simDt.getMonth()+1, d=simDt.getDate();
   document.getElementById('simDateMain').textContent=`${y}년 ${m}월 ${d}일`;
   document.getElementById('simDateDow').textContent=`${DOW[simDt.getDay()]}요일`;
