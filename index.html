@@ -84,120 +84,6 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
 .nb-date{font:700 16px/1 var(--serif);color:var(--gold)}
 .nb-dday{font:600 30px/1 var(--mono);color:var(--gold);letter-spacing:-.02em}
 
-/* ══ AR ══ */
-#p-ar{background:#000;position:relative;overflow:hidden}
-#camVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* 하늘 캔버스 (카메라 위 오버레이) */
-#arCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-/* 상단 바 */
-
-/* 홈 달 이모지 */
-.moon-emoji{
-  width:190px;height:190px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:158px;line-height:1;
-  animation:orb-pulse 5s ease-in-out infinite;
-  transition:text-shadow .6s, filter .6s;
-  user-select:none;
-  filter:drop-shadow(0 0 0px transparent);
-}
-.moon-emoji.super{
-  filter:drop-shadow(0 0 28px rgba(242,192,64,.7)) drop-shadow(0 0 60px rgba(242,192,64,.35));
-}
-.moon-emoji.quasi{
-  filter:drop-shadow(0 0 22px rgba(224,120,48,.6)) drop-shadow(0 0 50px rgba(224,120,48,.25));
-}
-.moon-emoji.blood{
-  filter:drop-shadow(0 0 24px rgba(200,34,0,.7)) drop-shadow(0 0 56px rgba(200,34,0,.3));
-}
-.moon-emoji.normal{
-  filter:drop-shadow(0 0 16px rgba(220,220,220,.45));
-}
-
-/* 홈 달 이모지 */
-.moon-emoji {
-  width: 190px; height: 190px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 158px; line-height: 1;
-  animation: orb-pulse 5s ease-in-out infinite;
-  transition: filter .6s ease, text-shadow .6s ease;
-  user-select: none;
-  will-change: transform, opacity, filter;
-}
-
-/* 위상 전환: fade-out */
-.moon-emoji.moon-transitioning {
-  animation: moon-out .3s ease forwards;
-}
-/* 위상 전환: fade-in */
-.moon-emoji.moon-fade-in {
-  animation: moon-in .4s ease forwards;
-}
-
-@keyframes moon-out {
-  0%   { opacity:1; transform:scale(1) rotate(0deg); }
-  100% { opacity:0; transform:scale(.72) rotate(-8deg); }
-}
-@keyframes moon-in {
-  0%   { opacity:0; transform:scale(.72) rotate(8deg); }
-  60%  { transform:scale(1.06) rotate(-2deg); }
-  100% { opacity:1; transform:scale(1) rotate(0deg); }
-}
-
-/* 글로우 타입별 */
-.moon-emoji.super  { filter: drop-shadow(0 0 28px rgba(242,192,64,.75)) drop-shadow(0 0 64px rgba(242,192,64,.35)); }
-.moon-emoji.quasi  { filter: drop-shadow(0 0 22px rgba(224,120,48,.65)) drop-shadow(0 0 52px rgba(224,120,48,.28)); }
-.moon-emoji.blood  { filter: drop-shadow(0 0 26px rgba(200,34,0,.75))   drop-shadow(0 0 58px rgba(200,34,0,.32)); }
-.moon-emoji.normal { filter: drop-shadow(0 0 18px rgba(220,220,220,.5)); }
-
-.ar-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;
-  align-items:flex-start;padding:16px 14px;z-index:10}
-.ar-badge{background:rgba(6,8,20,.72);border:1px solid rgba(242,192,64,.4);border-radius:99px;
-  padding:7px 16px;font:700 13px/1 var(--serif);color:var(--gold);backdrop-filter:blur(12px)}
-.ar-compass-ring{width:52px;height:52px;background:rgba(6,8,20,.72);border:1px solid rgba(240,236,224,.2);
-  border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(12px);
-  position:relative;flex-shrink:0}
-.ar-compass-needle{width:4px;height:22px;position:absolute;top:50%;left:50%;
-  transform-origin:50% 100%;border-radius:2px 2px 0 0;
-  background:linear-gradient(180deg,#f55 0%,#f55 50%,#aaa 50%,#aaa 100%)}
-/* 방위 눈금 오버레이 */
-.ar-horizon{position:absolute;left:0;right:0;pointer-events:none;z-index:5}
-.ar-azlabel{position:absolute;font:600 11px/1 var(--mono);color:rgba(255,255,255,.55);
-  transform:translateX(-50%);white-space:nowrap}
-/* 달 마커 (하늘 위치) */
-.ar-moon-marker{position:absolute;pointer-events:none;z-index:8;transform:translate(-50%,-50%)}
-.ar-moon-canvas{border-radius:50%;display:block}
-.ar-moon-label{text-align:center;margin-top:4px;font:600 11px/1 var(--mono);color:rgba(255,255,255,.8);
-  text-shadow:0 1px 4px rgba(0,0,0,.8)}
-/* 달이 지평선 아래 안내 */
-.ar-below-horizon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:rgba(6,8,20,.85);border:1px solid rgba(242,192,64,.3);border-radius:var(--r);
-  padding:20px 24px;text-align:center;backdrop-filter:blur(16px);z-index:10;display:none}
-.ar-below-horizon .ar-bh-icon{font-size:36px;margin-bottom:8px}
-.ar-below-horizon .ar-bh-title{font:700 14px/1 var(--serif);color:var(--gold);margin-bottom:6px}
-.ar-below-horizon .ar-bh-sub{font:400 11px/1.6 var(--mono);color:rgba(240,236,224,.5)}
-/* 하단 정보 패널 */
-.ar-infopanel{position:absolute;bottom:calc(var(--tab) + var(--safe) + 10px);left:10px;right:10px;
-  background:rgba(6,8,20,.82);border:1px solid rgba(242,192,64,.2);border-radius:var(--r);
-  padding:12px 14px;backdrop-filter:blur(18px);z-index:10}
-.ar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-.ar-item .lbl{display:block;margin-bottom:3px}.ar-item .val{font-size:12px}
-.ar-prox-row{display:flex;justify-content:space-between;margin-bottom:4px}
-.ar-prox-track{height:6px;background:rgba(240,236,224,.08);border-radius:99px;position:relative;overflow:visible}
-.ar-prox-fill{height:100%;border-radius:99px;transition:width .8s}
-.ar-marker{position:absolute;top:-3px;width:2px;height:12px;border-radius:1px}
-.ar-prox-labels{display:flex;justify-content:space-between;margin-top:2px;
-  font:400 8px/1 var(--mono);color:rgba(240,236,224,.28)}
-/* GPS 상태 */
-.ar-gps-status{position:absolute;top:72px;left:14px;font:400 10px/1 var(--mono);
-  color:rgba(240,236,224,.4);z-index:10;background:rgba(6,8,20,.5);padding:4px 8px;border-radius:6px}
-/* 카메라 없을 때 */
-.no-cam{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:16px;padding:36px;background:var(--ink)}
-.no-cam p{text-align:center;color:rgba(240,236,224,.55);font-size:13px;line-height:1.85}
-.cam-btn{background:var(--gold);color:var(--ink);border-radius:var(--r);
-  padding:13px 28px;font:700 14px/1 var(--serif)}
-
 /* ══ SIMULATION ══ */
 #p-sim{background:radial-gradient(ellipse 90% 70% at 50% 30%,#0b1326 0%,#050709 100%);
   align-items:center;padding:0 14px calc(var(--tab) + var(--safe) + 14px)}
@@ -459,71 +345,6 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
   </div>
 </div>
 
-<div id="p-ar" class="panel">
-  <!-- 카메라 배경 -->
-  <video id="camVid" autoplay playsinline muted></video>
-  <!-- 별자리/달 오버레이 캔버스 -->
-  <canvas id="arCanvas"></canvas>
-
-  <!-- 상단 바 -->
-  <div class="ar-topbar">
-    <div class="ar-badge" id="arBadge">🌕 —</div>
-    <div class="ar-compass-ring" id="arCompassRing">
-      <div class="ar-compass-needle" id="arNeedle"></div>
-    </div>
-  </div>
-
-  <!-- GPS 상태 -->
-  <div class="ar-gps-status" id="arGpsStatus">📡 GPS 대기 중…</div>
-
-  <!-- 달이 지평선 아래일 때 -->
-  <div class="ar-below-horizon" id="arBelowHorizon">
-    <div class="ar-bh-icon">🌙</div>
-    <div class="ar-bh-title">달이 지평선 아래에 있습니다</div>
-    <div class="ar-bh-sub" id="arBelowSub">방위각 —° · 고도 —°</div>
-  </div>
-
-  <!-- 하단 정보 패널 -->
-  <div class="ar-infopanel">
-    <div class="ar-grid">
-      <div class="ar-item">
-        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">방위각</span>
-        <span class="val" id="arAzimuth" style="font:600 13px/1 var(--mono);color:var(--paper)">—°</span>
-      </div>
-      <div class="ar-item">
-        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">고도</span>
-        <span class="val" id="arAltitude" style="font:600 13px/1 var(--mono);color:var(--paper)">—°</span>
-      </div>
-      <div class="ar-item">
-        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">거리</span>
-        <span class="val" id="arDist" style="font:600 12px/1 var(--mono);color:var(--paper)">—</span>
-      </div>
-      <div class="ar-item">
-        <span class="lbl" style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.4);letter-spacing:.08em">근접도</span>
-        <span class="val" id="arProxVal" style="font:600 13px/1 var(--mono);color:var(--gold)">—%</span>
-      </div>
-    </div>
-    <div class="ar-prox-row">
-      <span style="font:400 8px/1 var(--mono);color:rgba(240,236,224,.35)">근지점 근접도</span>
-      <span id="arType" style="font:600 9px/1 var(--mono);color:var(--gold)">—</span>
-    </div>
-    <div class="ar-prox-track">
-      <div class="ar-prox-fill" id="arProxBar" style="width:0%;background:linear-gradient(90deg,var(--gold-dim),var(--gold))"></div>
-      <div class="ar-marker" style="left:90%;background:var(--gold)"></div>
-      <div class="ar-marker" style="left:86%;background:var(--orange)"></div>
-    </div>
-    <div class="ar-prox-labels"><span>0%</span><span>86%</span><span>90%</span><span>100%</span></div>
-  </div>
-
-  <!-- 카메라 권한 없을 때 -->
-  <div class="no-cam" id="noCam">
-    <div style="font-size:52px">📷</div>
-    <p>카메라와 위치 권한이 필요합니다.<br>달의 실제 하늘 위치를 AR로 보여드립니다.</p>
-    <button class="cam-btn" onclick="startAR()">카메라 시작</button>
-    <p style="font-size:11px;margin-top:-6px">HTTPS 또는 localhost 환경 필요</p>
-  </div>
-</div>
-
 <div id="p-sim" class="panel">
   <div class="sim-hdr"><span class="sim-title">🔭 궤도 시뮬레이션</span></div>
 
@@ -534,10 +355,8 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
       <div class="sim-date-dow" id="simDateDow">—</div>
     </div>
     <div class="sim-date-right">
-      <div class="sim-dday-label" id="simDdayLabel">다음 슈퍼문</div>
+      <div class="sim-dday-label">다음 슈퍼문</div>
       <div class="sim-dday-val" id="simDday">D-?</div>
-      <div class="sim-dday-label" style="margin-top:6px;font-size:9px;opacity:.6" id="simOffsetLabel">기준일과</div>
-      <div class="sim-dday-val" style="font-size:13px;color:rgba(140,200,255,.8)" id="simOffset">±0</div>
     </div>
   </div>
 
@@ -577,7 +396,9 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
   </div>
 
   
-
+  <button class="formula-link-btn" onclick="switchTab('formula')">
+    📐 이 계산이 어떻게 되나요? → 수식 설명 보기
+  </button>
 
   <div class="sim-legend">
     <div class="leg-item"><div class="leg-dot" style="background:#fff870;box-shadow:0 0 5px #fff070"></div>태양</div>
@@ -590,65 +411,95 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
   </div>
 </div>
 
-<!--
-  ══════════════════════════════════════════════
-  수식 내부 메모 (개발자용, UI 미표시)
-  ══════════════════════════════════════════════
-  천문 상수:
-    삭망월(SYN)  = 29.53058867일  (보름달→보름달)
-    이상월(ANO)  = 27.55454989일  (근지점→근지점)
-    교점월(NOD)  = 27.21222082일  (교점→교점)
-    사로스       = 6585.32일 = 223삭망월 = 18년 11일
-
-  슈퍼문 주기 (Beat Period):
-    1/T = 1/ANO − 1/SYN
-        = 1/27.55455 − 1/29.53059
-        = 0.036292 − 0.033863
-        = 0.002428
-    T = 411.78일 ≈ 13.5개월
-    검증: 14삭망월(413.4일) ≈ 15이상월(413.3일) ✅
-
-  분류 기준:
-    Espenak: 슈퍼문 ≤361,050km(근접도≥90%), 준슈퍼문 361,050~363,070km
-    이 앱:   슈퍼문 ≤360,000km, 준슈퍼문 360,001~361,999km
-
-  특수 주기:
-    슈퍼 블러드문: 사로스(6585.32일) × N ≈ T_SM × M → ~54년 주기
-    슈퍼 반영월식: 교점월 기반 ~5~6년 주기
-    블루문 슈퍼문: 블루문(32.9개월) × LCM → ~2~3년 주기
-
-  predDate 계산: lastSM + T_SM (마지막 이벤트 + 1주기)
-  ══════════════════════════════════════════════
--->
 <div id="p-formula" class="panel">
-  <div class="form-hdr">📐 다음 이벤트 예측</div>
+  <div class="form-hdr">📐 슈퍼문 주기 수식</div>
+  <div class="step-dots" id="stepDots"></div>
+  <div class="step-card show" data-s="0">
+    <div class="step-title">1단계 · 보름달이란?</div>
+    <div class="step-body">달이 지구와 태양의 반대편에 위치할 때 보름달이 됩니다. 이 주기를 <strong>삭망월</strong>이라 합니다.</div>
+    <div class="fbox">T(삭망월) = 29.53058867일</div>
+  </div>
+  <div class="step-card" data-s="1">
+    <div class="step-title">2단계 · 달의 타원 궤도</div>
+    <div class="step-body">달은 타원 궤도로 공전합니다. 가장 가까운 점(근지점)까지의 주기를 <strong>이상월(근점월)</strong>이라 합니다.</div>
+    <div class="fbox">근지점:  362,600 km
+원지점:  405,500 km
+T(이상월) = 27.55454989일</div>
+  </div>
+  <div class="step-card" data-s="2">
+    <div class="step-title">3단계 · 슈퍼문 & 준슈퍼문 기준</div>
+    <div class="step-body">근지점 근접도 = (원지점−현재거리) ÷ (원지점−근지점) × 100%<br><br>이 값이 <strong>90% 이상이면 슈퍼문</strong>, 뉴스 기준 <strong>86~90%는 준슈퍼문</strong>입니다. 완전한 근지점에서 14% 거리까지를 준슈퍼문으로 봅니다.</div>
+    <div class="fbox">슈퍼문:   근접도 ≥ 90%
+준슈퍼문: 86% ≤ 근접도 &lt; 90%
+           (완전 근지점에서 14% 거리 이내)
+준슈퍼문 주기 = 29.5 ÷ 0.14 ≈ 210일</div>
+  </div>
+  <div class="step-card" data-s="3">
+    <div class="step-title">4단계 · 슈퍼문 주기 수식</div>
+    <div class="step-body">두 주기(삭망월, 이상월)의 역수 차이로 슈퍼문 주기를 구합니다.</div>
+    <div class="fbox">1/T = 1/T(삭망월) − 1/T(이상월)
+    = 1/29.53 − 1/27.55
+    = 0.033870 − 0.036290
 
+T = 1 ÷ 0.002421 ≈ 411.8일
+              ≈ 약 412일 (13.7개월)</div>
+  </div>
+  <div class="step-card" data-s="4">
+    <div class="step-title">5단계 · NASA 데이터 검증</div>
+    <div class="step-body">Fred Espenak (NASA 전 천체물리학자) 데이터와 비교합니다.</div>
+    <div class="fbox">이론값:    412일
+NASA 평균: 약 400일
+오차:      ±12일 (약 2~3%)
+
+✅ 수식이 실측 데이터와 잘 일치!
+
+연속 슈퍼문 주기: ≈ 413.5일 (T_SM과 거의 동일)
+  → 매년 3~4개월간 연속으로 슈퍼문 발생
+  → 그룹 간격: 413~414일 실측
+슈퍼 블러드문(사로스): ≈ 54년 주기</div>
+  </div>
+  <div class="step-card" data-s="5">
+    <div class="step-title">6단계 · 특수 슈퍼문 구하는 법</div>
+    <div class="step-body">슈퍼문과 월식이 동시에 발생하는 특수 이벤트는 두 주기의 최소공배수(LCM)로 계산합니다.</div>
+    <div class="fbox">슈퍼 블러드문 (개기월식+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+사로스 주기    = 6585.32일 (18년 11일)
+슈퍼문 주기    = 411.78일
+LCM ≈ 6585 × 9 = 59265일 ≈ 54년
+
+슈퍼 반영월식 (반영월식+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+교점월         = 27.2122일
+보름달-교점 주기 ≈ 173.3일
+슈퍼문과 겹침  ≈ 5~6년 주기
+
+블루문 슈퍼문 (두 번째 보름달+슈퍼문)
+━━━━━━━━━━━━━━━━━━━━
+블루문 주기    ≈ 32.9개월
+슈퍼문 주기    ≈ 13.5개월
+우연 겹침      ≈ 2~3년마다</div>
+  </div>
+  <div class="step-nav">
+    <button class="snav" id="sPrev" onclick="goStep(-1)" disabled>← 이전</button>
+    <button class="snav next" id="sNext" onclick="goStep(1)">다음 →</button>
+  </div>
   <div class="calc-sec" id="calcSec">
-    <!-- 이벤트 종류 선택 -->
-    <div style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap">
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
       <button class="fc on" id="ct-super" onclick="setCalcType(this,'super')">🌕 슈퍼문</button>
       <button class="fc" id="ct-quasi" onclick="setCalcType(this,'quasi')">🌔 준슈퍼문</button>
       <button class="fc" id="ct-blood" onclick="setCalcType(this,'blood')" style="border-color:rgba(204,34,0,.4);color:#ff7755">🩸 블러드문</button>
       <button class="fc" id="ct-penumbral" onclick="setCalcType(this,'penumbral')" style="border-color:rgba(96,176,255,.3);color:#60b0ff">🌕🌑 반영월식</button>
     </div>
-
-    <!-- 마지막 이벤트 선택 -->
-    <div class="calc-row" style="flex-direction:column;align-items:flex-start;gap:6px">
-      <span class="calc-lbl">마지막 이벤트 선택</span>
-      <select id="cLastSM" style="width:100%;background:rgba(20,28,48,.9);border:1px solid rgba(242,192,64,.2);border-radius:10px;padding:10px 12px;color:var(--cream);font:13px var(--mono);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer">
-        <option value="">불러오는 중...</option>
-      </select>
+    <div class="calc-row">
+      <span class="calc-lbl">마지막 이벤트</span>
+      <input class="calc-in" id="cLastSM" type="date" style="background:rgba(242,192,64,.06)">
     </div>
     <div class="calc-row">
       <span class="calc-lbl">오늘 날짜</span>
       <input class="calc-in" id="cToday" type="date">
     </div>
-
-    <button class="calc-btn" id="cCalcBtn" onclick="doCalc()">🔭 예측하기</button>
-    <div class="calc-result" id="cRes">← 종류를 선택하고 예측하세요!</div>
-    <button class="calc-btn" id="cSimBtn" onclick="jumpSimToCalc()" style="display:none;margin-top:8px;background:rgba(100,180,255,.12);border-color:rgba(100,180,255,.3);color:#80c8ff">🔭 시뮬레이션에서 확인</button>
-    <button class="calc-btn" id="cDetailBtn" onclick="toggleCalcDetail()" style="display:none;margin-top:6px;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:rgba(240,236,224,.5);font-size:11px">🔬 계산 상세 보기</button>
-    <div id="cDetail" style="display:none;margin-top:10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px;font:11px/1.7 JetBrains Mono,monospace;color:rgba(240,236,224,.55);white-space:pre-wrap"></div>
+    <button class="calc-btn" id="cCalcBtn" onclick="doCalc()">📐 계산하기</button>
+    <div class="calc-result" id="cRes">← 종류를 선택하고 계산하세요!</div>
   </div>
 </div>
 
@@ -672,7 +523,7 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
         <div class="pg-axis"><span>0%</span><span>50%</span><span>86%</span><span>90%</span><span>100%</span></div>
       </div>
       <div class="leg-rows">
-        <div class="leg-row"><span class="leg-icon">🌕</span><div class="leg-text"><div class="leg-name gold">슈퍼문 (≥90%)</div><div class="leg-desc">근지점 근접. ≤360,000 km (이 앱 기준). 주기≈412일</div></div></div>
+        <div class="leg-row"><span class="leg-icon">🌕</span><div class="leg-text"><div class="leg-name gold">슈퍼문 (≥90%)</div><div class="leg-desc">근지점 완전 근접. ≤365,950 km. 주기≈412일</div></div></div>
         <div class="leg-row"><span class="leg-icon">🌔</span><div class="leg-text"><div class="leg-name orange">준슈퍼문 (86~90%)</div><div class="leg-desc">근지점 14% 이내. 뉴스 기준. 주기≈210일</div></div></div>
         <div class="leg-row"><span class="leg-icon">🩸</span><div class="leg-text"><div class="leg-name red">슈퍼 블러드문</div><div class="leg-desc">개기월식+슈퍼문. 사로스 주기≈54년</div></div></div>
         <div class="leg-row"><span class="leg-icon">🌕🌑</span><div class="leg-text"><div class="leg-name blue">슈퍼 반영월식</div><div class="leg-desc">반영월식+슈퍼문. ≈5~6년 주기</div></div></div>
@@ -702,9 +553,8 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
 
 <nav class="tabbar">
   <button class="tb active" data-t="home" onclick="switchTab('home')"><span class="tb-icon">🌕</span><span class="tb-label">홈</span></button>
-  <button class="tb" data-t="ar" onclick="switchTab('ar')"><span class="tb-icon">📷</span><span class="tb-label">AR</span></button>
-  <button class="tb" data-t="formula" onclick="switchTab('formula')"><span class="tb-icon">📐</span><span class="tb-label">수식</span></button>
   <button class="tb" data-t="sim" onclick="switchTab('sim')"><span class="tb-icon">🔭</span><span class="tb-label">시뮬레이션</span></button>
+  <button class="tb" data-t="formula" onclick="switchTab('formula')"><span class="tb-icon">📐</span><span class="tb-label">수식</span></button>
   <button class="tb" data-t="sched" onclick="switchTab('sched')"><span class="tb-icon">🗓</span><span class="tb-label">일정</span></button>
 </nav>
 </div>
@@ -742,7 +592,6 @@ function applyUserToday(){
   if(typeof updateSchedTodayBar==='function') updateSchedTodayBar();
   if(typeof initHome==='function') initHome();
   if(typeof simReset==='function') simReset();
-  if(typeof updateAR==='function') updateAR();
   if(typeof buildSched==='function') buildSched();
   if(typeof initFormula==='function') initFormula();
 }
@@ -752,11 +601,9 @@ function applyUserToday(){
 // ========================================
 const SYN=29.53058867, ANO=27.55454989, NOD=27.21222082;
 // T_SM: 가장 가까운 슈퍼문의 재발 주기 (14삭망월 ≈ 15근점월 ≈ 413일)
-const T_SM=411.78; // beat period: 1/(1/ANO - 1/SYN)
-const T_QSM=T_SM;   // 준슈퍼문도 동일한 beat period
-const SAROS=6585.32; // 223×SYN = 18년 11일
+const T_SM=413;
 const PER=356000, APO=406500; // 표시용 근지점/원지점 평균 범위
-const J2000=new Date(Date.UTC(2000,0,6,18,14,0)); // 신월 기준: 2000-01-06 18:14 UTC
+const J2000=new Date(2000,0,6,18,14,0);
 const daysSince=dt=>(dt-J2000)/86400000;
 
 function moonPhase(dt){let p=(daysSince(dt)%SYN)/SYN;return p<0?p+1:p;}
@@ -789,99 +636,52 @@ function dayBestPhase(dt){
 // 슈퍼문 룩업 테이블 (Fred Espenak 기준 검증값)
 // 실제 거리(km) 기반 — 단순 코사인 모델 오차 4만km 이상으로 신뢰 불가
 // ========================================
-// ── 슈퍼문/준슈퍼문 룩업 테이블 ──
-// 출처: Fred Espenak (astropixels.com) 공식 데이터 — UTC 날짜 기준
-// 슈퍼문: 보름달 거리 ≤ 360,000km (명확한 슈퍼문)
-// 준슈퍼문: 360,001 ~ 361,999km (슈퍼문 직전/직후 달)
-// 362,000km 이상은 일반 보름달로 처리 — 매달 슈퍼문 표시 방지
 const _SM_TABLE=[
-  // ══════════════════════════════════════════
-  // Fred Espenak (astropixels.com) 공식 데이터
-  // UTC 기준 | ΔPerigee = 보름달-근지점 시간차(일)
-  // super: ≤360,000km | quasi: 360,001~361,999km
-  // (Espenak 공식기준: 근접도≥90% = rdist≥0.90)
-  // ══════════════════════════════════════════
-
-  // ── 2021 ──
-  {d:'2021-03-28',km:362170,rdist:0.959,dp:+1.475,type:'quasi'},
-  {d:'2021-04-27',km:357615,rdist:0.995,dp:+0.495,type:'super'},
-  {d:'2021-05-26',km:357462,rdist:0.997,dp:-0.390,type:'blood'}, // m · 개기월식
-  {d:'2021-06-24',km:361558,rdist:0.965,dp:-1.363,type:'quasi'},
-
-  // ── 2022 ──
-  {d:'2022-05-16',km:362127,rdist:0.959,dp:+1.465,type:'quasi'}, // 개기월식(eclipse)
-  {d:'2022-06-14',km:357658,rdist:0.995,dp:+0.479,type:'super'},
-  {d:'2022-07-13',km:357418,rdist:0.997,dp:-0.395,type:'super'}, // m
-  {d:'2022-08-12',km:361409,rdist:0.965,dp:-1.348,type:'quasi'},
-
-  // ── 2023 ──
-  {d:'2023-07-03',km:361934,rdist:0.961,dp:+1.451,type:'quasi'},
-  {d:'2023-08-01',km:357530,rdist:0.996,dp:+0.472,type:'super'},
-  {d:'2023-08-31',km:357344,rdist:0.997,dp:-0.406,type:'super'}, // m
-  {d:'2023-09-29',km:361552,rdist:0.964,dp:-1.370,type:'quasi'},
-
-  // ── 2024 ──
-  {d:'2024-08-19',km:361970,rdist:0.961,dp:+1.444,type:'quasi'},
-  {d:'2024-09-18',km:357486,rdist:0.996,dp:+0.465,type:'super'}, // 부분월식
-  {d:'2024-10-17',km:357364,rdist:0.997,dp:-0.390,type:'super'}, // m
-  {d:'2024-11-15',km:361867,rdist:0.961,dp:-1.369,type:'quasi'},
-
-  // ── 2025 ──
-  {d:'2025-10-07',km:361457,rdist:0.964,dp:+1.440,type:'quasi'}, // UTC Oct 7 (KST 동일)
-  {d:'2025-11-05',km:356980,rdist:0.998,dp:+0.488,type:'super'}, // m
-  {d:'2025-12-04',km:357218,rdist:0.995,dp:-0.484,type:'super'}, // ← 359270→357218 수정
-
-  // ── 2026 ──
-  {d:'2026-01-03',km:362312,rdist:0.959,dp:+1.406,type:'quasi'},
-  {d:'2026-11-24',km:360768,rdist:0.971,dp:+0.488,type:'super'},
-  {d:'2026-12-24',km:356740,rdist:0.998,dp:+0.293,type:'super'}, // m
-
-  // ── 2027 ──
-  {d:'2027-01-22',km:357644,rdist:0.997,dp:-0.395,type:'super'}, // m
-  {d:'2027-02-20',km:361015,rdist:0.969,dp:-1.370,type:'quasi'},
-
-  // ── 2028 ──
-  {d:'2028-01-12',km:361867,rdist:0.961,dp:+1.444,type:'quasi'},
-  {d:'2028-02-10',km:356720,rdist:0.999,dp:+0.201,type:'super'}, // m
-  {d:'2028-03-11',km:359347,rdist:0.982,dp:-0.790,type:'super'},
-
-  // ── 2029 ──
-  {d:'2029-02-09',km:359347,rdist:0.982,dp:+0.811,type:'super'},
-  {d:'2029-03-10',km:358074,rdist:0.990,dp:+0.442,type:'super'},
-  {d:'2029-03-30',km:356683,rdist:1.000,dp:+0.134,type:'super'}, // m
-  {d:'2029-04-28',km:358500,rdist:0.988,dp:-0.435,type:'super'},
+  // 2022
+  {d:'2022-06-14',km:357658,type:'super'},{d:'2022-07-13',km:357418,type:'super'},
+  // 2023
+  {d:'2023-07-03',km:361934,type:'super'},{d:'2023-08-01',km:357530,type:'super'},
+  {d:'2023-08-31',km:357344,type:'super'},{d:'2023-09-29',km:361552,type:'super'},
+  // 2024
+  {d:'2024-08-19',km:361970,type:'super'},{d:'2024-09-18',km:357486,type:'super'},
+  {d:'2024-10-17',km:357172,type:'super'},{d:'2024-11-15',km:361960,type:'super'},
+  // 2025 (Farmer's Almanac / Espenak)
+  {d:'2025-10-06',km:361500,type:'super'},{d:'2025-11-05',km:356980,type:'super'},
+  {d:'2025-12-04',km:359500,type:'super'},
+  // 2026
+  {d:'2026-01-03',km:362312,type:'super'},
+  {d:'2026-11-24',km:360768,type:'super'},{d:'2026-12-24',km:356740,type:'super'},
+  // 2027
+  {d:'2027-01-22',km:357644,type:'super'},{d:'2027-02-20',km:360000,type:'super'},
+  // 2028
+  {d:'2028-01-12',km:361000,type:'super'},{d:'2028-02-10',km:356720,type:'super'},
+  {d:'2028-03-11',km:360000,type:'super'},
+  // 2029 (5개 연속 예상)
+  {d:'2029-02-09',km:360000,type:'super'},{d:'2029-03-10',km:358000,type:'super'},
+  {d:'2029-04-09',km:358500,type:'super'},
 ];
 
-// 날짜 문자열 → Date (정오 KST)
+// 날짜 문자열 → Date (정오)
 function _smDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0);}
 
-// 날짜 기준 슈퍼/준슈퍼문 판정
-// ±0.4일(≈9.6h): UTC↔KST 시차(+9h) 보정용. 같은 날짜만 매칭.
+// 날짜 기준 슈퍼문 여부 판정 (±1일 허용: UTC↔KST 차이)
 function _smLookup(dt){
   const t=dt.getTime();
   for(const s of _SM_TABLE){
     const sd=_smDate(s.d).getTime();
-    if(Math.abs(t-sd)<0.4*86400000) return s;
+    if(Math.abs(t-sd)<1.5*86400000) return s;
   }
   return null;
 }
 
-// classify: 날짜 문자열로 정확 매칭 — 전후 날짜 오염 방지
+// classify: lookup 기반, 없으면 dayBestPhase로 일반 보름달 판정
 function classify(ph,dt_or_dist){
   if(dt_or_dist instanceof Date){
-    // 날짜 문자열(YYYY-MM-DD)로 테이블과 정확히 매칭
-    const yy=dt_or_dist.getFullYear();
-    const mm=String(dt_or_dist.getMonth()+1).padStart(2,'0');
-    const dd=String(dt_or_dist.getDate()).padStart(2,'0');
-    const dateStr=`${yy}-${mm}-${dd}`;
-    const sm=_SM_TABLE.find(s=>s.d===dateStr);
-    if(sm){
-      const bestPh=dayBestPhase(dt_or_dist);
-      if(bestPh>=0.47&&bestPh<=0.53) return sm.type;
-    }
-    // 일반 보름달 판정
+    // 당일 24h 최적 위상이 보름 범위(0.49~0.51)여야만 슈퍼/보름 가능
     const bestPh=dayBestPhase(dt_or_dist);
-    if(bestPh<0.48||bestPh>0.52) return'other';
+    if(bestPh<0.49||bestPh>0.51) return'other';
+    const sm=_smLookup(dt_or_dist);
+    if(sm) return sm.km<363000?'super':'quasi';
     return'normal';
   }
   const pr=(APO-dt_or_dist)/(APO-PER);
@@ -927,13 +727,15 @@ function _findFullMoon(from){
   return null;
 }
 
-// 다음 슈퍼문: super 타입만 찾기
+// 다음 슈퍼문: lookup 우선, 없으면 보름달 탐색
 function nextSM(from){
   const t=from.getTime();
+  // lookup에서 from 이후 첫 슈퍼문 찾기
   const future=_SM_TABLE
-    .filter(s=>s.type==='super'&&_smDate(s.d).getTime()>t)
+    .filter(s=>_smDate(s.d).getTime()>t)
     .sort((a,b)=>_smDate(a.d)-_smDate(b.d));
   if(future.length>0) return _smDate(future[0].d);
+  // lookup 범위 초과: 보름달 탐색으로 폴백 (T_SM 주기 추정)
   return new Date(from.getTime()+T_SM*86400000);
 }
 
@@ -969,27 +771,18 @@ function nextPenumbral(from){
 // 위상 이름 / 아이콘
 // ========================================
 function phaseIcon(p){
-  // 8위상 경계: 신월(0), 초승(0.03~0.22), 상현(0.22~0.28),
-  // 상현망(0.28~0.47), 보름(0.47~0.53), 하현망(0.53~0.72),
-  // 하현(0.72~0.78), 그믐(0.78~0.97), 신월(0.97~)
   if(p<0.03||p>0.97) return'🌑';
-  if(p<0.22) return'🌒';
-  if(p<0.28) return'🌓'; // 상현달 (0.25 중심)
-  if(p<0.47) return'🌔';
-  if(p<=0.53) return'🌕'; // 보름달 (0.50 중심)
-  if(p<0.72) return'🌖';
-  if(p<0.78) return'🌗'; // 하현달 (0.75 중심)
+  if(p<0.22) return'🌒'; if(p<0.37) return'🌓';
+  if(p<0.49) return'🌔'; if(p<=0.51) return'🌕';
+  if(p<0.63) return'🌖'; if(p<0.78) return'🌗';
   return'🌘';
 }
 function phaseName(p){
   const i=phaseIcon(p);
   if(p<0.03||p>0.97) return i+' 신월';
-  if(p<0.22) return i+' 초승달';
-  if(p<0.28) return i+' 상현달';  // 0.25 중심
-  if(p<0.47) return i+' 상현망';
-  if(p<=0.53) return i+' 보름달'; // 0.50 중심
-  if(p<0.72) return i+' 하현망';
-  if(p<0.78) return i+' 하현달';  // 0.75 중심
+  if(p<0.22) return i+' 초승달'; if(p<0.37) return i+' 상현달';
+  if(p<0.49) return i+' 상현망간'; if(p<=0.51) return i+' 보름달';
+  if(p<0.63) return i+' 하현망간'; if(p<0.78) return i+' 하현달';
   return i+' 그믐달';
 }
 function typeLabel(t){return{super:'슈퍼문 🌕',quasi:'준 슈퍼문 🌔',blood:'슈퍼 블러드문 🩸',penumbral:'슈퍼 반영월식 🌕🌑',normal:'보름달 🌕',other:'—'}[t];}
@@ -1159,286 +952,7 @@ function initHome(){
 
 // ========================================
 
-// AR — Star Walk 스타일 (GPS + 방위/기울기 기반 달 위치)
-// ========================================
-let camStream=null;
-let arGpsLat=null, arGpsLon=null;
-let arDeviceAz=0;   // 기기 방위각 (북=0, 동=90)
-let arDevicePitch=0; // 기기 기울기 (수평=0, 수직=90)
-let arAnimId=null;
 
-// ── 달 천구 좌표 계산 (적경/적위 → 방위각/고도) ──
-function moonRaDec(dt){
-  // 단순화된 달 적경/적위 계산 (±1도 정밀도)
-  const T=(dt-new Date(2000,0,1,12,0,0))/86400000/36525; // 율리우스 세기
-  const L0=218.316+13.176396*T*36525; // 평균 경도
-  const M=134.963+13.064993*T*36525;  // 평균 근점각
-  const F=93.272+13.229350*T*36525;   // 교점 위도
-  const r2d=180/Math.PI, d2r=Math.PI/180;
-  const Lrad=L0*d2r, Mrad=M*d2r, Frad=F*d2r;
-  // 황경 보정
-  const lon=L0+6.289*Math.sin(Mrad)-1.274*Math.sin(2*Lrad-Mrad)
-    +0.658*Math.sin(2*Lrad)-0.214*Math.sin(2*Mrad)-0.186*Math.sin(Mrad);
-  const lat=5.128*Math.sin(Frad)+0.280*Math.sin(Mrad+Frad)
-    -0.277*Math.sin(Mrad-Frad);
-  // 황도 → 적도 변환
-  const eps=(23.439-0.000036*T*36525)*d2r;
-  const lonRad=lon*d2r, latRad=lat*d2r;
-  const x=Math.cos(latRad)*Math.cos(lonRad);
-  const y=Math.cos(eps)*Math.cos(latRad)*Math.sin(lonRad)-Math.sin(eps)*Math.sin(latRad);
-  const z=Math.sin(eps)*Math.cos(latRad)*Math.sin(lonRad)+Math.cos(eps)*Math.sin(latRad);
-  const ra=Math.atan2(y,x)*r2d;
-  const dec=Math.asin(z)*r2d;
-  return {ra:(ra+360)%360, dec};
-}
-
-function moonAltAz(dt, lat, lon){
-  const {ra, dec}=moonRaDec(dt);
-  const r2d=180/Math.PI, d2r=Math.PI/180;
-  // 항성시 계산
-  const J=(dt-new Date(2000,0,1,12,0,0))/86400000;
-  const GMST=(280.46061837+360.98564736629*J)%360;
-  const LST=(GMST+lon+360)%360;
-  const H=((LST-ra)+360)%360; // 시각
-  const Hrad=H*d2r, decRad=dec*d2r, latRad=lat*d2r;
-  const sinAlt=Math.sin(decRad)*Math.sin(latRad)+Math.cos(decRad)*Math.cos(latRad)*Math.cos(Hrad);
-  const alt=Math.asin(Math.max(-1,Math.min(1,sinAlt)))*r2d;
-  const cosA=(Math.sin(decRad)-Math.sin(alt*d2r)*Math.sin(latRad))/(Math.cos(alt*d2r)*Math.cos(latRad));
-  let az=Math.acos(Math.max(-1,Math.min(1,cosA)))*r2d;
-  if(Math.sin(Hrad)>0) az=360-az;
-  return {alt:Math.round(alt*10)/10, az:Math.round(az*10)/10};
-}
-
-// ── GPS 획득 ──
-function startAR(){
-  const noCam=document.getElementById('noCam');
-  // 카메라 시작
-  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-    navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false})
-      .then(stream=>{
-        camStream=stream;
-        const v=document.getElementById('camVid');
-        v.srcObject=stream; v.play();
-        if(noCam) noCam.style.display='none';
-      })
-      .catch(()=>{ if(noCam) noCam.style.display='none'; }); // 카메라 없어도 계속
-  } else {
-    if(noCam) noCam.style.display='none';
-  }
-
-  // GPS
-  if(navigator.geolocation){
-    navigator.geolocation.watchPosition(pos=>{
-      arGpsLat=pos.coords.latitude;
-      arGpsLon=pos.coords.longitude;
-      const el=document.getElementById('arGpsStatus');
-      if(el) el.textContent='📍 '+arGpsLat.toFixed(4)+'°, '+arGpsLon.toFixed(4)+'°';
-    }, ()=>{
-      const el=document.getElementById('arGpsStatus');
-      if(el) el.textContent='⚠️ 위치 사용 불가';
-    }, {enableHighAccuracy:true,maximumAge:10000});
-  }
-
-  // 기기 방위/기울기
-  if(window.DeviceOrientationEvent){
-    // iOS 13+ 권한 요청
-    if(typeof DeviceOrientationEvent.requestPermission==='function'){
-      DeviceOrientationEvent.requestPermission().then(s=>{
-        if(s==='granted') window.addEventListener('deviceorientation',_onOrient,true);
-      });
-    } else {
-      window.addEventListener('deviceorientation',_onOrient,true);
-    }
-  }
-
-  // 렌더 루프
-  if(arAnimId) cancelAnimationFrame(arAnimId);
-  arAnimId=requestAnimationFrame(_arLoop);
-}
-
-function _onOrient(e){
-  // alpha=방위각(북=0), beta=앞뒤 기울기, gamma=좌우
-  if(e.webkitCompassHeading!=null){
-    arDeviceAz=e.webkitCompassHeading; // iOS
-  } else if(e.alpha!=null){
-    arDeviceAz=(360-e.alpha)%360; // Android
-  }
-  if(e.beta!=null) arDevicePitch=e.beta; // 앞뒤 기울기 (수직=90)
-}
-
-function _arLoop(){
-  _arDraw();
-  arAnimId=requestAnimationFrame(_arLoop);
-}
-
-function _arDraw(){
-  const cv=document.getElementById('arCanvas');
-  if(!cv) return;
-  const W=cv.offsetWidth, H=cv.offsetHeight;
-  if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}
-  const ctx=cv.getContext('2d');
-  if(!ctx) return;
-  ctx.clearRect(0,0,W,H);
-
-  const now=new Date(); // AR은 항상 실제 현재 시각 사용
-  const ph=dayBestPhase(now),dist=moonDistReal(now),pr2=proxReal(now),type=classify(ph,now);
-
-  // 나침반 바늘 업데이트
-  const needle=document.getElementById('arNeedle');
-  if(needle) needle.style.transform=`translate(-50%,-100%) rotate(${arDeviceAz}deg)`;
-
-  // 달 방위각/고도 계산 (GPS 있을 때)
-  let moonAz=null, moonAlt=null;
-  if(arGpsLat!==null){
-    const pos=moonAltAz(now, arGpsLat, arGpsLon);
-    moonAz=pos.az; moonAlt=pos.alt;
-    document.getElementById('arAzimuth').textContent=moonAz.toFixed(1)+'°';
-    document.getElementById('arAltitude').textContent=moonAlt.toFixed(1)+'°';
-  }
-
-  // 거리/근접도 업데이트
-  document.getElementById('arDist').textContent=Math.round(dist).toLocaleString()+' km';
-  const pp=(pr2*100).toFixed(1);
-  document.getElementById('arProxVal').textContent=pp+'%';
-  document.getElementById('arProxBar').style.width=pp+'%';
-  document.getElementById('arType').textContent=moonLabel(type,ph);
-  document.getElementById('arBadge').textContent=moonLabel(type,ph);
-
-  // ── 방위각 눈금 그리기 ──
-  const FOV_H=60; // 가로 시야각 (도)
-  const FOV_V=FOV_H*H/W;
-  const centerAz=arDeviceAz;
-  const centerAlt=Math.max(0,Math.min(90, arDevicePitch>85?90:arDevicePitch));
-
-  // 방위각 라벨들
-  ctx.textAlign='center'; ctx.textBaseline='top';
-  const dirs=[{az:0,lbl:'N'},{az:45,lbl:'NE'},{az:90,lbl:'E'},{az:135,lbl:'SE'},
-              {az:180,lbl:'S'},{az:225,lbl:'SW'},{az:270,lbl:'W'},{az:315,lbl:'NW'}];
-  dirs.forEach(({az,lbl})=>{
-    let dAz=az-centerAz;
-    if(dAz>180) dAz-=360; if(dAz<-180) dAz+=360;
-    if(Math.abs(dAz)>FOV_H/2+10) return;
-    const sx=W/2+dAz/FOV_H*W;
-    const isMain=['N','E','S','W'].includes(lbl);
-    // 지평선 y위치 계산
-    const horizY=H/2+centerAlt/FOV_V*H;
-    ctx.fillStyle=isMain?'rgba(255,255,255,.8)':'rgba(255,255,255,.45)';
-    ctx.font=(isMain?'bold ':'')+'12px JetBrains Mono,monospace';
-    ctx.fillText(lbl,sx,horizY+8);
-    // 눈금선
-    ctx.strokeStyle=isMain?'rgba(255,255,255,.35)':'rgba(255,255,255,.18)';
-    ctx.lineWidth=isMain?1.5:1;
-    ctx.beginPath();ctx.moveTo(sx,horizY);ctx.lineTo(sx,horizY+6);ctx.stroke();
-  });
-
-  // 지평선 선
-  const horizY=H/2+centerAlt/FOV_V*H;
-  if(horizY>0&&horizY<H){
-    const grad=ctx.createLinearGradient(0,0,W,0);
-    grad.addColorStop(0,'transparent');
-    grad.addColorStop(.3,'rgba(255,255,255,.25)');
-    grad.addColorStop(.7,'rgba(255,255,255,.25)');
-    grad.addColorStop(1,'transparent');
-    ctx.strokeStyle=grad; ctx.lineWidth=1.5;
-    ctx.setLineDash([6,10]);
-    ctx.beginPath();ctx.moveTo(0,horizY);ctx.lineTo(W,horizY);ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  // ── 달 마커 그리기 ──
-  if(moonAz===null||moonAlt===null){
-    // GPS 없음: 중앙에 달 표시 + 안내
-    const sx=W/2, sy=H*0.42;
-    const ms=type==='super'?44:type==='quasi'?36:28;
-    // 글로우
-    if(type==='super'||type==='quasi'){
-      const gc=type==='super'?'rgba(242,192,64,':'rgba(224,120,48,';
-      const grd=ctx.createRadialGradient(sx,sy,0,sx,sy,ms*2.5);
-      grd.addColorStop(0,gc+'0.35)');grd.addColorStop(1,'transparent');
-      ctx.beginPath();ctx.arc(sx,sy,ms*2.5,0,Math.PI*2);ctx.fillStyle=grd;ctx.fill();
-    }
-    // 달 본체 — 통합 drawPhase 사용
-    drawPhase(ctx, sx, sy, ms, ph, type);
-    ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);
-    ctx.strokeStyle=type==='super'?'rgba(242,192,64,.6)':'rgba(200,200,200,.3)';
-    ctx.lineWidth=1.5;ctx.stroke();
-    // 안내 텍스트
-    ctx.textAlign='center';ctx.textBaseline='top';
-    ctx.font='bold 14px JetBrains Mono,monospace';
-    ctx.fillStyle='rgba(255,255,255,.9)';
-    ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=3;
-    const lbl=moonLabel(type,ph);
-    ctx.strokeText(lbl,sx,sy+ms+10);ctx.fillText(lbl,sx,sy+ms+10);
-    ctx.font='11px JetBrains Mono,monospace';
-    ctx.fillStyle='rgba(255,255,255,.5)';
-    ctx.fillText('📍 위치 권한을 허용하면 하늘에서 달을 찾아드립니다',sx,sy+ms+32);
-  } else if(moonAz!==null&&moonAlt!==null){
-    let dAz=moonAz-centerAz;
-    if(dAz>180) dAz-=360; if(dAz<-180) dAz+=360;
-    const dAlt=moonAlt-centerAlt;
-    const sx=W/2+dAz/FOV_H*W;
-    const sy=H/2-dAlt/FOV_V*H;
-    const onScreen=Math.abs(dAz)<FOV_H/2+20&&Math.abs(dAlt)<FOV_V/2+20;
-    const belowEl=document.getElementById('arBelowHorizon');
-    const subEl=document.getElementById('arBelowSub');
-    if(moonAlt<-3){
-      // 지평선 아래
-      if(belowEl) belowEl.style.display='block';
-      if(subEl) subEl.textContent='방위각 '+moonAz.toFixed(1)+'° · 고도 '+moonAlt.toFixed(1)+'°';
-    } else {
-      if(belowEl) belowEl.style.display='none';
-      if(onScreen){
-        const ms=type==='super'?38:type==='quasi'?30:22;
-        // 글로우
-        if(type==='super'||type==='quasi'){
-          const gc=type==='super'?'rgba(242,192,64,':'rgba(224,120,48,';
-          const grd=ctx.createRadialGradient(sx,sy,0,sx,sy,ms*2.5);
-          grd.addColorStop(0,gc+'0.35)');grd.addColorStop(1,'transparent');
-          ctx.beginPath();ctx.arc(sx,sy,ms*2.5,0,Math.PI*2);ctx.fillStyle=grd;ctx.fill();
-        }
-        // 달 본체 — 통합 drawPhase 사용
-        drawPhase(ctx, sx, sy, ms, ph, type);
-        // 테두리
-        ctx.beginPath();ctx.arc(sx,sy,ms,0,Math.PI*2);
-        ctx.strokeStyle=type==='super'?'rgba(242,192,64,.6)':'rgba(200,200,200,.4)';
-        ctx.lineWidth=1.5;ctx.stroke();
-        // 라벨
-        ctx.textAlign='center';ctx.textBaseline='top';
-        ctx.font='bold 11px JetBrains Mono,monospace';
-        ctx.fillStyle='rgba(255,255,255,.9)';
-        ctx.strokeStyle='rgba(0,0,0,.6)';ctx.lineWidth=3;
-        const lbl=(type==='super'?'🌕 슈퍼문':type==='quasi'?'🌔 준슈퍼문':'🌕 달')+' '+moonAlt.toFixed(0)+'°';
-        ctx.strokeText(lbl,sx,sy+ms+6);ctx.fillText(lbl,sx,sy+ms+6);
-        // 화면 밖이면 화살표 안내
-      } else {
-        // 화면 밖: 방향 화살표
-        const arrowAngle=Math.atan2(-(sy-H/2),sx-W/2);
-        const ax=W/2+Math.cos(arrowAngle)*(Math.min(W,H)/2-40);
-        const ay=H/2+Math.sin(arrowAngle)*(Math.min(W,H)/2-40);
-        ctx.save();ctx.translate(ax,ay);ctx.rotate(arrowAngle);
-        ctx.fillStyle='rgba(242,192,64,.8)';
-        ctx.beginPath();ctx.moveTo(16,0);ctx.lineTo(-10,-8);ctx.lineTo(-10,8);ctx.closePath();ctx.fill();
-        ctx.restore();
-        ctx.textAlign='center';ctx.font='10px JetBrains Mono,monospace';
-        ctx.fillStyle='rgba(255,255,255,.7)';
-        ctx.fillText(Math.abs(dAz).toFixed(0)+'°',ax,ay+20);
-      }
-    }
-  }
-}
-
-function updateAR(){
-  if(arAnimId) return; // 루프 중이면 스킵
-  const now=userToday;
-  const ph=dayBestPhase(now),dist=moonDistReal(now),pr2=proxReal(now),type=classify(ph,now);
-  const pp=(pr2*100).toFixed(1);
-  document.getElementById('arDist').textContent=Math.round(dist).toLocaleString()+' km';
-  document.getElementById('arProxVal').textContent=pp+'%';
-  document.getElementById('arProxBar').style.width=pp+'%';
-  const _arLabel=moonLabel(type,ph);
-  document.getElementById('arType').textContent=_arLabel;
-  document.getElementById('arBadge').textContent=_arLabel;
-}
 
 // ========================================
 
@@ -1477,72 +991,28 @@ function simAddDays(n){
   drawSim();updateSimUI();
 }
 
-// 달 렌더링 헬퍼 — 위상+태양방향 기반 정확한 이모지
+// 달 렌더링 헬퍼 (지구 앞/뒤 공용)
 function _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle){
   // 연결선
-  ctx.strokeStyle='rgba(242,192,64,.08)';ctx.lineWidth=1;
+  ctx.strokeStyle='rgba(242,192,64,.05)';ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(earX,earY);ctx.lineTo(mx,my);ctx.stroke();
-
-  // 글로우 (슈퍼/준슈퍼)
+  // 글로우
   if(type==='super'||type==='quasi'){
-    const glowC=type==='super'?'rgba(242,192,64,.52)':'rgba(224,120,48,.40)';
-    const gr=ms*6;
-    const mg2=ctx.createRadialGradient(mx,my,0,mx,my,gr);
+    const glowC=type==='super'?'rgba(242,192,64,.3)':'rgba(224,120,48,.24)';
+    const gr=ms*2.2;const mg2=ctx.createRadialGradient(mx,my,0,mx,my,gr);
     mg2.addColorStop(0,glowC);mg2.addColorStop(1,'transparent');
     ctx.beginPath();ctx.arc(mx,my,gr,0,Math.PI*2);ctx.fillStyle=mg2;ctx.fill();
   }
-
-  // 태양이 달 기준 오른쪽/왼쪽 어느 쪽인지 판단
-  // earthToSunAngle ≈ moonAngle - ph*2π
-  const earthToSunAngle = moonAngle - ph * Math.PI * 2;
-  // 달→태양 방향 벡터의 x성분: cos(earthToSunAngle - moonAngle) = cos(-ph*2π)
-  // 더 직관적으로: 달 위치에서 태양쪽 x offset
-  const sunRelX = Math.cos(earthToSunAngle); // 캔버스 x축 기준 태양 방향
-  // 태양이 오른쪽(sunRelX>0)이면 기본이모지 사용, 왼쪽이면 좌우반전 이모지 사용
-  // 위상별 이모지: 오른쪽태양 기준(기본), 왼쪽태양이면 waxing↔waning 교체
-  const p = ph;
-  let icon;
-  if(p < 0.03 || p > 0.97)      icon = '🌑';
-  else if(p <= 0.51 && p >= 0.49) icon = '🌕';
-  else {
-    // 태양이 오른쪽이면 waxing(오른쪽 밝음), 왼쪽이면 waning(왼쪽 밝음)
-    const sunRight = sunRelX > 0;
-    if(p < 0.5){
-      // 이론상 waxing(신월→보름): 오른쪽 밝음
-      icon = sunRight
-        ? (p<0.22?'🌒':p<0.37?'🌓':'🌔')   // 태양오른쪽: 표준
-        : (p<0.22?'🌘':p<0.37?'🌗':'🌖');   // 태양왼쪽: 반전
-    } else {
-      // waning(보름→신월): 왼쪽 밝음
-      icon = sunRight
-        ? (p<0.63?'🌖':p<0.78?'🌗':'🌘')   // 태양오른쪽
-        : (p<0.63?'🌔':p<0.78?'🌓':'🌒');   // 태양왼쪽: 반전
-    }
-  }
-
-  const fontSize = ms * 2.8;
-
-  ctx.save();
-  ctx.translate(mx, my);
-  // 태양이 위/아래에 있을 때를 위한 최소 회전 (수직 방향 보정만)
-  // 태양 방향이 위쪽이면 이모지를 -90도, 아래면 +90도 회전
-  const sunY_component = Math.sin(earthToSunAngle);
-  // 태양이 거의 위/아래일 때만 회전 적용 (|sunRelX|<0.3)
-  const tilt = Math.abs(sunRelX) < 0.42
-    ? (sunY_component > 0 ? Math.PI/2 : -Math.PI/2)
-    : 0;
-  ctx.rotate(tilt);
-
-  ctx.shadowColor = 'rgba(255,250,220,0.98)';
-  ctx.shadowBlur = ms * 2.2;
-  ctx.globalAlpha = 1.0;
-  ctx.font = fontSize + 'px serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(icon, 0, 0);
-  ctx.shadowBlur = ms * 0.9;
-  ctx.fillText(icon, 0, 0);
-  ctx.restore();
+  // 본체
+  drawPhase(ctx,mx,my,ms,ph,type);
+  // 레이블
+  const lx=mx+Math.cos(moonAngle)*(ms+8);
+  const ly=my+Math.sin(moonAngle)*(ms+8);
+  ctx.font='9px JetBrains Mono,monospace';
+  ctx.textAlign=Math.cos(moonAngle)>=0?'left':'right';
+  ctx.textBaseline='middle';
+  ctx.fillStyle='rgba(240,236,224,.45)';ctx.fillText('달',lx,ly);
+  ctx.textBaseline='alphabetic';
 }
 
 function drawSim(){
@@ -1619,24 +1089,20 @@ function drawSim(){
 
   // ── 달 위치 계산 ──
   const earthToSunAngle=Math.atan2(sunY-earY, sunX-earX);
-  // 달 공전각: 신월(ph=0)=태양 방향, 보름(ph=0.5)=태양 반대
-  // earthToSunAngle = 지구→태양 방향
-  // 신월: 달이 지구-태양 사이 → moonAngle = earthToSunAngle
-  // 보름: 달이 태양 반대쪽  → moonAngle = earthToSunAngle + π
-  const moonAngle = earthToSunAngle + ph * Math.PI * 2;
+  const moonAngle=earthToSunAngle + ph*Math.PI*2;
   const normD=Math.max(0,Math.min(1,(dist-PER)/(APO-PER)));
   const mr=moonOA*(0.82+0.18*(1-normD));
   const mx=earX+Math.cos(moonAngle)*mr;
   const my=earY+Math.sin(moonAngle)*(moonOB/moonOA)*mr;
-  const ms=type==='super'?8:type==='quasi'?7:6;
+  const ms=type==='super'?10:type==='quasi'?8:7;
 
-  // 신월(ph<0.5): 달이 태양쪽=지구 앞 / 보름(ph>=0.5): 지구 뒤
-  const moonInFront = ph < 0.5;
+  // 달이 태양쪽(신월방향)이면 지구 앞, 반대쪽(보름방향)이면 지구 뒤
+  const moonInFront=ph<0.5;
 
   // ── 지구 뒤 달 먼저 ──
   if(!moonInFront) _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle);
 
-  // ── 지구 (정적) ──
+  // ── 지구 ──
   const earR=22;
   ctx.save();
   ctx.beginPath();ctx.arc(earX,earY,earR,0,Math.PI*2);ctx.clip();
@@ -1658,18 +1124,23 @@ function drawSim(){
   ctx.beginPath();ctx.arc(earX,earY,earR,0,Math.PI*2);
   ctx.strokeStyle='rgba(140,210,255,.5)';ctx.lineWidth=1.2;ctx.stroke();
 
-  // ── 레이블 (지구 이모지 제거) ──
+  // ── 레이블 ──
+  const earthLabelAngle=moonAngle+Math.PI;
+  const elx=earX+Math.cos(earthLabelAngle)*(earR+12);
+  const ely=earY+Math.sin(earthLabelAngle)*(earR+12);
+  ctx.font='11px JetBrains Mono,monospace';
+  ctx.textAlign=Math.cos(earthLabelAngle)>=0?'left':'right';
+  ctx.textBaseline='middle';
+  ctx.fillStyle='rgba(140,210,255,.6)';ctx.fillText('🌍',elx,ely);
+  ctx.textBaseline='alphabetic';
 
   // ── 지구 앞 달 (신월쪽) ──
   if(moonInFront) _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle);
 
-  if(type==='super'){
-    ctx.save();
-    ctx.font='600 11px Noto Serif KR,serif';
-    ctx.textAlign='center';
-    ctx.fillStyle='rgba(242,192,64,.75)';
-    ctx.fillText('슈퍼문',W/2,18);
-    ctx.restore();
+  if(type==='super'||type==='quasi'){
+    ctx.font='bold 20px Noto Serif KR,serif';
+    ctx.fillStyle=type==='super'?'rgba(242,192,64,.95)':'rgba(224,120,48,.9)';
+    ctx.fillText(type==='super'?'🌕 슈퍼문!':'🌔 준 슈퍼문',W/2,28);
   }
   ctx.textAlign='right';ctx.font='11px JetBrains Mono,monospace';
   ctx.fillStyle='rgba(240,236,224,.3)';ctx.fillText('근접도 '+(pr2*100).toFixed(1)+'%',W-6,H-6);
@@ -1681,25 +1152,10 @@ function updateSimUI(){
   const y=simDt.getFullYear(),m=simDt.getMonth()+1,d=simDt.getDate();
   document.getElementById('simDateMain').textContent=`${y}년 ${m}월 ${d}일`;
   document.getElementById('simDateDow').textContent=`${DOW[simDt.getDay()]}요일`;
-  // 다음 슈퍼문/준슈퍼문 중 더 가까운 것 D-day 표시
+  // 다음 슈퍼문 D-day
   const ns=nextSM(simDt);
-  const nq=nextQSM(simDt);
-  let ddLabel='다음 슈퍼문', ddTarget=ns;
-  if(nq&&(!ns||nq.getTime()<ns.getTime())){
-    ddLabel='다음 준슈퍼문'; ddTarget=nq;
-  }
-  const dd=Math.ceil((ddTarget-simDt)/86400000);
-  document.getElementById('simDdayLabel').textContent=ddLabel;
+  const dd=Math.ceil((ns-simDt)/86400000);
   document.getElementById('simDday').textContent=dd<=0?'오늘!':'D-'+dd;
-  // 홈 기준일(userToday)과 시뮬 날짜 차이
-  const diffDays=Math.round((simDt-userToday)/86400000);
-  const offsetEl=document.getElementById('simOffset');
-  const offsetLbl=document.getElementById('simOffsetLabel');
-  if(offsetEl){
-    offsetEl.textContent=diffDays===0?'오늘':(diffDays>0?'+'+diffDays+'일':diffDays+'일');
-    offsetEl.style.color=diffDays===0?'rgba(242,192,64,.9)':diffDays>0?'rgba(140,200,255,.85)':'rgba(180,180,180,.7)';
-    if(offsetLbl) offsetLbl.textContent=diffDays===0?'기준일':'기준일로부터';
-  }
   // chips
   document.getElementById('scDist').textContent=(dist/1000).toFixed(0)+'천km';
   document.getElementById('scProx').textContent=(pr2*100).toFixed(1)+'%';
@@ -1715,6 +1171,9 @@ function updateSimUI(){
 // ========================================
 let curStep=0;const STEPS=6;
 function initFormula(){
+  const dots=document.getElementById('stepDots');dots.innerHTML='';
+  for(let i=0;i<STEPS;i++){const d=document.createElement('div');d.className='sdot'+(i===0?' on':'');dots.appendChild(d);}
+  showStep(0);
   // userToday 기준으로 날짜 설정
   const _y=userToday.getFullYear(),_m=_pad(userToday.getMonth()+1),_d=_pad(userToday.getDate());
   document.getElementById('cToday').value=_y+'-'+_m+'-'+_d;
@@ -1740,19 +1199,21 @@ function showStep(n){
 }
 function goStep(d){showStep(curStep+d);}
 
-// 가장 최근 이벤트 찾기 — NASA_DATA(일정) 기준, 오늘 이전 최근 항목
+// 가장 최근 이벤트 찾기 (userToday 이전)
 function findLastSM(type='super'){
-  const today=userToday.getTime();
-  // NASA_DATA에서 해당 type, 오늘 이전 중 가장 최근 날짜
-  const matchType = type==='blood'
-    ? s=>s.type==='blood'
-    : type==='penumbral'
-    ? s=>s.type==='penumbral'
-    : s=>s.type===type;
-  const candidates=NASA_DATA
-    .filter(s=>matchType(s) && parseDate(s.date).getTime()<today)
-    .sort((a,b)=>parseDate(b.date)-parseDate(a.date));
-  if(candidates.length>0) return parseDate(candidates[0].date);
+  // 역방향으로 보름달 순간을 1개씩 찾아서 조건 체크
+  let dt=new Date(userToday);
+  for(let i=0;i<30;i++){
+    dt=new Date(dt.getTime()-SYN*86400000); // 삭망월씩 뒤로
+    // dt 근처 보름달 정밀 탐색 (앞으로 2일 탐색)
+    const fm=_findFullMoon(new Date(dt.getTime()-2*86400000), 6);
+    if(fm>=userToday) continue;
+    const pr2=prox(moonDist(fm));
+    if(type==='super'&&pr2>=0.90) return fm;
+    if(type==='quasi'&&pr2>=0.86&&pr2<0.90) return fm;
+    if(type==='blood'&&pr2>=0.90&&isLunarEclipse(fm)) return fm;
+    if(type==='penumbral'&&pr2>=0.86&&isPenumbralEclipse(fm)) return fm;
+  }
   return parseDate('2015-09-28');
 }
 
@@ -1761,195 +1222,63 @@ function setCalcType(btn,t){
   calcType=t;
   document.querySelectorAll('.calc-sec .fc').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-
-  // NASA_DATA에서 해당 type의 과거 이벤트 추려서 select 옵션 채우기
-  // 슈퍼문/준슈퍼문엔 특수 이벤트(blood, penumbral)도 함께 포함
-  const today=userToday.getTime();
-  let matchType;
-  if(t==='blood')       matchType=s=>s.type==='blood';
-  else if(t==='penumbral') matchType=s=>s.type==='penumbral';
-  else if(t==='super')  matchType=s=>s.type==='super'||s.type==='blood'||s.type==='penumbral';
-  else if(t==='quasi')  matchType=s=>s.type==='quasi'||s.type==='blood'||s.type==='penumbral';
-  else                  matchType=s=>s.type===t;
-
-  const typeIcon={super:'🌕',quasi:'🌔',blood:'🩸',penumbral:'🌕🌑',normal:'🌕'};
-
-  const past=NASA_DATA
-    .filter(s=>matchType(s)&&parseDate(s.date).getTime()<today)
-    .sort((a,b)=>parseDate(b.date)-parseDate(a.date));
-
-  const sel=document.getElementById('cLastSM');
-  sel.innerHTML='';
-  if(past.length===0){
-    sel.innerHTML='<option value="">기록된 데이터 없음</option>';
-  } else {
-    past.forEach((s,i)=>{
-      const dt=parseDate(s.date);
-      // 날짜 + 아이콘 + note만 표시 (km은 내부 data-km 속성에만 저장)
-      const icon=typeIcon[s.type]||'🌕';
-      const noteStr=s.note?' · '+s.note:'';
-      const label=dt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})
-        +' '+icon+noteStr;
-      const opt=document.createElement('option');
-      opt.value=s.date;
-      opt.dataset.km=s.dist;      // km은 숨김 데이터로만 보관
-      opt.dataset.type=s.type;
-      opt.textContent=label;
-      if(i===0) opt.selected=true;
-      sel.appendChild(opt);
-    });
-  }
-
-  const btnLabels={super:'🔭 예측하기',quasi:'🔭 예측하기',
-    blood:'🔭 예측하기',penumbral:'🔭 예측하기'};
-  document.getElementById('cCalcBtn').textContent=btnLabels[t]||'🔭 예측하기';
-  document.getElementById('cRes').textContent='← 이벤트를 선택하고 예측하세요!';
-  document.getElementById('cSimBtn').style.display='none';
-  document.getElementById('cDetailBtn').style.display='none';
+  // 자동 기입 갱신
+  const last=findLastSM(t);
+  document.getElementById('cLastSM').value=last.toISOString().slice(0,10);
+  const notes={super:'마지막 슈퍼문 자동 기입',quasi:'마지막 준슈퍼문 자동 기입',
+    blood:'마지막 슈퍼 블러드문 자동 기입',penumbral:'마지막 슈퍼 반영월식 자동 기입'};
+  
+  const btnLabels={super:'📐 다음 슈퍼문 계산',quasi:'📐 다음 준슈퍼문 계산',
+    blood:'🩸 다음 블러드문 계산',penumbral:'🌕🌑 다음 반영월식 계산'};
+  document.getElementById('cCalcBtn').textContent=btnLabels[t];
+  document.getElementById('cRes').textContent='← 계산 버튼을 눌러주세요!';
 }
 
 function doCalc(){
   const lastVal=document.getElementById('cLastSM').value;
   const todayVal=document.getElementById('cToday').value;
-  if(!lastVal||!todayVal){document.getElementById('cRes').textContent='⚠️ 이벤트를 선택하고 오늘 날짜를 확인해주세요.';return;}
+  if(!lastVal||!todayVal){document.getElementById('cRes').textContent='⚠️ 날짜를 확인해주세요.';return;}
   const lastDt=parseDate(lastVal),todayDt=parseDate(todayVal);
   const elapsed=Math.round((todayDt-lastDt)/86400000);
   if(elapsed<0){document.getElementById('cRes').textContent='⚠️ 기준일보다 이전 날짜입니다.';return;}
 
-  /* 내부 계산 메모 (일반인 미표시)
-   * 슈퍼문/준슈퍼문 Beat Period: T = 1/(1/ANO − 1/SYN) = 411.78일
-   * 블러드문: Saros = 223×SYN = 6585.32일 = 18년 11일
-   * 반영월식: ~5~6년 (교점월 기반)
-   * predDate = lastDt + T (마지막 이벤트 + 1주기)
-   */
-  let T, label, nextDt;
+  let T,periodName,nextDt,formula;
   if(calcType==='super'){
-    T=T_SM; label='슈퍼문';
-    nextDt=nextSM(todayDt);
+    T=T_SM;periodName='슈퍼문 주기';
+    nextDt=nextSM(todayDt,0.90);
+    formula=`1/T = 1/${SYN.toFixed(2)} − 1/${ANO.toFixed(2)}\nT = ${T.toFixed(1)}일 ≈ 13.7개월`;
   } else if(calcType==='quasi'){
-    T=T_QSM; label='준슈퍼문';
-    nextDt=nextQSM(todayDt);
+    T=T_QSM;periodName='준슈퍼문 주기';
+    nextDt=nextQSM(todayDt);   // 슈퍼문 제외한 준슈퍼문만
+    formula=`T = T(삭망월) ÷ 0.14\n= ${SYN.toFixed(2)} ÷ 0.14 = ${T.toFixed(1)}일 ≈ 7개월`;
   } else if(calcType==='blood'){
-    T=SAROS; label='슈퍼 블러드문';
+    T=SAROS;periodName='사로스(블러드문) 주기';
     nextDt=nextBloodMoon(todayDt);
+    formula=`사로스 주기: 223삭망월 ≈ ${SAROS.toFixed(0)}일 ≈ 18년 11일\n슈퍼문+개기월식 LCM ≈ 54년`;
   } else {
-    T=SYN*NOD/(SYN-NOD)*2; label='슈퍼 반영월식';
+    T=SYN*NOD/(SYN-NOD)*2;periodName='반영월식+슈퍼문 주기';
     nextDt=nextPenumbral(todayDt);
+    formula=`교점월(${NOD.toFixed(2)}일)과 삭망월의 결합 주기\n≈ 5~6년 주기`;
   }
 
-  const periodText={
-    super:'약 13.5개월 (411일)',
-    quasi:'약 13.5개월 (411일)',
-    blood:'약 18년 (사로스 주기)',
-    penumbral:'약 5~6년'
-  }[calcType];
-
-  const icon={'super':'🌕','quasi':'🌔','blood':'🩸','penumbral':'🌕🌑'}[calcType];
-  const predDate=new Date(lastDt.getTime()+T*86400000);
-  const daysLeft=Math.round((predDate-todayDt)/86400000);
+  const remainder=elapsed%T;
+  const daysLeft=Math.round(T-remainder);
+  const predDate=new Date(todayDt.getTime()+daysLeft*86400000);
   const actualDays=nextDt?Math.ceil((nextDt-todayDt)/86400000):null;
   const actualStr=nextDt
-    ?`${nextDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} (D-${actualDays}일)`
-    :'기록된 데이터 없음';
-
-  const lastStr=lastDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
-  const predStr=predDate.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+    ?`${nextDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} (D-${actualDays})`
+    :'계산 중 (매우 희귀한 이벤트)';
 
   document.getElementById('cRes').textContent=
-    `${icon} 마지막 ${label}
-${lastStr}
-
-`+
-    `⏱ 주기: ${periodText}
-
-`+
-    `📅 다음 ${label} 예상
-`+
-    `${predStr} (D-${daysLeft}일)
-
-`+
-    (nextDt&&Math.abs(nextDt.getTime()-predDate.getTime())>3*86400000
-      ? `🛰 실측 기록 예측
-${actualStr}`
-      : `✅ 실측 기록과 일치`);
-
-  window._calcJumpDate=nextDt||predDate;
-  document.getElementById('cSimBtn').style.display='block';
-  document.getElementById('cDetailBtn').style.display='block';
-
-  document.getElementById('cDetail').textContent = getDetailLines(calcType).join('\n');
-}
-
-function getDetailLines(type){
-  const _s = SYN, _a = ANO, _n = NOD, _saros = SAROS, _tsm = T_SM, _tqsm = T_QSM;
-  if(type==='super') return [
-    '── 슈퍼문 주기 계산 ──',
-    '삭망월(SYN) = '+_s.toFixed(5)+'일',
-    '이상월(ANO) = '+_a.toFixed(5)+'일',
-    '',
-    '맥놀이 주기 (Beat Period):',
-    '1/T = 1/ANO − 1/SYN',
-    '    = '+( 1/_a).toFixed(6)+' − '+(1/_s).toFixed(6),
-    '    = '+(1/_a-1/_s).toFixed(6),
-    'T   = '+_tsm.toFixed(2)+'일 ≈ 13.5개월',
-    '',
-    '검증: 14삭망월 = '+(14*_s).toFixed(2)+'일',
-    '      15이상월 = '+(15*_a).toFixed(2)+'일 ✅',
-  ];
-  if(type==='quasi') return [
-    '── 준슈퍼문 주기 계산 ──',
-    '슈퍼문과 동일한 맥놀이 주기 적용',
-    'T = '+_tqsm.toFixed(2)+'일 ≈ 13.5개월',
-    '',
-    '분류 기준 (이 앱):',
-    '  슈퍼문   ≤ 360,000 km',
-    '  준슈퍼문  360,001 ~ 361,999 km',
-    '',
-    'Espenak 공식 기준:',
-    '  슈퍼문   ≤ 361,050 km (근접도 ≥90%)',
-    '  준슈퍼문  361,050 ~ 363,070 km',
-  ];
-  if(type==='blood') return [
-    '── 슈퍼 블러드문 주기 ──',
-    '사로스(Saros) = 223삭망월',
-    '= 223 × '+_s.toFixed(5),
-    '= '+_saros.toFixed(2)+'일 = 18년 11일',
-    '',
-    '검증:',
-    '239이상월 = '+(239*_a).toFixed(2)+'일 ✅',
-    '242교점월 = '+(242*_n).toFixed(2)+'일 ✅',
-    '',
-    '슈퍼문+개기월식 결합 ≈ 54년',
-  ];
-  return [
-    '── 슈퍼 반영월식 주기 ──',
-    '교점월(NOD) = '+_n.toFixed(5)+'일',
-    '삭망월(SYN) = '+_s.toFixed(5)+'일',
-    '',
-    '반영월식 기회: ~173.3일마다',
-    '슈퍼문과 결합: ≈ 5~6년 주기',
-  ];
-}
-
-function toggleCalcDetail(){
-  const d=document.getElementById('cDetail');
-  const btn=document.getElementById('cDetailBtn');
-  const show=d.style.display==='none';
-  d.style.display=show?'block':'none';
-  btn.textContent=show?'🔬 상세 접기':'🔬 계산 상세 보기';
-}
-
-function jumpSimToCalc(){
-  if(!window._calcJumpDate) return;
-  simDt=new Date(window._calcJumpDate);
-  simPlaying=false; simLast=null;
-  document.getElementById('btnPP').textContent='▶ 재생';
-  drawSim(); updateSimUI();
-  switchTab('sim');
-  setTimeout(()=>{
-    const el=document.getElementById('simCanvas');
-    if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
-  },300);
+    `기준일: ${lastDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
+    `오늘:   ${todayDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
+    `경과:   ${elapsed}일\n\n`+
+    `━━ ${periodName} ━━━━━━━━━━\n`+
+    formula+'\n\n'+
+    `${elapsed}일 ÷ ${T.toFixed(1)}일 → 나머지 ${remainder.toFixed(1)}일\n`+
+    `다음까지 = ${T.toFixed(1)} − ${remainder.toFixed(1)} ≈ ${daysLeft}일\n\n`+
+    `📅 수식 예측: ${predDate.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
+    `🛰 NASA 예측: ${actualStr}`;
 }
 
 // ========================================
@@ -1958,18 +1287,14 @@ function jumpSimToCalc(){
 // ========================================
 // Fred Espenak (NASA) 공식 데이터
 // https://astropixels.com/ephemeris/moon/fullperigee2001.html
-// type 기준: ≤360,000km = super, 360,001~361,999km = quasi, ≥362,000km = normal
+// type 기준: Relative Distance ≥0.90 = super, 0.86~0.90 = quasi
 // 월식: t=개기, p=부분, n=반영
 const NASA_DATA=[
-  // ══════════════════════════════════════════════
-  // Fred Espenak (astropixels.com) 공식 데이터
-  // src:'NASA'=실측, src:'Espenak'=Espenak 예측
+  // ================================================
+  // Fred Espenak (NASA/Astropixels) 공식 데이터
+  // src:'NASA' = 실측, src:'NASA예측' = Espenak 예측
   // eclipse: t=개기, p=부분, n=반영
-  // dp = ΔPerigee(일): 보름달 시각 - 근지점 시각
-  //   |dp| < 0.5일 = 매우 가까운 근접 (연중 최근접 후보)
-  //   |dp| 0.5~1.5일 = 일반 슈퍼문
-  //   |dp| 1.5~2.5일 = 경계 슈퍼문 (준슈퍼문)
-  // ══════════════════════════════════════════════
+  // ================================================
 
   // ── 2001 ──
   {date:'2001-01-09',dist:357406,rdist:0.994,type:'super',src:'NASA',eclipse:'t'},
@@ -2076,7 +1401,7 @@ const NASA_DATA=[
   {date:'2021-05-26',dist:357462,rdist:0.997,type:'blood',src:'NASA',eclipse:'t',note:'슈퍼 블러드문'},
   {date:'2021-06-24',dist:361558,rdist:0.965,type:'quasi',src:'NASA'},
   // ── 2022 ──
-  {date:'2022-05-16',dist:362127,rdist:0.959,type:'quasi',src:'NASA',eclipse:'t',note:'개기월식'},
+  {date:'2022-05-16',dist:362127,rdist:0.959,type:'quasi',src:'NASA',eclipse:'t'},
   {date:'2022-06-14',dist:357658,rdist:0.995,type:'super',src:'NASA'},
   {date:'2022-07-13',dist:357418,rdist:0.997,type:'super',src:'NASA'},
   {date:'2022-08-12',dist:361409,rdist:0.965,type:'quasi',src:'NASA'},
@@ -2090,34 +1415,35 @@ const NASA_DATA=[
   {date:'2024-09-18',dist:357486,rdist:0.996,type:'super',src:'NASA',eclipse:'p'},
   {date:'2024-10-17',dist:357364,rdist:0.996,type:'super',src:'NASA'},
   {date:'2024-11-15',dist:361867,rdist:0.961,type:'quasi',src:'NASA'},
-  // ── 2025 (Espenak 검증) ──
-  {date:'2025-10-07',dist:361457,rdist:0.964,type:'quasi',src:'Espenak'},
-  {date:'2025-11-05',dist:356980,rdist:0.998,type:'super',src:'Espenak'},  // 연중최근접
-  {date:'2025-12-04',dist:357218,rdist:0.995,type:'super',src:'Espenak'},
+  // ── 2025 ──
+  {date:'2025-10-07',dist:361458,rdist:0.964,type:'quasi',src:'NASA'},
+  {date:'2025-11-05',dist:356980,rdist:0.997,type:'super',src:'NASA'},
+  {date:'2025-12-04',dist:357219,rdist:0.995,type:'super',src:'NASA'},
 
-  // ── 2026 (EarthSky/Espenak 교차검증 완료) ──
-  {date:'2026-01-03',dist:362312,rdist:0.959,type:'normal',src:'Espenak'},
-  {date:'2026-03-03',dist:358490,rdist:0.988,type:'blood',src:'Espenak',eclipse:'t',note:'개기월식 슈퍼 블러드문'},
-  {date:'2026-11-24',dist:360768,rdist:0.971,type:'super',src:'Espenak'},  // Espenak 공식 super
-  {date:'2026-12-24',dist:356740,rdist:0.998,type:'super',src:'Espenak'}, // 연중최근접(m)
+  // ── 2026 예측 ──
+  {date:'2026-01-03',dist:362312,rdist:0.956,type:'quasi',src:'NASA예측'},
+  {date:'2026-03-03',dist:358490,rdist:0.988,type:'blood',src:'NASA예측',eclipse:'t',note:'개기월식 블러드문 (슈퍼문 아님)'},
+  {date:'2026-11-24',dist:360768,rdist:0.969,type:'quasi',src:'NASA예측'},
+  {date:'2026-12-24',dist:356740,rdist:0.998,type:'super',src:'NASA예측'},
 
-  // ── 2027 (Almanac/Espenak: 슈퍼문 Jan22 + Feb20) ──
-  {date:'2027-01-22',dist:357644,rdist:0.997,type:'super',src:'Espenak'}, // 연중최근접(m)
-  {date:'2027-02-20',dist:361015,rdist:0.969,type:'quasi',src:'Espenak'}, // Espenak 공식 super
+  // ── 2027 예측 ──
+  {date:'2027-01-22',dist:357644,rdist:0.993,type:'super',src:'NASA예측'},
+  {date:'2027-02-20',dist:363306,rdist:0.948,type:'penumbral',src:'NASA예측',eclipse:'n',note:'슈퍼 반영월식'},
+  {date:'2027-07-18',dist:368100,rdist:0.898,type:'quasi',src:'NASA예측',eclipse:'n',note:'반영월식'},
+  {date:'2027-08-17',dist:364200,rdist:0.940,type:'quasi',src:'NASA예측',eclipse:'n',note:'반영월식'},
 
-  // ── 2028 (astropixels 확인: 최근접 Feb10 356,720km) ──
-  {date:'2028-01-12',dist:361867,rdist:0.961,type:'quasi',src:'Espenak'},
-  {date:'2028-02-10',dist:356720,rdist:0.999,type:'super',src:'Espenak'}, // 연중최근접(m)
-  {date:'2028-03-11',dist:359347,rdist:0.982,type:'super',src:'Espenak'},
-  {date:'2028-04-09',dist:363867,rdist:0.943,type:'quasi',src:'Espenak'},
+  // ── 2028 예측 ──
+  {date:'2028-01-12',dist:360266,rdist:0.974,type:'quasi',src:'NASA예측'},
+  {date:'2028-02-10',dist:356720,rdist:0.999,type:'super',src:'NASA예측'},
+  {date:'2028-03-11',dist:358074,rdist:0.990,type:'super',src:'NASA예측'},
+  {date:'2028-04-09',dist:363867,rdist:0.943,type:'quasi',src:'NASA예측'},
 
-  // ── 2029 (Espenak: 5개 슈퍼문, 최근접 Mar30 356,683km) ──
-  {date:'2029-01-10',dist:362127,rdist:0.959,type:'normal',src:'Espenak'},
-  {date:'2029-02-09',dist:359347,rdist:0.982,type:'super',src:'Espenak'},
-  {date:'2029-03-10',dist:358074,rdist:0.990,type:'super',src:'Espenak'},
-  {date:'2029-03-30',dist:356683,rdist:1.000,type:'super',src:'Espenak'}, // 연중최근접(m)
-  {date:'2029-04-28',dist:358500,rdist:0.988,type:'super',src:'Espenak'},
-  {date:'2029-05-27',dist:364262,rdist:0.938,type:'quasi',src:'Espenak'},
+  // ── 2029 예측 ──
+  {date:'2029-01-30',dist:367046,rdist:0.911,type:'super',src:'NASA예측'},
+  {date:'2029-02-28',dist:359659,rdist:0.978,type:'quasi',src:'NASA예측'},
+  {date:'2029-03-30',dist:356683,rdist:1.000,type:'super',src:'NASA예측'},
+  {date:'2029-04-28',dist:358383,rdist:0.989,type:'super',src:'NASA예측'},
+  {date:'2029-05-27',dist:364262,rdist:0.938,type:'quasi',src:'NASA예측'},
 
   // ── 2030 예측 ──
   {date:'2030-03-19',dist:366439,rdist:0.917,type:'super',src:'NASA예측'},
@@ -2336,14 +1662,10 @@ function setF(btn,f){
 
 // TAB
 // ========================================
-const PM={home:'p-home',ar:'p-ar',sim:'p-sim',formula:'p-formula',sched:'p-sched'};
+const PM={home:'p-home',sim:'p-sim',formula:'p-formula',sched:'p-sched'};
 function switchTab(tab){
   Object.entries(PM).forEach(([k,id])=>document.getElementById(id).classList.toggle('active',k===tab));
   document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('active',b.dataset.t===tab));
-  // 시뮬 탭에서는 수식 탭 버튼 숨김
-
-  if(tab==='ar'&&!camStream) startAR();
-  else if(tab==='ar') updateAR();
   if(tab==='sim'){if(!simRaf){simRaf=requestAnimationFrame(simLoop);}}
   else{if(simRaf){cancelAnimationFrame(simRaf);simRaf=null;simLast=null;}}
   if(tab==='formula')initFormula();
