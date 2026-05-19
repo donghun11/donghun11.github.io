@@ -7,8 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>슈퍼문 탐구 🌕</title>
-<style>
-/* 오프라인 폴백: 시스템 폰트 사용 */
+<style>/* 오프라인 폴백: 시스템 폰트 사용 */
 @font-face {
   font-family: 'Noto Serif KR';
   src: local('Noto Serif CJK KR'), local('NotoSerifCJKkr'), local('본명조'), local('Batang'), local('바탕');
@@ -85,7 +84,33 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
 .nb-date{font:700 16px/1 var(--serif);color:var(--gold)}
 .nb-dday{font:600 30px/1 var(--mono);color:var(--gold);letter-spacing:-.02em}
 
-/* ══ SIMULATION ══ */
+/* ══ 달 이모지 ══ */
+.moon-emoji{
+  width:190px;height:190px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:158px;line-height:1;
+  animation:orb-pulse 5s ease-in-out infinite;
+  transition:filter .6s ease, text-shadow .6s ease;
+  user-select:none;
+  will-change:transform,opacity,filter;
+  filter:drop-shadow(0 0 0px transparent);
+}
+.moon-emoji.moon-transitioning{animation:moon-out .3s ease forwards}
+.moon-emoji.moon-fade-in{animation:moon-in .4s ease forwards}
+@keyframes moon-out{
+  0%{opacity:1;transform:scale(1) rotate(0deg)}
+  100%{opacity:0;transform:scale(.72) rotate(-8deg)}
+}
+@keyframes moon-in{
+  0%{opacity:0;transform:scale(.72) rotate(8deg)}
+  60%{transform:scale(1.06) rotate(-2deg)}
+  100%{opacity:1;transform:scale(1) rotate(0deg)}
+}
+.moon-emoji.super{filter:drop-shadow(0 0 28px rgba(242,192,64,.75)) drop-shadow(0 0 64px rgba(242,192,64,.35))}
+.moon-emoji.quasi{filter:drop-shadow(0 0 22px rgba(224,120,48,.65)) drop-shadow(0 0 52px rgba(224,120,48,.28))}
+.moon-emoji.blood{filter:drop-shadow(0 0 26px rgba(200,34,0,.75)) drop-shadow(0 0 58px rgba(200,34,0,.32))}
+.moon-emoji.normal{filter:drop-shadow(0 0 18px rgba(220,220,220,.5))}
+
 /* ══ SIMULATION ══ */
 #p-sim{background:radial-gradient(ellipse 90% 70% at 50% 30%,#0b1326 0%,#050709 100%);
   align-items:center;padding:0 14px calc(var(--tab) + var(--safe) + 14px)}
@@ -94,7 +119,7 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
 .sim-title{font:700 15px/1 var(--serif)}
 .sim-datebadge{font:400 11px/1 var(--mono);color:var(--gold);
   background:rgba(242,192,64,.10);border:1px solid rgba(242,192,64,.22);border-radius:6px;padding:4px 10px}
-#simCanvas{display:block;width:100%;max-width:380px;height:310px;border-radius:var(--r);
+#simCanvas{display:block;width:100%;max-width:380px;aspect-ratio:380/310;border-radius:var(--r);
   border:1px solid rgba(242,192,64,.10);margin:0 auto}
 .sim-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;width:100%;margin-top:10px}
 .chip{background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:9px 6px;text-align:center}
@@ -357,8 +382,10 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
       <div class="sim-date-dow" id="simDateDow">—</div>
     </div>
     <div class="sim-date-right">
-      <div class="sim-dday-label">다음 슈퍼문</div>
+      <div class="sim-dday-label" id="simDdayLabel">다음 슈퍼문</div>
       <div class="sim-dday-val" id="simDday">D-?</div>
+      <div class="sim-dday-label" style="margin-top:6px;font-size:9px;opacity:.6" id="simOffsetLabel">기준일로부터</div>
+      <div class="sim-dday-val" style="font-size:13px;color:rgba(140,200,255,.8)" id="simOffset">±0</div>
     </div>
   </div>
 
@@ -392,8 +419,7 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
       <button class="spd-chip" onclick="setSpd(this,3)">×3</button>
       <button class="spd-chip" onclick="setSpd(this,7)">×7</button>
       <button class="spd-chip" onclick="setSpd(this,15)">×15</button>
-      <button class="spd-chip" onclick="setSpd(this,30)">×30</button>
-      <button class="spd-chip" onclick="setSpd(this,90)">×90</button>
+      <button class="spd-chip" onclick="setSpd(this,20)">×20</button>
     </div>
   </div>
 
@@ -639,55 +665,79 @@ function dayBestPhase(dt){
 // 실제 거리(km) 기반 — 단순 코사인 모델 오차 4만km 이상으로 신뢰 불가
 // ========================================
 const _SM_TABLE=[
-  // 2022
-  {d:'2022-06-14',km:357658,type:'super'},{d:'2022-07-13',km:357418,type:'super'},
-  // 2023
-  {d:'2023-07-03',km:361934,type:'super'},{d:'2023-08-01',km:357530,type:'super'},
-  {d:'2023-08-31',km:357344,type:'super'},{d:'2023-09-29',km:361552,type:'super'},
-  // 2024
-  {d:'2024-08-19',km:361970,type:'super'},{d:'2024-09-18',km:357486,type:'super'},
-  {d:'2024-10-17',km:357172,type:'super'},{d:'2024-11-15',km:361960,type:'super'},
-  // 2025 (Farmer's Almanac / Espenak)
-  {d:'2025-10-06',km:361500,type:'super'},{d:'2025-11-05',km:356980,type:'super'},
-  {d:'2025-12-04',km:359500,type:'super'},
-  // 2026
-  {d:'2026-01-03',km:362312,type:'super'},
-  {d:'2026-11-24',km:360768,type:'super'},{d:'2026-12-24',km:356740,type:'super'},
-  // 2027
-  {d:'2027-01-22',km:357644,type:'super'},{d:'2027-02-20',km:360000,type:'super'},
-  // 2028
-  {d:'2028-01-12',km:361000,type:'super'},{d:'2028-02-10',km:356720,type:'super'},
-  {d:'2028-03-11',km:360000,type:'super'},
-  // 2029 (5개 연속 예상)
-  {d:'2029-02-09',km:360000,type:'super'},{d:'2029-03-10',km:358000,type:'super'},
-  {d:'2029-04-09',km:358500,type:'super'},
+  // Fred Espenak (astropixels.com) | super≤360,000km | quasi 360,001~361,999km
+  // ── 2021 ──
+  {d:'2021-03-28',km:362170,rdist:0.959,dp:+1.475,type:'quasi'},
+  {d:'2021-04-27',km:357615,rdist:0.995,dp:+0.495,type:'super'},
+  {d:'2021-05-26',km:357462,rdist:0.997,dp:-0.390,type:'blood'},
+  {d:'2021-06-24',km:361558,rdist:0.965,dp:-1.363,type:'quasi'},
+  // ── 2022 ──
+  {d:'2022-05-16',km:362127,rdist:0.959,dp:+1.465,type:'quasi'},
+  {d:'2022-06-14',km:357658,rdist:0.995,dp:+0.479,type:'super'},
+  {d:'2022-07-13',km:357418,rdist:0.997,dp:-0.395,type:'super'},
+  {d:'2022-08-12',km:361409,rdist:0.965,dp:-1.348,type:'quasi'},
+  // ── 2023 ──
+  {d:'2023-07-03',km:361934,rdist:0.961,dp:+1.451,type:'quasi'},
+  {d:'2023-08-01',km:357530,rdist:0.996,dp:+0.472,type:'super'},
+  {d:'2023-08-31',km:357344,rdist:0.997,dp:-0.406,type:'super'},
+  {d:'2023-09-29',km:361552,rdist:0.964,dp:-1.370,type:'quasi'},
+  // ── 2024 ──
+  {d:'2024-08-19',km:361970,rdist:0.961,dp:+1.444,type:'quasi'},
+  {d:'2024-09-18',km:357486,rdist:0.996,dp:+0.465,type:'super'},
+  {d:'2024-10-17',km:357364,rdist:0.997,dp:-0.390,type:'super'},
+  {d:'2024-11-15',km:361867,rdist:0.961,dp:-1.369,type:'quasi'},
+  // ── 2025 ──
+  {d:'2025-10-07',km:361457,rdist:0.964,dp:+1.440,type:'quasi'},
+  {d:'2025-11-05',km:356980,rdist:0.998,dp:+0.488,type:'super'},
+  {d:'2025-12-04',km:357218,rdist:0.995,dp:-0.484,type:'super'},
+  // ── 2026 ──
+  {d:'2026-01-03',km:362312,rdist:0.959,dp:+1.406,type:'quasi'},
+  {d:'2026-11-24',km:360768,rdist:0.971,dp:+0.488,type:'super'},
+  {d:'2026-12-24',km:356740,rdist:0.998,dp:+0.293,type:'super'},
+  // ── 2027 ──
+  {d:'2027-01-22',km:357644,rdist:0.997,dp:-0.395,type:'super'},
+  {d:'2027-02-20',km:361015,rdist:0.969,dp:-1.370,type:'quasi'},
+  // ── 2028 ──
+  {d:'2028-01-12',km:361867,rdist:0.961,dp:+1.444,type:'quasi'},
+  {d:'2028-02-10',km:356720,rdist:0.999,dp:+0.201,type:'super'},
+  {d:'2028-03-11',km:359347,rdist:0.982,dp:-0.790,type:'super'},
+  // ── 2029 ──
+  {d:'2029-02-09',km:359347,rdist:0.982,dp:+0.811,type:'super'},
+  {d:'2029-03-10',km:358074,rdist:0.990,dp:+0.442,type:'super'},
+  {d:'2029-03-30',km:356683,rdist:1.000,dp:+0.134,type:'super'},
+  {d:'2029-04-28',km:358500,rdist:0.988,dp:-0.435,type:'super'},
 ];
 
-// 날짜 문자열 → Date (정오)
+// 날짜 문자열 → Date (정오 KST)
 function _smDate(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0);}
 
-// 날짜 기준 슈퍼문 여부 판정 (±1일 허용: UTC↔KST 차이)
+// 날짜 기준 슈퍼/준슈퍼문 판정 (±0.4일: UTC↔KST 시차 보정용)
 function _smLookup(dt){
   const t=dt.getTime();
   for(const s of _SM_TABLE){
     const sd=_smDate(s.d).getTime();
-    if(Math.abs(t-sd)<1.5*86400000) return s;
+    if(Math.abs(t-sd)<0.4*86400000) return s;
   }
   return null;
 }
 
-// classify: lookup 기반, 없으면 dayBestPhase로 일반 보름달 판정
+// classify: NASA_DATA 날짜 매칭 우선 (일정 탭과 동일 소스)
 function classify(ph,dt_or_dist){
   if(dt_or_dist instanceof Date){
-    // 당일 24h 최적 위상이 보름 범위(0.49~0.51)여야만 슈퍼/보름 가능
+    const yy=dt_or_dist.getFullYear();
+    const mm=String(dt_or_dist.getMonth()+1).padStart(2,'0');
+    const dd=String(dt_or_dist.getDate()).padStart(2,'0');
+    const dateStr=`${yy}-${mm}-${dd}`;
+    // NASA_DATA에서 정확 매칭
+    const nd=NASA_DATA.find(s=>s.date===dateStr);
+    if(nd) return nd.type;
+    // 위상 기반 보름달 판정
     const bestPh=dayBestPhase(dt_or_dist);
-    if(bestPh<0.49||bestPh>0.51) return'other';
-    const sm=_smLookup(dt_or_dist);
-    if(sm) return sm.km<363000?'super':'quasi';
+    if(bestPh<0.47||bestPh>0.53) return'other';
     return'normal';
   }
   const pr=(APO-dt_or_dist)/(APO-PER);
-  if(ph>=0.49&&ph<=0.51){
+  if(ph>=0.47&&ph<=0.53){
     if(pr>=0.90)return'super';if(pr>=0.80)return'quasi';return'normal';
   }
   return'other';
@@ -695,11 +745,13 @@ function classify(ph,dt_or_dist){
 
 // 실제 거리 반환: 보름달 근처(±0.08)일 때만 lookup 사용, 아니면 모델값
 function moonDistReal(dt){
-  const ph=moonPhase(dt);
-  if(ph>=0.42&&ph<=0.58){
-    const sm=_smLookup(dt);
-    if(sm) return sm.km;
-  }
+  // NASA_DATA에서 날짜 매칭 우선 (정확한 실측값)
+  const yy=dt.getFullYear();
+  const mm=String(dt.getMonth()+1).padStart(2,'0');
+  const dd=String(dt.getDate()).padStart(2,'0');
+  const dateStr=`${yy}-${mm}-${dd}`;
+  const nd=NASA_DATA.find(s=>s.date===dateStr);
+  if(nd) return nd.dist;
   return moonDist(dt);
 }
 
@@ -731,23 +783,22 @@ function _findFullMoon(from){
 
 // 다음 슈퍼문: lookup 우선, 없으면 보름달 탐색
 function nextSM(from){
+  // NASA_DATA 기준 (일정 탭과 동일한 소스)
   const t=from.getTime();
-  // lookup에서 from 이후 첫 슈퍼문 찾기
-  const future=_SM_TABLE
-    .filter(s=>_smDate(s.d).getTime()>t)
-    .sort((a,b)=>_smDate(a.d)-_smDate(b.d));
-  if(future.length>0) return _smDate(future[0].d);
-  // lookup 범위 초과: 보름달 탐색으로 폴백 (T_SM 주기 추정)
-  return new Date(from.getTime()+T_SM*86400000);
+  const future=NASA_DATA
+    .filter(s=>s.type==='super'&&parseDate(s.date).getTime()>t)
+    .sort((a,b)=>parseDate(a.date)-parseDate(b.date));
+  return future.length>0 ? parseDate(future[0].date) : null;
 }
 
 // 다음 준슈퍼문: lookup에서 quasi 타입 찾기
 function nextQSM(from){
+  // NASA_DATA 기준 (일정 탭과 동일한 소스)
   const t=from.getTime();
-  const future=_SM_TABLE
-    .filter(s=>_smDate(s.d).getTime()>t&&s.type==='quasi')
-    .sort((a,b)=>_smDate(a.d)-_smDate(b.d));
-  return future.length>0?_smDate(future[0].d):null;
+  const future=NASA_DATA
+    .filter(s=>s.type==='quasi'&&parseDate(s.date).getTime()>t)
+    .sort((a,b)=>parseDate(a.date)-parseDate(b.date));
+  return future.length>0 ? parseDate(future[0].date) : null;
 }
 
 function nextBloodMoon(from){
@@ -984,7 +1035,20 @@ function setSpd(btn, v){
   btn.classList.add('on');
 }
 function simReset(){simDt=new Date(userToday);simLast=null;}
-function simJump(){simDt=nextSM(simDt);simLast=null;}
+function simJump(){
+  const target=nextSM(simDt);
+  if(!target){
+    const el=document.getElementById('simDday');
+    const lb=document.getElementById('simDdayLabel');
+    if(el) el.textContent='없음';
+    if(lb) lb.textContent='데이터 없음';
+    return;
+  }
+  simDt=target;
+  simPlaying=false;simLast=null;
+  document.getElementById('btnPP').textContent='▶ 재생';
+  drawSim();updateSimUI();
+}
 function simAddDays(n){
   // 일시정지 후 날짜 이동
   simPlaying=false;simLast=null;
@@ -996,25 +1060,57 @@ function simAddDays(n){
 // 달 렌더링 헬퍼 (지구 앞/뒤 공용)
 function _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle){
   // 연결선
-  ctx.strokeStyle='rgba(242,192,64,.05)';ctx.lineWidth=1;
+  ctx.strokeStyle='rgba(242,192,64,.08)';ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(earX,earY);ctx.lineTo(mx,my);ctx.stroke();
-  // 글로우
+
+  // 글로우 (슈퍼/준슈퍼)
   if(type==='super'||type==='quasi'){
-    const glowC=type==='super'?'rgba(242,192,64,.3)':'rgba(224,120,48,.24)';
-    const gr=ms*2.2;const mg2=ctx.createRadialGradient(mx,my,0,mx,my,gr);
+    const glowC=type==='super'?'rgba(242,192,64,.52)':'rgba(224,120,48,.40)';
+    const gr=ms*6;
+    const mg2=ctx.createRadialGradient(mx,my,0,mx,my,gr);
     mg2.addColorStop(0,glowC);mg2.addColorStop(1,'transparent');
     ctx.beginPath();ctx.arc(mx,my,gr,0,Math.PI*2);ctx.fillStyle=mg2;ctx.fill();
   }
-  // 본체
-  drawPhase(ctx,mx,my,ms,ph,type);
-  // 레이블
-  const lx=mx+Math.cos(moonAngle)*(ms+8);
-  const ly=my+Math.sin(moonAngle)*(ms+8);
-  ctx.font='9px JetBrains Mono,monospace';
-  ctx.textAlign=Math.cos(moonAngle)>=0?'left':'right';
-  ctx.textBaseline='middle';
-  ctx.fillStyle='rgba(240,236,224,.45)';ctx.fillText('달',lx,ly);
-  ctx.textBaseline='alphabetic';
+
+  // 위상 이모지 — 태양 방향 기반으로 정확한 이모지 선택
+  const earthToSunAngle = moonAngle - ph * Math.PI * 2;
+  const sunRelX = Math.cos(earthToSunAngle);
+  const p = ph;
+  let icon;
+  if(p < 0.03 || p > 0.97) icon = '🌑';
+  else if(p >= 0.47 && p <= 0.53) icon = '🌕';
+  else {
+    const sunRight = sunRelX > 0;
+    if(p < 0.5){
+      icon = sunRight
+        ? (p<0.22?'🌒':p<0.28?'🌓':'🌔')
+        : (p<0.22?'🌘':p<0.28?'🌗':'🌖');
+    } else {
+      icon = sunRight
+        ? (p<0.72?'🌖':p<0.78?'🌗':'🌘')
+        : (p<0.72?'🌔':p<0.78?'🌓':'🌒');
+    }
+  }
+
+  const fontSize = ms * 2.8;
+  const sunY_component = Math.sin(earthToSunAngle);
+  const tilt = Math.abs(sunRelX) < 0.42
+    ? (sunY_component > 0 ? Math.PI/2 : -Math.PI/2)
+    : 0;
+
+  ctx.save();
+  ctx.translate(mx, my);
+  ctx.rotate(tilt);
+  ctx.shadowColor = 'rgba(255,250,220,0.98)';
+  ctx.shadowBlur = ms * 2.2;
+  ctx.globalAlpha = 1.0;
+  ctx.font = fontSize + 'px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(icon, 0, 0);
+  ctx.shadowBlur = ms * 0.9;
+  ctx.fillText(icon, 0, 0);
+  ctx.restore();
 }
 
 function drawSim(){
@@ -1096,7 +1192,7 @@ function drawSim(){
   const mr=moonOA*(0.82+0.18*(1-normD));
   const mx=earX+Math.cos(moonAngle)*mr;
   const my=earY+Math.sin(moonAngle)*(moonOB/moonOA)*mr;
-  const ms=type==='super'?10:type==='quasi'?8:7;
+  const ms=type==='super'?9:type==='quasi'?8:6;
 
   // 달이 태양쪽(신월방향)이면 지구 앞, 반대쪽(보름방향)이면 지구 뒤
   const moonInFront=ph<0.5;
@@ -1104,37 +1200,16 @@ function drawSim(){
   // ── 지구 뒤 달 먼저 ──
   if(!moonInFront) _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle);
 
-  // ── 지구 ──
-  const earR=22;
+  // ── 지구: 이모지로 표시 ──
+  const earR=14;
   ctx.save();
-  ctx.beginPath();ctx.arc(earX,earY,earR,0,Math.PI*2);ctx.clip();
-  const eg=ctx.createRadialGradient(earX-earR*.3,earY-earR*.3,earR*.05,earX,earY,earR);
-  eg.addColorStop(0,'#6ac8ff');eg.addColorStop(.35,'#1a78e8');eg.addColorStop(1,'#082860');
-  ctx.fillStyle=eg;ctx.fillRect(earX-earR,earY-earR,earR*2,earR*2);
-  ctx.fillStyle='rgba(55,140,55,.9)';
-  ctx.beginPath();ctx.ellipse(earX+earR*.2,earY-earR*.2,earR*.36,earR*.26,0.3,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='rgba(60,148,60,.85)';
-  ctx.beginPath();ctx.ellipse(earX-earR*.38,earY-earR*.08,earR*.16,earR*.32,-0.2,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='rgba(65,150,55,.85)';
-  ctx.beginPath();ctx.ellipse(earX+earR*.08,earY+earR*.22,earR*.16,earR*.22,0.05,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='rgba(240,248,255,.65)';
-  ctx.beginPath();ctx.ellipse(earX,earY+earR*.72,earR*.38,earR*.18,0,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-  const atmG=ctx.createRadialGradient(earX,earY,earR-1,earX,earY,earR+5);
-  atmG.addColorStop(0,'rgba(100,200,255,.38)');atmG.addColorStop(1,'transparent');
-  ctx.beginPath();ctx.arc(earX,earY,earR+5,0,Math.PI*2);ctx.fillStyle=atmG;ctx.fill();
-  ctx.beginPath();ctx.arc(earX,earY,earR,0,Math.PI*2);
-  ctx.strokeStyle='rgba(140,210,255,.5)';ctx.lineWidth=1.2;ctx.stroke();
-
-  // ── 레이블 ──
-  const earthLabelAngle=moonAngle+Math.PI;
-  const elx=earX+Math.cos(earthLabelAngle)*(earR+12);
-  const ely=earY+Math.sin(earthLabelAngle)*(earR+12);
-  ctx.font='11px JetBrains Mono,monospace';
-  ctx.textAlign=Math.cos(earthLabelAngle)>=0?'left':'right';
+  ctx.font='28px serif';
+  ctx.textAlign='center';
   ctx.textBaseline='middle';
-  ctx.fillStyle='rgba(140,210,255,.6)';ctx.fillText('🌍',elx,ely);
-  ctx.textBaseline='alphabetic';
+  ctx.shadowColor='rgba(100,200,255,.6)';
+  ctx.shadowBlur=12;
+  ctx.fillText('🌍',earX,earY);
+  ctx.restore();
 
   // ── 지구 앞 달 (신월쪽) ──
   if(moonInFront) _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle);
@@ -1156,15 +1231,48 @@ function updateSimUI(){
   document.getElementById('simDateDow').textContent=`${DOW[simDt.getDay()]}요일`;
   // 다음 슈퍼문 D-day
   const ns=nextSM(simDt);
-  const dd=Math.ceil((ns-simDt)/86400000);
-  document.getElementById('simDday').textContent=dd<=0?'오늘!':'D-'+dd;
+  let nq=nextQSM(simDt);
+  // 준슈퍼문이 슈퍼문과 같은 날이거나 ±1일 이내면 제외
+  if(nq && ns && Math.abs(nq.getTime()-ns.getTime()) <= 1*86400000) nq=null;
+
+  let ddLabel='다음 슈퍼문', ddTarget=ns;
+  if(!ns && nq){ ddLabel='다음 준슈퍼문'; ddTarget=nq; }
+  else if(ns && nq && nq.getTime()<ns.getTime()){ ddLabel='다음 준슈퍼문'; ddTarget=nq; }
+
+  const lblEl=document.getElementById('simDdayLabel');
+  const ddEl=document.getElementById('simDday');
+  if(lblEl) lblEl.textContent=ddLabel;
+  if(ddEl){
+    if(ddTarget){
+      const dd=Math.ceil((ddTarget-simDt)/86400000);
+      ddEl.textContent=dd<=0?'오늘!':'D-'+dd;
+    } else {
+      ddEl.textContent='—';
+    }
+  }
+
+  // 기준일 대비 오프셋
+  const diffDays=Math.round((simDt-userToday)/86400000);
+  const offsetEl=document.getElementById('simOffset');
+  const offsetLbl=document.getElementById('simOffsetLabel');
+  if(offsetEl){
+    offsetEl.textContent=diffDays===0?'오늘':(diffDays>0?'+'+diffDays+'일':diffDays+'일');
+    offsetEl.style.color=diffDays===0?'rgba(242,192,64,.9)':diffDays>0?'rgba(140,200,255,.85)':'rgba(180,180,180,.7)';
+  }
+  if(offsetLbl) offsetLbl.textContent=diffDays===0?'기준일':'기준일로부터';
+
   // chips
-  document.getElementById('scDist').textContent=(dist/1000).toFixed(0)+'천km';
-  document.getElementById('scProx').textContent=(pr2*100).toFixed(1)+'%';
-  document.getElementById('scPhase').textContent=(ph*100).toFixed(0)+'%';
+  const distEl=document.getElementById('scDist');
+  const proxEl=document.getElementById('scProx');
+  const phaseEl=document.getElementById('scPhase');
   const sc=document.getElementById('scType');
-  sc.textContent=type==='super'?'🌕슈퍼':type==='quasi'?'🌔준슈퍼':phaseName(ph);
-  sc.style.color=type==='super'?'var(--gold)':type==='quasi'?'var(--orange)':'inherit';
+  if(distEl) distEl.textContent=(dist/1000).toFixed(0)+'천km';
+  if(proxEl) proxEl.textContent=(pr2*100).toFixed(1)+'%';
+  if(phaseEl) phaseEl.textContent=(ph*100).toFixed(0)+'%';
+  if(sc){
+    sc.textContent=type==='super'?'🌕슈퍼':type==='quasi'?'🌔준슈퍼':phaseName(ph);
+    sc.style.color=type==='super'?'var(--gold)':type==='quasi'?'var(--orange)':'inherit';
+  }
 }
 
 // ========================================
@@ -1440,12 +1548,13 @@ const NASA_DATA=[
   {date:'2028-03-11',dist:358074,rdist:0.990,type:'super',src:'NASA예측'},
   {date:'2028-04-09',dist:363867,rdist:0.943,type:'quasi',src:'NASA예측'},
 
-  // ── 2029 예측 ──
-  {date:'2029-01-30',dist:367046,rdist:0.911,type:'super',src:'NASA예측'},
-  {date:'2029-02-28',dist:359659,rdist:0.978,type:'quasi',src:'NASA예측'},
-  {date:'2029-03-30',dist:356683,rdist:1.000,type:'super',src:'NASA예측'},
-  {date:'2029-04-28',dist:358383,rdist:0.989,type:'super',src:'NASA예측'},
-  {date:'2029-05-27',dist:364262,rdist:0.938,type:'quasi',src:'NASA예측'},
+  // ── 2029 (Espenak 검증) ──
+  {date:'2029-01-10',dist:362127,rdist:0.959,type:'quasi',src:'Espenak'},
+  {date:'2029-02-09',dist:359347,rdist:0.982,type:'super',src:'Espenak'},
+  {date:'2029-03-10',dist:358074,rdist:0.990,type:'super',src:'Espenak'},
+  {date:'2029-03-30',dist:356683,rdist:1.000,type:'super',src:'Espenak'},
+  {date:'2029-04-28',dist:358500,rdist:0.988,type:'super',src:'Espenak'},
+  {date:'2029-05-27',dist:364262,rdist:0.938,type:'quasi',src:'Espenak'},
 
   // ── 2030 예측 ──
   {date:'2030-03-19',dist:366439,rdist:0.917,type:'super',src:'NASA예측'},
