@@ -1,0 +1,929 @@
+[
+  {
+    "date": "2001-01-09",
+    "dist": 357406,
+    "rdist": 0.994,
+    "type": "super",
+    "src": "NASA",
+    "eclipse": "t"
+  },
+  {
+    "date": "2001-02-08",
+    "dist": 356994,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2001-03-09",
+    "dist": 361389,
+    "rdist": 0.965,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2002-01-28",
+    "dist": 361766,
+    "rdist": 0.961,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2002-02-27",
+    "dist": 357091,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2002-03-28",
+    "dist": 357212,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2002-04-27",
+    "dist": 361870,
+    "rdist": 0.961,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2003-03-18",
+    "dist": 361416,
+    "rdist": 0.965,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2003-04-16",
+    "dist": 357306,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2003-05-16",
+    "dist": 357693,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "NASA",
+    "eclipse": "t"
+  },
+  {
+    "date": "2003-06-14",
+    "dist": 362315,
+    "rdist": 0.958,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2004-05-04",
+    "dist": 361359,
+    "rdist": 0.966,
+    "type": "quasi",
+    "src": "NASA",
+    "eclipse": "t"
+  },
+  {
+    "date": "2004-06-03",
+    "dist": 357384,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2004-07-02",
+    "dist": 357699,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2004-07-31",
+    "dist": 362193,
+    "rdist": 0.958,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2005-06-22",
+    "dist": 361179,
+    "rdist": 0.967,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2005-07-21",
+    "dist": 357291,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2005-08-19",
+    "dist": 357652,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2005-09-18",
+    "dist": 362325,
+    "rdist": 0.957,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2006-08-09",
+    "dist": 361257,
+    "rdist": 0.967,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2006-09-07",
+    "dist": 357298,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA",
+    "eclipse": "p"
+  },
+  {
+    "date": "2006-10-07",
+    "dist": 357695,
+    "rdist": 0.994,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2006-11-05",
+    "dist": 362616,
+    "rdist": 0.955,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2007-09-26",
+    "dist": 360827,
+    "rdist": 0.97,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2007-10-26",
+    "dist": 356841,
+    "rdist": 0.998,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2007-11-24",
+    "dist": 357548,
+    "rdist": 0.993,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2007-12-24",
+    "dist": 363032,
+    "rdist": 0.95,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2008-10-14",
+    "dist": 367908,
+    "rdist": 0.9,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2008-11-13",
+    "dist": 360196,
+    "rdist": 0.974,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2008-12-12",
+    "dist": 356615,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2009-01-11",
+    "dist": 357969,
+    "rdist": 0.99,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2009-02-09",
+    "dist": 364050,
+    "rdist": 0.941,
+    "type": "quasi",
+    "src": "NASA",
+    "eclipse": "n"
+  },
+  {
+    "date": "2009-12-02",
+    "dist": 367240,
+    "rdist": 0.909,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2009-12-31",
+    "dist": 359721,
+    "rdist": 0.978,
+    "type": "quasi",
+    "src": "NASA",
+    "eclipse": "p"
+  },
+  {
+    "date": "2010-01-30",
+    "dist": 356607,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA",
+    "note": "연간 최근접"
+  },
+  {
+    "date": "2010-02-28",
+    "dist": 358436,
+    "rdist": 0.987,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2010-03-30",
+    "dist": 364689,
+    "rdist": 0.935,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2011-01-19",
+    "dist": 366158,
+    "rdist": 0.92,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2011-02-18",
+    "dist": 359103,
+    "rdist": 0.982,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2011-03-19",
+    "dist": 356580,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA",
+    "note": "역대 최근접"
+  },
+  {
+    "date": "2011-04-18",
+    "dist": 358798,
+    "rdist": 0.985,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2011-05-17",
+    "dist": 365164,
+    "rdist": 0.929,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2012-03-08",
+    "dist": 365497,
+    "rdist": 0.927,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2012-04-06",
+    "dist": 359076,
+    "rdist": 0.984,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2012-05-06",
+    "dist": 356954,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2012-06-04",
+    "dist": 359257,
+    "rdist": 0.984,
+    "type": "super",
+    "src": "NASA",
+    "eclipse": "p"
+  },
+  {
+    "date": "2012-07-03",
+    "dist": 365483,
+    "rdist": 0.926,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2013-04-25",
+    "dist": 365312,
+    "rdist": 0.929,
+    "type": "quasi",
+    "src": "NASA",
+    "eclipse": "p"
+  },
+  {
+    "date": "2013-05-25",
+    "dist": 359110,
+    "rdist": 0.985,
+    "type": "super",
+    "src": "NASA",
+    "eclipse": "n"
+  },
+  {
+    "date": "2013-06-23",
+    "dist": 356991,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2013-07-22",
+    "dist": 359170,
+    "rdist": 0.984,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2013-08-21",
+    "dist": 365340,
+    "rdist": 0.928,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2014-06-13",
+    "dist": 365038,
+    "rdist": 0.931,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2014-07-12",
+    "dist": 358975,
+    "rdist": 0.985,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2014-08-10",
+    "dist": 356898,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2014-09-09",
+    "dist": 359182,
+    "rdist": 0.983,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2014-10-08",
+    "dist": 365659,
+    "rdist": 0.925,
+    "type": "quasi",
+    "src": "NASA",
+    "eclipse": "t"
+  },
+  {
+    "date": "2015-07-31",
+    "dist": 365112,
+    "rdist": 0.93,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2015-08-29",
+    "dist": 358993,
+    "rdist": 0.985,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2015-09-28",
+    "dist": 356878,
+    "rdist": 1.0,
+    "type": "blood",
+    "src": "NASA",
+    "eclipse": "t",
+    "note": "슈퍼 블러드문"
+  },
+  {
+    "date": "2015-10-27",
+    "dist": 359324,
+    "rdist": 0.982,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2015-11-25",
+    "dist": 366149,
+    "rdist": 0.921,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2016-09-16",
+    "dist": 364754,
+    "rdist": 0.934,
+    "type": "penumbral",
+    "src": "NASA",
+    "eclipse": "n",
+    "note": "슈퍼 반영월식"
+  },
+  {
+    "date": "2016-10-16",
+    "dist": 358475,
+    "rdist": 0.987,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2016-11-14",
+    "dist": 356523,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA",
+    "note": "68년 만의 최근접"
+  },
+  {
+    "date": "2016-12-14",
+    "dist": 359450,
+    "rdist": 0.979,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2017-01-12",
+    "dist": 366880,
+    "rdist": 0.913,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2017-11-04",
+    "dist": 364004,
+    "rdist": 0.941,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2017-12-03",
+    "dist": 357987,
+    "rdist": 0.99,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2018-01-02",
+    "dist": 356604,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2018-01-31",
+    "dist": 360199,
+    "rdist": 0.974,
+    "type": "blood",
+    "src": "NASA",
+    "eclipse": "t",
+    "note": "슈퍼 블러드 블루문"
+  },
+  {
+    "date": "2018-12-22",
+    "dist": 363368,
+    "rdist": 0.948,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2019-01-21",
+    "dist": 357715,
+    "rdist": 0.992,
+    "type": "blood",
+    "src": "NASA",
+    "eclipse": "t",
+    "note": "슈퍼 블러드문"
+  },
+  {
+    "date": "2019-02-19",
+    "dist": 356846,
+    "rdist": 0.998,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2019-03-21",
+    "dist": 360772,
+    "rdist": 0.97,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2020-02-09",
+    "dist": 362479,
+    "rdist": 0.955,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2020-03-09",
+    "dist": 357404,
+    "rdist": 0.994,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2020-04-08",
+    "dist": 357035,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2020-05-07",
+    "dist": 361184,
+    "rdist": 0.967,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2021-03-28",
+    "dist": 362170,
+    "rdist": 0.959,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2021-04-27",
+    "dist": 357615,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2021-05-26",
+    "dist": 357462,
+    "rdist": 0.997,
+    "type": "blood",
+    "src": "NASA",
+    "eclipse": "t",
+    "note": "슈퍼 블러드문"
+  },
+  {
+    "date": "2021-06-24",
+    "dist": 361558,
+    "rdist": 0.965,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2022-05-16",
+    "dist": 362127,
+    "rdist": 0.959,
+    "type": "quasi",
+    "src": "NASA",
+    "eclipse": "t"
+  },
+  {
+    "date": "2022-06-14",
+    "dist": 357658,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2022-07-13",
+    "dist": 357418,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2022-08-12",
+    "dist": 361409,
+    "rdist": 0.965,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2023-07-03",
+    "dist": 361934,
+    "rdist": 0.961,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2023-08-01",
+    "dist": 357530,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2023-08-31",
+    "dist": 357344,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA",
+    "note": "블루문"
+  },
+  {
+    "date": "2023-09-29",
+    "dist": 361552,
+    "rdist": 0.964,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2024-08-19",
+    "dist": 361970,
+    "rdist": 0.961,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2024-09-18",
+    "dist": 357486,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "NASA",
+    "eclipse": "p"
+  },
+  {
+    "date": "2024-10-17",
+    "dist": 357364,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2024-11-15",
+    "dist": 361867,
+    "rdist": 0.961,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2025-10-07",
+    "dist": 361458,
+    "rdist": 0.964,
+    "type": "quasi",
+    "src": "NASA"
+  },
+  {
+    "date": "2025-11-05",
+    "dist": 356980,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2025-12-04",
+    "dist": 357219,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "NASA"
+  },
+  {
+    "date": "2026-01-03",
+    "dist": 362312,
+    "rdist": 0.956,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2026-11-24",
+    "dist": 360768,
+    "rdist": 0.969,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2026-12-24",
+    "dist": 356740,
+    "rdist": 0.998,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2027-01-22",
+    "dist": 357285,
+    "rdist": 0.975,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2027-02-20",
+    "dist": 363306,
+    "rdist": 0.948,
+    "type": "penumbral",
+    "src": "NASA예측",
+    "eclipse": "n",
+    "note": "슈퍼 반영월식"
+  },
+  {
+    "date": "2027-07-18",
+    "dist": 368100,
+    "rdist": 0.898,
+    "type": "quasi",
+    "src": "NASA예측",
+    "eclipse": "n",
+    "note": "반영월식"
+  },
+  {
+    "date": "2027-08-17",
+    "dist": 364200,
+    "rdist": 0.94,
+    "type": "quasi",
+    "src": "NASA예측",
+    "eclipse": "n",
+    "note": "반영월식"
+  },
+  {
+    "date": "2028-01-12",
+    "dist": 360266,
+    "rdist": 0.974,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2028-02-10",
+    "dist": 356720,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2028-03-11",
+    "dist": 358074,
+    "rdist": 0.99,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2028-04-09",
+    "dist": 363867,
+    "rdist": 0.943,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2029-01-10",
+    "dist": 362127,
+    "rdist": 0.959,
+    "type": "quasi",
+    "src": "Espenak"
+  },
+  {
+    "date": "2029-02-09",
+    "dist": 359347,
+    "rdist": 0.982,
+    "type": "super",
+    "src": "Espenak"
+  },
+  {
+    "date": "2029-03-10",
+    "dist": 358074,
+    "rdist": 0.99,
+    "type": "super",
+    "src": "Espenak"
+  },
+  {
+    "date": "2029-03-30",
+    "dist": 356683,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "Espenak"
+  },
+  {
+    "date": "2029-04-28",
+    "dist": 358500,
+    "rdist": 0.988,
+    "type": "super",
+    "src": "Espenak"
+  },
+  {
+    "date": "2029-05-27",
+    "dist": 364262,
+    "rdist": 0.938,
+    "type": "quasi",
+    "src": "Espenak"
+  },
+  {
+    "date": "2030-03-19",
+    "dist": 366439,
+    "rdist": 0.917,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2030-04-18",
+    "dist": 359654,
+    "rdist": 0.98,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2030-05-17",
+    "dist": 357028,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2030-06-15",
+    "dist": 358779,
+    "rdist": 0.987,
+    "type": "super",
+    "src": "NASA예측",
+    "eclipse": "p"
+  },
+  {
+    "date": "2030-07-15",
+    "dist": 364530,
+    "rdist": 0.936,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2031-05-07",
+    "dist": 366293,
+    "rdist": 0.918,
+    "type": "super",
+    "src": "NASA예측",
+    "eclipse": "n"
+  },
+  {
+    "date": "2031-06-05",
+    "dist": 359674,
+    "rdist": 0.98,
+    "type": "super",
+    "src": "NASA예측",
+    "eclipse": "n"
+  },
+  {
+    "date": "2031-07-04",
+    "dist": 357018,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2031-08-03",
+    "dist": 358651,
+    "rdist": 0.988,
+    "type": "super",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2031-09-01",
+    "dist": 364383,
+    "rdist": 0.938,
+    "type": "quasi",
+    "src": "NASA예측"
+  },
+  {
+    "date": "2033-10-08",
+    "dist": 357490,
+    "rdist": 0.996,
+    "type": "blood",
+    "src": "NASA예측",
+    "eclipse": "t",
+    "note": "슈퍼 블러드문 (2021 이후 최초)"
+  },
+  {
+    "date": "2037-03-02",
+    "dist": 356751,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "NASA예측",
+    "note": "2037 최근접"
+  }
+]
