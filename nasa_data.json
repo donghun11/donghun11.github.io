@@ -910,6 +910,62 @@
     "src": "NASA예측"
   },
   {
+    "date": "2032-01-27",
+    "dist": 359819,
+    "rdist": 0.924,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2032-02-25",
+    "dist": 356651,
+    "rdist": 0.987,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2032-03-26",
+    "dist": 357363,
+    "rdist": 0.973,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2032-04-24",
+    "dist": 361298,
+    "rdist": 0.895,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2033-02-16",
+    "dist": 359131,
+    "rdist": 0.938,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2033-03-15",
+    "dist": 360843,
+    "rdist": 0.904,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2033-04-14",
+    "dist": 356066,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2033-05-13",
+    "dist": 356832,
+    "rdist": 0.984,
+    "type": "super",
+    "src": "계산"
+  },
+  {
     "date": "2033-10-08",
     "dist": 357490,
     "rdist": 0.996,
@@ -919,11 +975,1089 @@
     "note": "슈퍼 블러드문 (2021 이후 최초)"
   },
   {
+    "date": "2034-04-05",
+    "dist": 360072,
+    "rdist": 0.919,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2034-05-03",
+    "dist": 358787,
+    "rdist": 0.945,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2034-06-01",
+    "dist": 356264,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2034-07-01",
+    "dist": 358123,
+    "rdist": 0.958,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2035-05-23",
+    "dist": 361125,
+    "rdist": 0.899,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2035-06-20",
+    "dist": 359682,
+    "rdist": 0.927,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2035-07-19",
+    "dist": 356594,
+    "rdist": 0.988,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2035-08-18",
+    "dist": 357449,
+    "rdist": 0.971,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2036-07-10",
+    "dist": 359006,
+    "rdist": 0.94,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2036-08-06",
+    "dist": 360691,
+    "rdist": 0.907,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2036-09-05",
+    "dist": 356048,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2036-10-04",
+    "dist": 356900,
+    "rdist": 0.982,
+    "type": "super",
+    "src": "계산"
+  },
+  {
     "date": "2037-03-02",
     "dist": 356751,
     "rdist": 0.999,
     "type": "super",
     "src": "NASA예측",
     "note": "2037 최근접"
+  },
+  {
+    "date": "2037-08-27",
+    "dist": 359931,
+    "rdist": 0.922,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2037-09-24",
+    "dist": 358669,
+    "rdist": 0.947,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2037-10-23",
+    "dist": 356228,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2037-11-22",
+    "dist": 358228,
+    "rdist": 0.956,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2038-10-14",
+    "dist": 360969,
+    "rdist": 0.902,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2038-11-11",
+    "dist": 359548,
+    "rdist": 0.93,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2038-12-11",
+    "dist": 356006,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2039-01-09",
+    "dist": 357537,
+    "rdist": 0.97,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2039-12-02",
+    "dist": 358884,
+    "rdist": 0.943,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2039-12-30",
+    "dist": 357811,
+    "rdist": 0.964,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2040-01-28",
+    "dist": 356033,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2040-02-27",
+    "dist": 359166,
+    "rdist": 0.937,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2041-01-18",
+    "dist": 359793,
+    "rdist": 0.925,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2041-02-15",
+    "dist": 358554,
+    "rdist": 0.949,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2041-03-17",
+    "dist": 356136,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2041-04-15",
+    "dist": 358337,
+    "rdist": 0.954,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2042-03-07",
+    "dist": 360814,
+    "rdist": 0.905,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2042-04-05",
+    "dist": 357114,
+    "rdist": 0.978,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2042-05-04",
+    "dist": 356012,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2042-06-03",
+    "dist": 360255,
+    "rdist": 0.916,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2043-04-24",
+    "dist": 361943,
+    "rdist": 0.882,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2043-05-23",
+    "dist": 357716,
+    "rdist": 0.966,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2043-06-21",
+    "dist": 356021,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2043-07-21",
+    "dist": 359294,
+    "rdist": 0.935,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2044-06-11",
+    "dist": 359657,
+    "rdist": 0.928,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2044-07-09",
+    "dist": 358441,
+    "rdist": 0.952,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2044-08-08",
+    "dist": 356165,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2044-09-06",
+    "dist": 358447,
+    "rdist": 0.952,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2045-07-29",
+    "dist": 360662,
+    "rdist": 0.908,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2045-08-27",
+    "dist": 357039,
+    "rdist": 0.979,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2045-09-25",
+    "dist": 356022,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2045-10-25",
+    "dist": 360401,
+    "rdist": 0.913,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2046-09-15",
+    "dist": 361777,
+    "rdist": 0.886,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2046-10-14",
+    "dist": 357622,
+    "rdist": 0.968,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2046-11-13",
+    "dist": 356489,
+    "rdist": 0.99,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2046-12-12",
+    "dist": 359423,
+    "rdist": 0.932,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2047-10-06",
+    "dist": 360939,
+    "rdist": 0.902,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2047-11-03",
+    "dist": 359523,
+    "rdist": 0.93,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2047-12-02",
+    "dist": 356529,
+    "rdist": 0.99,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2047-12-31",
+    "dist": 356196,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2048-01-30",
+    "dist": 361652,
+    "rdist": 0.888,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2048-12-20",
+    "dist": 360513,
+    "rdist": 0.911,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2049-01-18",
+    "dist": 356966,
+    "rdist": 0.981,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2049-02-17",
+    "dist": 356984,
+    "rdist": 0.981,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2049-03-18",
+    "dist": 360549,
+    "rdist": 0.91,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2050-02-06",
+    "dist": 361612,
+    "rdist": 0.889,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2050-03-08",
+    "dist": 356188,
+    "rdist": 0.996,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2050-04-06",
+    "dist": 356542,
+    "rdist": 0.989,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2051-02-27",
+    "dist": 360785,
+    "rdist": 0.905,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2051-03-27",
+    "dist": 359391,
+    "rdist": 0.933,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2051-04-25",
+    "dist": 356477,
+    "rdist": 0.991,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2051-05-24",
+    "dist": 356230,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2051-06-23",
+    "dist": 361818,
+    "rdist": 0.885,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2052-04-15",
+    "dist": 361912,
+    "rdist": 0.883,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2052-05-13",
+    "dist": 360365,
+    "rdist": 0.914,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2052-06-11",
+    "dist": 356896,
+    "rdist": 0.982,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2052-07-11",
+    "dist": 357057,
+    "rdist": 0.979,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2052-08-09",
+    "dist": 360700,
+    "rdist": 0.907,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2053-06-03",
+    "dist": 359631,
+    "rdist": 0.928,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2053-06-30",
+    "dist": 361449,
+    "rdist": 0.892,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2053-07-30",
+    "dist": 356158,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2053-08-28",
+    "dist": 356597,
+    "rdist": 0.988,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2054-07-21",
+    "dist": 360634,
+    "rdist": 0.908,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2054-08-18",
+    "dist": 359262,
+    "rdist": 0.935,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2054-09-16",
+    "dist": 356428,
+    "rdist": 0.992,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2054-10-16",
+    "dist": 357739,
+    "rdist": 0.966,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2054-11-14",
+    "dist": 361985,
+    "rdist": 0.881,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2055-09-07",
+    "dist": 361745,
+    "rdist": 0.886,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2055-10-05",
+    "dist": 360220,
+    "rdist": 0.916,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2055-11-04",
+    "dist": 356011,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2055-12-03",
+    "dist": 357133,
+    "rdist": 0.978,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2056-10-25",
+    "dist": 359498,
+    "rdist": 0.931,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2056-11-22",
+    "dist": 358310,
+    "rdist": 0.954,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2056-12-21",
+    "dist": 356130,
+    "rdist": 0.997,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2057-01-20",
+    "dist": 358582,
+    "rdist": 0.949,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2057-12-12",
+    "dist": 360485,
+    "rdist": 0.911,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2058-01-09",
+    "dist": 359135,
+    "rdist": 0.938,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2058-02-08",
+    "dist": 356037,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2058-03-09",
+    "dist": 357835,
+    "rdist": 0.964,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2059-01-29",
+    "dist": 361581,
+    "rdist": 0.889,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2059-02-26",
+    "dist": 360077,
+    "rdist": 0.919,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2059-03-28",
+    "dist": 356004,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2059-04-26",
+    "dist": 357212,
+    "rdist": 0.976,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2060-03-18",
+    "dist": 359367,
+    "rdist": 0.933,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2060-04-15",
+    "dist": 358202,
+    "rdist": 0.956,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2060-05-14",
+    "dist": 356105,
+    "rdist": 0.998,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2060-06-13",
+    "dist": 358698,
+    "rdist": 0.947,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2061-05-05",
+    "dist": 360337,
+    "rdist": 0.914,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2061-06-02",
+    "dist": 359010,
+    "rdist": 0.94,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2061-07-02",
+    "dist": 356052,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2061-07-31",
+    "dist": 357934,
+    "rdist": 0.962,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2062-06-22",
+    "dist": 361418,
+    "rdist": 0.893,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2062-07-21",
+    "dist": 357427,
+    "rdist": 0.972,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2062-08-19",
+    "dist": 356001,
+    "rdist": 1.0,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2062-09-18",
+    "dist": 359716,
+    "rdist": 0.926,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2063-08-10",
+    "dist": 359238,
+    "rdist": 0.936,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2063-09-07",
+    "dist": 358097,
+    "rdist": 0.958,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2063-10-07",
+    "dist": 356273,
+    "rdist": 0.995,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2063-11-05",
+    "dist": 358816,
+    "rdist": 0.944,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2064-09-26",
+    "dist": 360193,
+    "rdist": 0.917,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2064-10-25",
+    "dist": 356816,
+    "rdist": 0.984,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2064-11-23",
+    "dist": 356070,
+    "rdist": 0.999,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2064-12-23",
+    "dist": 360881,
+    "rdist": 0.903,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2065-11-13",
+    "dist": 361258,
+    "rdist": 0.896,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2065-12-12",
+    "dist": 357342,
+    "rdist": 0.973,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2066-01-11",
+    "dist": 356666,
+    "rdist": 0.987,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2066-02-09",
+    "dist": 359853,
+    "rdist": 0.924,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2067-01-01",
+    "dist": 359111,
+    "rdist": 0.938,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2067-01-29",
+    "dist": 357994,
+    "rdist": 0.961,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2067-02-28",
+    "dist": 356313,
+    "rdist": 0.994,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2067-03-29",
+    "dist": 358937,
+    "rdist": 0.942,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2068-01-21",
+    "dist": 361550,
+    "rdist": 0.89,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2068-02-18",
+    "dist": 360050,
+    "rdist": 0.92,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2068-03-18",
+    "dist": 356752,
+    "rdist": 0.985,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2068-04-16",
+    "dist": 356091,
+    "rdist": 0.998,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2068-05-16",
+    "dist": 361036,
+    "rdist": 0.9,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2069-04-06",
+    "dist": 361100,
+    "rdist": 0.899,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2069-05-05",
+    "dist": 357260,
+    "rdist": 0.975,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2069-06-04",
+    "dist": 356726,
+    "rdist": 0.986,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2069-07-03",
+    "dist": 359992,
+    "rdist": 0.921,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2070-04-27",
+    "dist": 360310,
+    "rdist": 0.915,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2070-05-25",
+    "dist": 358987,
+    "rdist": 0.941,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2070-06-23",
+    "dist": 356330,
+    "rdist": 0.993,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2070-07-22",
+    "dist": 356355,
+    "rdist": 0.993,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2071-06-14",
+    "dist": 361388,
+    "rdist": 0.893,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2071-07-12",
+    "dist": 359909,
+    "rdist": 0.923,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2071-08-10",
+    "dist": 356690,
+    "rdist": 0.986,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2071-09-09",
+    "dist": 357308,
+    "rdist": 0.974,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2071-10-08",
+    "dist": 361194,
+    "rdist": 0.897,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2072-08-28",
+    "dist": 360944,
+    "rdist": 0.902,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2072-09-27",
+    "dist": 356078,
+    "rdist": 0.998,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2072-10-26",
+    "dist": 356790,
+    "rdist": 0.984,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2073-09-18",
+    "dist": 360165,
+    "rdist": 0.918,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2073-10-16",
+    "dist": 358865,
+    "rdist": 0.943,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2073-11-14",
+    "dist": 356289,
+    "rdist": 0.994,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2073-12-14",
+    "dist": 358055,
+    "rdist": 0.959,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2074-11-05",
+    "dist": 361228,
+    "rdist": 0.896,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2074-12-03",
+    "dist": 359771,
+    "rdist": 0.925,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2075-01-01",
+    "dist": 356631,
+    "rdist": 0.988,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2075-01-31",
+    "dist": 357392,
+    "rdist": 0.972,
+    "type": "super",
+    "src": "계산"
+  },
+  {
+    "date": "2075-03-01",
+    "dist": 361353,
+    "rdist": 0.894,
+    "type": "quasi",
+    "src": "계산"
+  },
+  {
+    "date": "2075-12-24",
+    "dist": 359088,
+    "rdist": 0.939,
+    "type": "super",
+    "src": "계산"
   }
 ]

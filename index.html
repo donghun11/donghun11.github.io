@@ -457,55 +457,80 @@ T(이상월) = 27.55454989일</div>
   <div class="step-card" data-s="2">
     <div class="step-title">3단계 · 슈퍼문 & 준슈퍼문 기준</div>
     <div class="step-body">근지점 근접도 = (원지점−현재거리) ÷ (원지점−근지점) × 100%<br><br>이 값이 <strong>90% 이상이면 슈퍼문</strong>, 뉴스 기준 <strong>86~90%는 준슈퍼문</strong>입니다. 완전한 근지점에서 14% 거리까지를 준슈퍼문으로 봅니다.</div>
-    <div class="fbox">슈퍼문:   근접도 ≥ 90%
-준슈퍼문: 86% ≤ 근접도 &lt; 90%
-           (완전 근지점에서 14% 거리 이내)
-준슈퍼문 주기 = 29.5 ÷ 0.14 ≈ 210일</div>
+    <div class="fbox">Espenak 공식 기준:
+  슈퍼문:   근접도 ≥ 90%  (≤ 361,050 km)
+  준슈퍼문: 86% ≤ 근접도 &lt; 90%  (361,050 ~ 363,070 km)
+
+이 앱 기준 (미디어 관행):
+  슈퍼문:   ≤ 360,000 km
+  준슈퍼문: 360,001 ~ 361,999 km
+
+슈퍼문/준슈퍼문 모두 동일 주기:
+  T = 1/(1/이상월 − 1/삭망월) = 411.78일 ≈ 13.5개월</div>
   </div>
   <div class="step-card" data-s="3">
     <div class="step-title">4단계 · 슈퍼문 주기 수식</div>
     <div class="step-body">두 주기(삭망월, 이상월)의 역수 차이로 슈퍼문 주기를 구합니다.</div>
-    <div class="fbox">1/T = 1/T(삭망월) − 1/T(이상월)
-    = 1/29.53 − 1/27.55
-    = 0.033870 − 0.036290
+    <div class="fbox">슈퍼문 = 보름달(삭망월) + 근지점(이상월) 동시 발생
+이 두 주기의 맥놀이 주기(Beat Period):
 
-T = 1 ÷ 0.002421 ≈ 411.8일
-              ≈ 약 412일 (13.7개월)</div>
+1/T = 1/T(이상월) − 1/T(삭망월)
+    = 1/27.55455 − 1/29.53059
+    = 0.036292 − 0.033863
+    = 0.002428
+
+T = 1 ÷ 0.002428 ≈ 411.78일 ≈ 13.5개월
+
+검증: 14삭망월 = 413.428일
+      15이상월 = 413.318일 ✅</div>
   </div>
   <div class="step-card" data-s="4">
     <div class="step-title">5단계 · NASA 데이터 검증</div>
     <div class="step-body">Fred Espenak (NASA 전 천체물리학자) 데이터와 비교합니다.</div>
-    <div class="fbox">이론값:    412일
-NASA 평균: 약 400일
-오차:      ±12일 (약 2~3%)
+    <div class="fbox">수식 이론값:  411.78일
+14삭망월:    413.428일  ← 실측 그룹 주기
+15이상월:    413.318일  ✅ 거의 일치
 
-✅ 수식이 실측 데이터와 잘 일치!
+실측 그룹 간격 (Espenak 데이터):
+  2022→2023: 384일
+  2023→2024: 383일
+  2024→2025: 384일
+  2025→2026: 395일  ← 평균 ≈ 392일
+  이론값(412일)과 차이: ±20일 이내
 
-연속 슈퍼문 주기: ≈ 413.5일 (T_SM과 거의 동일)
-  → 매년 3~4개월간 연속으로 슈퍼문 발생
-  → 그룹 간격: 413~414일 실측
-슈퍼 블러드문(사로스): ≈ 54년 주기</div>
+슈퍼 블러드문: 정확한 주기를 수식으로 구할 수 없음
+  → 사로스·슈퍼문 두 주기가 비정수 배수 관계
+  → 과거 실측 시점으로 대략적 위치만 추정 가능</div>
   </div>
   <div class="step-card" data-s="5">
     <div class="step-title">6단계 · 특수 슈퍼문 구하는 법</div>
-    <div class="step-body">슈퍼문과 월식이 동시에 발생하는 특수 이벤트는 두 주기의 최소공배수(LCM)로 계산합니다.</div>
+    <div class="step-body">슈퍼 반영월식·블루문 슈퍼문은 대략적 주기 추정이 가능하지만, <strong>슈퍼 블러드문(개기월식+슈퍼문)은 정확한 주기를 수식으로 구할 수 없습니다.</strong> 두 주기가 비정수 배수 관계이므로, 과거 실측 시점으로 대략적인 다음 시점만 알 수 있습니다.</div>
     <div class="fbox">슈퍼 블러드문 (개기월식+슈퍼문)
 ━━━━━━━━━━━━━━━━━━━━
-사로스 주기    = 6585.32일 (18년 11일)
-슈퍼문 주기    = 411.78일
-LCM ≈ 6585 × 9 = 59265일 ≈ 54년
+사로스 주기 = 6585.32일 = 18년 11일
+  검증: 223삭망월=6585.32일 ✅
+        242교점월=6585.36일 ✅
+슈퍼문 주기 = 411.78일
+
+⚠️ 정확한 주기를 수식으로 구할 수 없음
+두 주기가 비정수 배수 관계 → 고정 LCM 없음
+
+과거 실측으로 대략적 시점만 추정 가능:
+  1982-07 / 2015-09 / 2021-05 / 2033-10
+  (간격: 33년 → 6년 → 12년 → 불규칙)
+→ "대략 수십 년에 한 번" 수준으로만 예측
 
 슈퍼 반영월식 (반영월식+슈퍼문)
 ━━━━━━━━━━━━━━━━━━━━
-교점월         = 27.2122일
-보름달-교점 주기 ≈ 173.3일
-슈퍼문과 겹침  ≈ 5~6년 주기
+교점월(NOD)     = 27.21222일
+식 계절 주기    ≈ 173.3일 (반년)
+결합 주기       ≈ 5~6년 (불규칙)
 
 블루문 슈퍼문 (두 번째 보름달+슈퍼문)
 ━━━━━━━━━━━━━━━━━━━━
-블루문 주기    ≈ 32.9개월
-슈퍼문 주기    ≈ 13.5개월
-우연 겹침      ≈ 2~3년마다</div>
+블루문 주기  ≈ 32.9개월 (19년에 7회)
+슈퍼문 주기  ≈ 13.5개월
+우연 겹침    ≈ 2~3년마다</div>
   </div>
   <div class="step-nav">
     <button class="snav" id="sPrev" onclick="goStep(-1)" disabled>← 이전</button>
@@ -535,7 +560,15 @@ LCM ≈ 6585 × 9 = 59265일 ≈ 54년
 
   
   <div class="sched-top">
-    <div class="sched-hdr"><span class="sched-title">🗓 슈퍼문 일정</span></div>
+    <div class="sched-hdr">
+      <span class="sched-title">🗓 슈퍼문 일정</span>
+      <span style="font:400 10px/1 var(--mono);color:rgba(240,236,224,.35)">2001~2075</span>
+    </div>
+    <div style="display:flex;gap:6px;padding:6px 14px;flex-wrap:wrap">
+      <span style="font:400 9px/1 var(--mono);padding:2px 7px;border-radius:4px;background:rgba(58,123,224,.18);color:#60a0e0;border:1px solid rgba(58,123,224,.22)">NASA 실측 ≤2010</span>
+      <span style="font:400 9px/1 var(--mono);padding:2px 7px;border-radius:4px;background:rgba(58,123,224,.12);color:#80b8e8;border:1px solid rgba(96,160,255,.2)">Espenak 예측 2011~2031</span>
+      <span style="font:400 9px/1 var(--mono);padding:2px 7px;border-radius:4px;background:rgba(140,100,255,.12);color:#b090ff;border:1px solid rgba(140,100,255,.2)">모델 계산 2032~2075</span>
+    </div>
     <div class="sched-legend">
       <div class="sleg-title">분류 기준 — 근지점 근접도</div>
       <div class="prox-gauge">
@@ -553,7 +586,7 @@ LCM ≈ 6585 × 9 = 59265일 ≈ 54년
       <div class="leg-rows">
         <div class="leg-row"><span class="leg-icon">🌕</span><div class="leg-text"><div class="leg-name gold">슈퍼문 (≥90%)</div><div class="leg-desc">근지점 완전 근접. ≤365,950 km. 주기≈412일</div></div></div>
         <div class="leg-row"><span class="leg-icon">🌔</span><div class="leg-text"><div class="leg-name orange">준슈퍼문 (86~90%)</div><div class="leg-desc">360,001~361,999km. 주기≈13.5개월</div></div></div>
-        <div class="leg-row"><span class="leg-icon">🩸</span><div class="leg-text"><div class="leg-name red">슈퍼 블러드문</div><div class="leg-desc">개기월식+슈퍼문. 간격 불규칙(6~33년)</div></div></div>
+        <div class="leg-row"><span class="leg-icon">🩸</span><div class="leg-text"><div class="leg-name red">슈퍼 블러드문</div><div class="leg-desc">개기월식+슈퍼문. 정확한 주기 없음 — 실측 시점만 추정 가능</div></div></div>
         <div class="leg-row"><span class="leg-icon">🌕🌑</span><div class="leg-text"><div class="leg-name blue">슈퍼 반영월식</div><div class="leg-desc">반영월식+슈퍼문. ≈5~6년 주기</div></div></div>
       </div>
     </div>
@@ -1366,7 +1399,7 @@ function doCalc(){
     // 사로스로 개기월식은 예측 가능하나, 슈퍼문 여부는 별개
     T=SAROS;periodName='슈퍼 블러드문';
     nextDt=nextBloodMoon(todayDt);
-    formula=`개기월식 주기(사로스): 223삭망월 = ${SAROS.toFixed(0)}일 = 18년 11일\n슈퍼 블러드문 간격: 불규칙 (6~33년)\n실측: 1982→2015(33년), 2015→2021(6년), 2021→2033(12년)`;
+    formula=`⚠️ 슈퍼 블러드문은 정확한 주기를 수식으로 구할 수 없습니다\n\n개기월식(사로스): 223삭망월 = ${SAROS.toFixed(0)}일 = 18년 11일\n슈퍼문 주기: ${T_SM.toFixed(2)}일\n→ 두 주기가 비정수 배수 관계 → 고정 LCM 없음\n\n과거 실측 시점만 알 수 있음:\n1982-07 → 2015-09 → 2021-05 → 2033-10\n(간격: 33년, 6년, 12년 … 불규칙)`;
   } else {
     T=SYN*NOD/(SYN-NOD)*2;periodName='반영월식+슈퍼문 주기';
     nextDt=nextPenumbral(todayDt);
@@ -1436,32 +1469,30 @@ function buildSched(){
 }
 
 function _precalcCache(){
-  if(!makeItem._cache) makeItem._cache={};
-  let idx=0;
+  makeItem._cache = {}; // 항상 초기화 (stale null 방지)
+  let idx = 0;
   function _next(){
-    if(idx>=schedAllData.length) return;
-    const it=schedAllData[idx++];
-    const key=it.date+it.type;
-    if(makeItem._cache[key]===undefined){
-      // 앱 예측: 직전 이벤트(같은 종류) + 삭망월(SYN=29.53일)
-      // 슈퍼문은 연속 보름달 기준이므로 SYN이 가장 의미있는 예측
-      const nasaDate=parseDate(it.date);
-      const matchType=it.type==='quasi'
-        ? s=>s.type==='quasi'
-        : s=>s.type==='super'||s.type==='blood'||s.type==='penumbral';
-      const prev=NASA_DATA
-        .filter(s=>matchType(s)&&parseDate(s.date).getTime()<nasaDate.getTime())
-        .sort((a,b)=>parseDate(b.date)-parseDate(a.date))[0];
-      let result=null;
-      if(prev){
-        // 직전 이벤트 + 삭망월(29.53일) = 다음 보름달 예측
-        result=new Date(parseDate(prev.date).getTime()+SYN*86400000);
-      }
-      makeItem._cache[key]=result||null;
+    if(idx >= schedAllData.length){
+      // 모든 항목 계산 완료 → 일정 목록 재렌더링 (오차 표시 반영)
+      renderSched(userToday);
+      return;
     }
-    setTimeout(_next,0);
+    const it = schedAllData[idx++];
+    const key = it.date + it.type;
+    const nasaDate = parseDate(it.date);
+    const matchType = it.type==='quasi'
+      ? s=>s.type==='quasi'
+      : s=>s.type==='super'||s.type==='blood'||s.type==='penumbral';
+    const prev = NASA_DATA
+      .filter(s=>matchType(s) && parseDate(s.date).getTime() < nasaDate.getTime())
+      .sort((a,b)=>parseDate(b.date)-parseDate(a.date))[0];
+    // 직전 이벤트 + 삭망월(SYN) = 다음 보름달 예측
+    makeItem._cache[key] = prev
+      ? new Date(parseDate(prev.date).getTime() + SYN*86400000)
+      : null;
+    setTimeout(_next, 0);
   }
-  setTimeout(_next,100);
+  setTimeout(_next, 50);
 }
 
 function renderSched(now){
@@ -1538,15 +1569,12 @@ function makeItem(it,now,isFutureGroup){
   // 앱 예측 날짜 — NASA 날짜 기준 ±45일 범위에서 가장 가까운 보름달 탐색
   const cacheKey = it.date + it.type;
   if(!makeItem._cache) makeItem._cache = {};
-  let appPredDate = makeItem._cache[cacheKey];
-  if(appPredDate === undefined){
-    // 아직 비동기 계산 안 됨 → null로 표시 (나중에 자동 갱신)
-    appPredDate = null;
-    makeItem._cache[cacheKey] = null;
-  }
-  const daysDiff = appPredDate
+  // _precalcCache 완료 후 재렌더링되므로 undefined면 계산 중 표시
+  const appPredDate = makeItem._cache ? makeItem._cache[cacheKey] : undefined;
+  const daysDiff = (appPredDate && appPredDate instanceof Date)
     ? Math.round((appPredDate - parseDate(it.date))/86400000)
     : null;
+  const diffPending = appPredDate === undefined;
   const calcDist=Math.round(moonDist(parseDate(it.date)));
   const calcProxPct=(prox(calcDist)*100).toFixed(1);
 
@@ -1554,12 +1582,17 @@ function makeItem(it,now,isFutureGroup){
   const el=document.createElement('div');
   el.className=`si ${it.type} ${isToday?'today':''} ${isFutureGroup?'fut-item':''}`;
 
-  // 출처 뱃지
-  const srcBadge=it.src==='NASA'
-    ?`<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.18);color:#60a0e0;border:1px solid rgba(58,123,224,.22)">NASA</span>`
-    :it.src==='NASA예측'
-    ?`<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.25);color:#80c0ff;border:1px solid rgba(96,160,255,.28)">(NASA 예측)</span>`
-    :'';
+  // 출처 뱃지 (2010 이하 = 과거 실측, 2011~ = 예측/계산)
+  const itemYear = parseInt(it.date.slice(0,4));
+  const srcBadge = itemYear <= 2010
+    ? `<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.18);color:#60a0e0;border:1px solid rgba(58,123,224,.22)">NASA 실측</span>`
+    : it.src==='NASA' || it.src==='Espenak'
+    ? `<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.12);color:#80b8e8;border:1px solid rgba(96,160,255,.2)">Espenak 예측</span>`
+    : it.src==='NASA예측'
+    ? `<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(58,123,224,.12);color:#80b8e8;border:1px solid rgba(96,160,255,.2)">NASA 예측</span>`
+    : it.src==='계산'
+    ? `<span style="font:600 10px/1 var(--mono);padding:2px 6px;border-radius:4px;background:rgba(140,100,255,.12);color:#b090ff;border:1px solid rgba(140,100,255,.2)">모델 계산</span>`
+    : '';
   const noteBadge=it.note
     ?`<span style="font:400 10px/1 var(--mono);color:rgba(240,236,224,.38)">${it.note}</span>`:'';
 
@@ -1572,10 +1605,12 @@ function makeItem(it,now,isFutureGroup){
     :'';
 
   // 날짜 오차 표시
-  const daysDiffStr = daysDiff===null ? '탐색실패'
+  const daysDiffStr = diffPending ? '계산 중…'
+    : daysDiff===null ? '데이터 없음'
     : daysDiff===0 ? '±0일 (일치)'
     : `${daysDiff>0?'+':''}${daysDiff}일`;
-  const errColor = daysDiff===null ? 'rgba(240,236,224,.4)'
+  const errColor = diffPending ? 'rgba(240,236,224,.3)'
+    : daysDiff===null ? 'rgba(240,236,224,.4)'
     : Math.abs(daysDiff)===0 ? 'rgba(80,200,120,.9)'
     : Math.abs(daysDiff)<=3  ? 'rgba(80,200,120,.8)'
     : Math.abs(daysDiff)<=7  ? 'rgba(242,192,64,.8)'
@@ -1592,7 +1627,7 @@ function makeItem(it,now,isFutureGroup){
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;padding:8px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.06)">
       <div>
-        <div style="font:400 9px/1 var(--mono);color:#60a0e0;letter-spacing:.1em;margin-bottom:3px">NASA 실측</div>
+        <div style="font:400 9px/1 var(--mono);color:#60a0e0;letter-spacing:.1em;margin-bottom:3px">${itemYear<=2010?'NASA 실측':itemYear<=2031?'Espenak 예측':'모델 계산'}</div>
         <div style="font:600 12px/1.3 var(--mono);color:var(--paper)">${d.toLocaleDateString('ko-KR',{month:'short',day:'numeric'})}</div>
         <div style="font:600 10px/1 var(--mono);color:var(--gold);margin-top:2px">상대거리 ${nasaRdist}</div>
         <div style="font:400 10px/1 var(--mono);color:rgba(240,236,224,.4);margin-top:1px">${it.dist.toLocaleString()} km</div>
