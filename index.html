@@ -543,12 +543,14 @@ T = 1 ÷ 0.002428 ≈ 411.78일 ≈ 13.5개월
       <button class="fc" id="ct-blood" onclick="setCalcType(this,'blood')" style="border-color:rgba(204,34,0,.4);color:#ff7755">🩸 블러드문</button>
       <button class="fc" id="ct-penumbral" onclick="setCalcType(this,'penumbral')" style="border-color:rgba(96,176,255,.3);color:#60b0ff">🌕🌑 반영월식</button>
     </div>
-    <div class="calc-row">
-      <span class="calc-lbl">마지막 이벤트</span>
-      <input class="calc-in" id="cLastSM" type="date" style="background:rgba(242,192,64,.06)">
+    <div class="calc-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+      <span class="calc-lbl">기준일 이전 마지막 이벤트</span>
+      <select id="cLastSM" style="width:100%;background:rgba(20,28,48,.9);border:1px solid rgba(242,192,64,.25);border-radius:10px;padding:10px 12px;color:var(--cream);font:13px var(--mono);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer">
+        <option value="">데이터 로드 중...</option>
+      </select>
     </div>
     <div class="calc-row">
-      <span class="calc-lbl">오늘 날짜</span>
+      <span class="calc-lbl">기준일 (오늘)</span>
       <input class="calc-in" id="cToday" type="date">
     </div>
     <button class="calc-btn" id="cCalcBtn" onclick="doCalc()">📐 계산하기</button>
@@ -1317,9 +1319,14 @@ function initFormula(){
   const dots=document.getElementById('stepDots');dots.innerHTML='';
   for(let i=0;i<STEPS;i++){const d=document.createElement('div');d.className='sdot'+(i===0?' on':'');dots.appendChild(d);}
   showStep(0);
-  // userToday 기준으로 날짜 설정
   const _y=userToday.getFullYear(),_m=_pad(userToday.getMonth()+1),_d=_pad(userToday.getDate());
-  document.getElementById('cToday').value=_y+'-'+_m+'-'+_d;
+  const cToday=document.getElementById('cToday');
+  cToday.value=_y+'-'+_m+'-'+_d;
+  // 기준일 변경 시 마지막 이벤트 select 자동 갱신
+  cToday.onchange=()=>{
+    const baseDt=parseDate(cToday.value)||userToday;
+    _fillLastEventSelect(calcType, baseDt);
+  };
   setCalcType(document.getElementById('ct-super'),'super');
 }
 function showStep(n){
@@ -1344,20 +1351,50 @@ function goStep(d){showStep(curStep+d);}
 
 // 가장 최근 이벤트 찾기 (userToday 이전)
 function findLastSM(type='super'){
-  // 역방향으로 보름달 순간을 1개씩 찾아서 조건 체크
-  let dt=new Date(userToday);
-  for(let i=0;i<30;i++){
-    dt=new Date(dt.getTime()-SYN*86400000); // 삭망월씩 뒤로
-    // dt 근처 보름달 정밀 탐색 (앞으로 2일 탐색)
-    const fm=_findFullMoon(new Date(dt.getTime()-2*86400000), 6);
-    if(fm>=userToday) continue;
-    const pr2=prox(moonDist(fm));
-    if(type==='super'&&pr2>=0.90) return fm;
-    if(type==='quasi'&&pr2>=0.86&&pr2<0.90) return fm;
-    if(type==='blood'&&pr2>=0.90&&isLunarEclipse(fm)) return fm;
-    if(type==='penumbral'&&pr2>=0.86&&isPenumbralEclipse(fm)) return fm;
-  }
-  return parseDate('2015-09-28');
+  // NASA_DATA에서 기준일(userToday) 이전 가장 최근 같은 타입 반환
+  const todayT = userToday.getTime();
+  const matchFn = type==='blood'    ? s=>s.type==='blood'
+    : type==='penumbral'             ? s=>s.type==='penumbral'
+    : type==='quasi'                 ? s=>s.type==='quasi'
+    :                                  s=>s.type==='super'||s.type==='blood';
+  const list = NASA_DATA
+    .filter(s => matchFn(s) && parseDate(s.date).getTime() < todayT)
+    .sort((a,b) => parseDate(b.date) - parseDate(a.date));
+  return list.length > 0 ? parseDate(list[0].date) : parseDate('2015-09-28');
+}
+
+// 기준일 이전 NASA_DATA 항목 최근순 목록 반환
+function getLastEventList(type, baseDt){
+  const baseT = baseDt.getTime();
+  const matchFn = type==='blood'    ? s=>s.type==='blood'
+    : type==='penumbral'             ? s=>s.type==='penumbral'
+    : type==='quasi'                 ? s=>s.type==='quasi'
+    :                                  s=>s.type==='super'||s.type==='blood';
+  return NASA_DATA
+    .filter(s => matchFn(s) && parseDate(s.date).getTime() < baseT)
+    .sort((a,b) => parseDate(b.date) - parseDate(a.date))
+    .slice(0, 12);
+}
+
+// select 채우기
+function _fillLastEventSelect(type, baseDt){
+  const list = getLastEventList(type, baseDt);
+  const sel = document.getElementById('cLastSM');
+  const typeIcon={super:'🌕',quasi:'🌔',blood:'🩸',penumbral:'🌕🌑'};
+  sel.innerHTML='';
+  if(!list.length){ sel.innerHTML='<option value="">해당 데이터 없음</option>'; return; }
+  list.forEach((s,i)=>{
+    const dt = parseDate(s.date);
+    const icon = typeIcon[s.type]||'🌕';
+    const noteStr = s.note?' · '+s.note:'';
+    const label = dt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})
+      +' '+icon+noteStr;
+    const opt = document.createElement('option');
+    opt.value = s.date;
+    opt.textContent = label;
+    if(i===0) opt.selected = true;
+    sel.appendChild(opt);
+  });
 }
 
 let calcType='super';
@@ -1365,12 +1402,10 @@ function setCalcType(btn,t){
   calcType=t;
   document.querySelectorAll('.calc-sec .fc').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  // 자동 기입 갱신
-  const last=findLastSM(t);
-  document.getElementById('cLastSM').value=last.toISOString().slice(0,10);
-  const notes={super:'마지막 슈퍼문 자동 기입',quasi:'마지막 준슈퍼문 자동 기입',
-    blood:'마지막 슈퍼 블러드문 자동 기입',penumbral:'마지막 슈퍼 반영월식 자동 기입'};
-  
+  // 기준일(cToday) 기준으로 select 채우기
+  const todayVal = document.getElementById('cToday').value;
+  const baseDt = todayVal ? parseDate(todayVal) : userToday;
+  _fillLastEventSelect(t, baseDt);
   const btnLabels={super:'📐 다음 슈퍼문 계산',quasi:'📐 다음 준슈퍼문 계산',
     blood:'🩸 다음 블러드문 계산',penumbral:'🌕🌑 다음 반영월식 계산'};
   document.getElementById('cCalcBtn').textContent=btnLabels[t];
@@ -1381,49 +1416,91 @@ function doCalc(){
   const lastVal=document.getElementById('cLastSM').value;
   const todayVal=document.getElementById('cToday').value;
   if(!lastVal||!todayVal){document.getElementById('cRes').textContent='⚠️ 날짜를 확인해주세요.';return;}
-  const lastDt=parseDate(lastVal),todayDt=parseDate(todayVal);
+  const lastDt=parseDate(lastVal), todayDt=parseDate(todayVal);
   const elapsed=Math.round((todayDt-lastDt)/86400000);
   if(elapsed<0){document.getElementById('cRes').textContent='⚠️ 기준일보다 이전 날짜입니다.';return;}
 
-  let T,periodName,nextDt,formula;
+  // NASA_DATA 기준 마지막 이벤트 재확인
+  const lastNasa=findLastSM(calcType);
+  const lastNasaStr=lastNasa.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+
+  let T, periodName, nextDt, formula, predDate;
+
   if(calcType==='super'){
-    T=T_SM;periodName='슈퍼문 주기';
-    nextDt=nextSM(todayDt,0.90);
-    formula=`1/T = 1/${SYN.toFixed(2)} − 1/${ANO.toFixed(2)}\nT = ${T.toFixed(1)}일 ≈ 13.7개월`;
+    T=T_SM; periodName='슈퍼문';
+    nextDt=nextSM(todayDt);
+    // predDate: lastDt + T×N (N=경과일/T 반올림)
+    const n=Math.max(1,Math.round(elapsed/T));
+    predDate=new Date(lastDt.getTime()+n*T*86400000);
+    formula=
+      `맥놀이 주기(Beat Period):
+`+
+      `1/T = 1/이상월 − 1/삭망월
+`+
+      `    = 1/${ANO.toFixed(5)} − 1/${SYN.toFixed(5)}
+`+
+      `    = ${(1/ANO).toFixed(6)} − ${(1/SYN).toFixed(6)}
+`+
+      `    = ${(1/ANO-1/SYN).toFixed(6)}
+`+
+      `T = ${T_SM.toFixed(2)}일 ≈ 13.5개월`;
+
   } else if(calcType==='quasi'){
-    T=T_QSM;periodName='준슈퍼문 주기';
-    nextDt=nextQSM(todayDt);   // 슈퍼문 제외한 준슈퍼문만
-    formula=`T = T(삭망월) ÷ 0.14\n= ${SYN.toFixed(2)} ÷ 0.14 = ${T.toFixed(1)}일 ≈ 7개월`;
+    T=T_QSM; periodName='준슈퍼문';
+    nextDt=nextQSM(todayDt);
+    const n=Math.max(1,Math.round(elapsed/T));
+    predDate=new Date(lastDt.getTime()+n*T*86400000);
+    formula=
+      `준슈퍼문도 동일한 맥놀이 주기:
+`+
+      `T = ${T_QSM.toFixed(2)}일 ≈ 13.5개월`;
+
   } else if(calcType==='blood'){
-    // 슈퍼 블러드문은 고정 주기 없음 (실측: 6~33년 불규칙)
-    // 사로스로 개기월식은 예측 가능하나, 슈퍼문 여부는 별개
-    T=SAROS;periodName='슈퍼 블러드문';
+    T=SAROS; periodName='슈퍼 블러드문';
     nextDt=nextBloodMoon(todayDt);
-    formula=`⚠️ 슈퍼 블러드문은 정확한 주기를 수식으로 구할 수 없습니다\n\n개기월식(사로스): 223삭망월 = ${SAROS.toFixed(0)}일 = 18년 11일\n슈퍼문 주기: ${T_SM.toFixed(2)}일\n→ 두 주기가 비정수 배수 관계 → 고정 LCM 없음\n\n과거 실측 시점만 알 수 있음:\n1982-07 → 2015-09 → 2021-05 → 2033-10\n(간격: 33년, 6년, 12년 … 불규칙)`;
+    predDate=nextDt||new Date(lastDt.getTime()+T*86400000);
+    formula=
+      `⚠️ 정확한 주기를 수식으로 구할 수 없음
+`+
+      `사로스(개기월식): 223삭망월 = ${SAROS.toFixed(0)}일 = 18년 11일
+`+
+      `슈퍼문 주기: ${T_SM.toFixed(2)}일
+`+
+      `→ 비정수 배수 관계 → 고정 주기 없음
+`+
+      `실측: 33년, 6년, 12년 (불규칙)`;
+
   } else {
-    T=SYN*NOD/(SYN-NOD)*2;periodName='반영월식+슈퍼문 주기';
+    T=SYN*NOD/(SYN-NOD)*2; periodName='슈퍼 반영월식';
     nextDt=nextPenumbral(todayDt);
-    formula=`교점월(${NOD.toFixed(2)}일)과 삭망월의 결합 주기\n≈ 5~6년 주기`;
+    predDate=nextDt||new Date(lastDt.getTime()+T*86400000);
+    formula=`교점월(NOD=${NOD.toFixed(5)}일)과 삭망월의 결합
+≈ 5~6년 주기`;
   }
 
-  const remainder=elapsed%T;
-  const daysLeft=Math.round(T-remainder);
-  const predDate=new Date(todayDt.getTime()+daysLeft*86400000);
+  const predDays=Math.round((predDate-todayDt)/86400000);
   const actualDays=nextDt?Math.ceil((nextDt-todayDt)/86400000):null;
   const actualStr=nextDt
     ?`${nextDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} (D-${actualDays})`
-    :'계산 중 (매우 희귀한 이벤트)';
+    :'기록된 데이터 없음';
+  const predStr=predDate.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
 
   document.getElementById('cRes').textContent=
-    `기준일: ${lastDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
-    `오늘:   ${todayDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
-    `경과:   ${elapsed}일\n\n`+
-    `━━ ${periodName} ━━━━━━━━━━\n`+
-    formula+'\n\n'+
-    `${elapsed}일 ÷ ${T.toFixed(1)}일 → 나머지 ${remainder.toFixed(1)}일\n`+
-    `다음까지 = ${T.toFixed(1)} − ${remainder.toFixed(1)} ≈ ${daysLeft}일\n\n`+
-    `📅 수식 예측: ${predDate.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})}\n`+
-    `🛰 NASA 예측: ${actualStr}`;
+    `📅 마지막 ${periodName}: ${lastNasaStr}
+`+
+    `⏱ 경과: ${elapsed}일
+
+`+
+    formula+'
+
+'+
+    `📅 수식 예측: ${predStr} (D-${predDays})
+`+
+    (calcType==='blood'||calcType==='penumbral'
+      ? `🛰 실측 예측: ${actualStr}`
+      : actualDays!==null&&Math.abs(predDays-actualDays)<=5
+        ? `✅ 실측 일치: ${actualStr}`
+        : `🛰 실측 예측: ${actualStr}`);
 }
 
 // ========================================
