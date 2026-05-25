@@ -622,7 +622,6 @@ T = 1 ÷ 0.002428 ≈ 411.78일 ≈ 13.5개월
 </nav>
 </div>
 
-<script src="app.js"></script>
 </body>
 </html>
 </div>
@@ -1020,22 +1019,33 @@ function initHome(){
   });
 
   const badge=document.getElementById('typeBadge');
-  badge.textContent=moonLabel(type,ph);
-  badge.className='type-badge '+(type==='quasi'?'quasi':type==='blood'?'blood':type==='super'?'':'dim');
-  document.getElementById('dateSub').textContent=now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('distVal').textContent=Math.round(dist).toLocaleString()+' km';
+  if(badge){
+    badge.textContent=moonLabel(type,ph);
+    badge.className='type-badge '+(type==='quasi'?'quasi':type==='blood'?'blood':type==='super'?'':'dim');
+  }
+  const dateSubEl=document.getElementById('dateSub');
+  if(dateSubEl) dateSubEl.textContent=now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  const distEl=document.getElementById('distVal');
+  if(distEl) distEl.textContent=Math.round(dist).toLocaleString()+' km';
   const pp=(pr2*100).toFixed(1);
-  document.getElementById('proxVal').textContent=pp+'%';
-  const fill=document.getElementById('proxFill');fill.style.width=pp+'%';
-  fill.className='prox-fill'+(type==='quasi'?' quasi':'');
-  document.getElementById('phaseVal').textContent=phaseName(ph)+` (${(ph*100).toFixed(1)}%)`;
-  document.getElementById('periodVal').textContent=`≈ ${T_SM.toFixed(0)}일`;
+  const proxEl=document.getElementById('proxVal');
+  if(proxEl) proxEl.textContent=pp+'%';
+  const fill=document.getElementById('proxFill');
+  if(fill){fill.style.width=pp+'%';fill.className='prox-fill'+(type==='quasi'?' quasi':'');}
+  const phEl=document.getElementById('phaseVal');
+  if(phEl) phEl.textContent=phaseName(ph)+' ('+(ph*100).toFixed(1)+'%)';
+  const perEl=document.getElementById('periodVal');
+  if(perEl) perEl.textContent='≈ '+T_SM.toFixed(0)+'일';
   const ns=nextSM(now);
-  document.getElementById('nextDate').textContent=ns.toLocaleDateString('ko-KR',{month:'long',day:'numeric'});
-  document.getElementById('nextDday').textContent='D-'+Math.ceil((ns-now)/86400000);
+  const nsEl=document.getElementById('nextDate');
+  const nsDEl=document.getElementById('nextDday');
+  if(nsEl) nsEl.textContent=ns?ns.toLocaleDateString('ko-KR',{month:'long',day:'numeric'}):'—';
+  if(nsDEl) nsDEl.textContent=ns?'D-'+Math.ceil((ns-now)/86400000):'—';
   const nq=nextQSM(now);
-  document.getElementById('nextQDate').textContent=nq?nq.toLocaleDateString('ko-KR',{month:'long',day:'numeric'}):'—';
-  document.getElementById('nextQDday').textContent=nq?'D-'+Math.ceil((nq-now)/86400000):'—';
+  const nqEl=document.getElementById('nextQDate');
+  const nqDEl=document.getElementById('nextQDday');
+  if(nqEl) nqEl.textContent=nq?nq.toLocaleDateString('ko-KR',{month:'long',day:'numeric'}):'—';
+  if(nqDEl) nqDEl.textContent=nq?'D-'+Math.ceil((nq-now)/86400000):'—';
 }
 
 // ========================================
@@ -1420,7 +1430,6 @@ function doCalc(){
   const elapsed=Math.round((todayDt-lastDt)/86400000);
   if(elapsed<0){document.getElementById('cRes').textContent='⚠️ 기준일보다 이전 날짜입니다.';return;}
 
-  // NASA_DATA 기준 마지막 이벤트 재확인
   const lastNasa=findLastSM(calcType);
   const lastNasaStr=lastNasa.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
 
@@ -1429,78 +1438,57 @@ function doCalc(){
   if(calcType==='super'){
     T=T_SM; periodName='슈퍼문';
     nextDt=nextSM(todayDt);
-    // predDate: lastDt + T×N (N=경과일/T 반올림)
     const n=Math.max(1,Math.round(elapsed/T));
     predDate=new Date(lastDt.getTime()+n*T*86400000);
-    formula=
-      `맥놀이 주기(Beat Period):
-`+
-      `1/T = 1/이상월 − 1/삭망월
-`+
-      `    = 1/${ANO.toFixed(5)} − 1/${SYN.toFixed(5)}
-`+
-      `    = ${(1/ANO).toFixed(6)} − ${(1/SYN).toFixed(6)}
-`+
-      `    = ${(1/ANO-1/SYN).toFixed(6)}
-`+
-      `T = ${T_SM.toFixed(2)}일 ≈ 13.5개월`;
+    formula='맥놀이 주기(Beat Period):\n'
+      +'1/T = 1/이상월 − 1/삭망월\n'
+      +'    = 1/'+ANO.toFixed(5)+' − 1/'+SYN.toFixed(5)+'\n'
+      +'    = '+(1/ANO).toFixed(6)+' − '+(1/SYN).toFixed(6)+'\n'
+      +'    = '+(1/ANO-1/SYN).toFixed(6)+'\n'
+      +'T = '+T_SM.toFixed(2)+'일 ≈ 13.5개월';
 
   } else if(calcType==='quasi'){
     T=T_QSM; periodName='준슈퍼문';
     nextDt=nextQSM(todayDt);
     const n=Math.max(1,Math.round(elapsed/T));
     predDate=new Date(lastDt.getTime()+n*T*86400000);
-    formula=
-      `준슈퍼문도 동일한 맥놀이 주기:
-`+
-      `T = ${T_QSM.toFixed(2)}일 ≈ 13.5개월`;
+    formula='준슈퍼문도 동일한 맥놀이 주기:\n'
+      +'T = '+T_QSM.toFixed(2)+'일 ≈ 13.5개월';
 
   } else if(calcType==='blood'){
     T=SAROS; periodName='슈퍼 블러드문';
     nextDt=nextBloodMoon(todayDt);
     predDate=nextDt||new Date(lastDt.getTime()+T*86400000);
-    formula=
-      `⚠️ 정확한 주기를 수식으로 구할 수 없음
-`+
-      `사로스(개기월식): 223삭망월 = ${SAROS.toFixed(0)}일 = 18년 11일
-`+
-      `슈퍼문 주기: ${T_SM.toFixed(2)}일
-`+
-      `→ 비정수 배수 관계 → 고정 주기 없음
-`+
-      `실측: 33년, 6년, 12년 (불규칙)`;
+    formula='⚠️ 정확한 주기를 수식으로 구할 수 없음\n'
+      +'사로스(개기월식): 223삭망월 = '+SAROS.toFixed(0)+'일 = 18년 11일\n'
+      +'슈퍼문 주기: '+T_SM.toFixed(2)+'일\n'
+      +'→ 비정수 배수 관계 → 고정 주기 없음\n'
+      +'실측: 33년, 6년, 12년 (불규칙)';
 
   } else {
     T=SYN*NOD/(SYN-NOD)*2; periodName='슈퍼 반영월식';
     nextDt=nextPenumbral(todayDt);
     predDate=nextDt||new Date(lastDt.getTime()+T*86400000);
-    formula=`교점월(NOD=${NOD.toFixed(5)}일)과 삭망월의 결합
-≈ 5~6년 주기`;
+    formula='교점월(NOD='+NOD.toFixed(5)+'일)과 삭망월의 결합\n≈ 5~6년 주기';
   }
 
   const predDays=Math.round((predDate-todayDt)/86400000);
   const actualDays=nextDt?Math.ceil((nextDt-todayDt)/86400000):null;
   const actualStr=nextDt
-    ?`${nextDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} (D-${actualDays})`
+    ?nextDt.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})+' (D-'+actualDays+')'
     :'기록된 데이터 없음';
   const predStr=predDate.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
 
   document.getElementById('cRes').textContent=
-    `📅 마지막 ${periodName}: ${lastNasaStr}
-`+
-    `⏱ 경과: ${elapsed}일
-
-`+
-    formula+'
-
-'+
-    `📅 수식 예측: ${predStr} (D-${predDays})
-`+
+    '📅 마지막 '+periodName+': '+lastNasaStr+'\n'+
+    '⏱ 경과: '+elapsed+'일\n\n'+
+    formula+'\n\n'+
+    '📅 수식 예측: '+predStr+' (D-'+predDays+')\n'+
     (calcType==='blood'||calcType==='penumbral'
-      ? `🛰 실측 예측: ${actualStr}`
+      ? '🛰 실측 예측: '+actualStr
       : actualDays!==null&&Math.abs(predDays-actualDays)<=5
-        ? `✅ 실측 일치: ${actualStr}`
-        : `🛰 실측 예측: ${actualStr}`);
+        ? '✅ 실측 일치: '+actualStr
+        : '🛰 실측 예측: '+actualStr);
 }
 
 // ========================================
@@ -1778,6 +1766,11 @@ async function initApp(){
     inp.addEventListener('change', applyUserToday);
     inp.addEventListener('input', applyUserToday);
   }
+  // userToday를 오늘로 명시 설정 (parseDate가 로컬 정오로 설정)
+  userToday=parseDate(todayISO);
+  const label=userToday.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  const lblEl=document.getElementById('userTodayLabel');
+  if(lblEl) lblEl.textContent='기준일: '+label;
   if(typeof updateSchedTodayBar==='function') updateSchedTodayBar();
   if(typeof initHome==='function') initHome();
   if(typeof initSim==='function') initSim();
