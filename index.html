@@ -817,20 +817,20 @@ function _findFullMoon(from){
 
 // 다음 슈퍼문: lookup 우선, 없으면 보름달 탐색
 function nextSM(from){
-  // 날짜만 비교 (시각 무시: 정오 기준 정규화)
-  const fromDate=new Date(from.getFullYear(),from.getMonth(),from.getDate(),12,0,0);
+  // 날짜 문자열로 직접 비교 (시각 완전 독립)
+  const fromStr=from.getFullYear()+'-'+String(from.getMonth()+1).padStart(2,'0')+'-'+String(from.getDate()).padStart(2,'0');
   const future=NASA_DATA
-    .filter(s=>s.type==='super'&&parseDate(s.date).getTime()>fromDate.getTime())
-    .sort((a,b)=>parseDate(a.date)-parseDate(b.date));
+    .filter(s=>s.type==='super' && s.date>=fromStr)
+    .sort((a,b)=>a.date.localeCompare(b.date));
   return future.length>0 ? parseDate(future[0].date) : null;
 }
 
 // 다음 준슈퍼문: lookup에서 quasi 타입 찾기
 function nextQSM(from){
-  const fromDate=new Date(from.getFullYear(),from.getMonth(),from.getDate(),12,0,0);
+  const fromStr=from.getFullYear()+'-'+String(from.getMonth()+1).padStart(2,'0')+'-'+String(from.getDate()).padStart(2,'0');
   const future=NASA_DATA
-    .filter(s=>s.type==='quasi'&&parseDate(s.date).getTime()>fromDate.getTime())
-    .sort((a,b)=>parseDate(a.date)-parseDate(b.date));
+    .filter(s=>s.type==='quasi' && s.date>=fromStr)
+    .sort((a,b)=>a.date.localeCompare(b.date));
   return future.length>0 ? parseDate(future[0].date) : null;
 }
 
@@ -1080,9 +1080,9 @@ function setSpd(btn, v){
 }
 function simReset(){simDt=new Date(userToday);simLast=null;}
 function simJump(){
-  // 날짜 정규화 후 다음 슈퍼문 탐색
-  const simDay=new Date(simDt.getFullYear(),simDt.getMonth(),simDt.getDate(),12,0,0);
-  let target=nextSM(simDay);
+  // 현재 날짜 다음 날부터 다음 슈퍼문 탐색 (현재 날짜 제외)
+  const nextDay=new Date(simDt.getFullYear(),simDt.getMonth(),simDt.getDate()+1,12,0,0);
+  let target=nextSM(nextDay);
   if(!target){
     // 테이블 범위 초과 → 첫 번째 슈퍼문으로 리셋
     const first=NASA_DATA.filter(s=>s.type==='super').sort((a,b)=>a.date.localeCompare(b.date))[0];
@@ -1275,10 +1275,10 @@ function updateSimUI(){
   document.getElementById('simDateMain').textContent=`${y}년 ${m}월 ${d}일`;
   document.getElementById('simDateDow').textContent=`${DOW[simDt.getDay()]}요일`;
   // 다음 슈퍼문 D-day (날짜 단위로 정규화 후 계산)
-  const simDay=new Date(simDt.getFullYear(),simDt.getMonth(),simDt.getDate(),12,0,0);
-  const ns=nextSM(simDay);
-  let nq=nextQSM(simDay);
-  if(nq && ns && Math.abs(nq.getTime()-ns.getTime()) <= 1*86400000) nq=null;
+  // simDt 날짜 문자열 기반 (시각 독립적)
+  const ns=nextSM(simDt);
+  let nq=nextQSM(simDt);
+  if(nq && ns && nq.getTime()===ns.getTime()) nq=null;
 
   let ddLabel='다음 슈퍼문', ddTarget=ns;
   if(!ns && nq){ ddLabel='다음 준슈퍼문'; ddTarget=nq; }
@@ -1289,7 +1289,8 @@ function updateSimUI(){
   if(lblEl) lblEl.textContent=ddLabel;
   if(ddEl){
     if(ddTarget){
-      const dd=Math.round((ddTarget-simDay)/86400000);
+      const simMid=new Date(simDt.getFullYear(),simDt.getMonth(),simDt.getDate(),12,0,0);
+      const dd=Math.round((ddTarget-simMid)/86400000);
       ddEl.textContent=dd<=0?'오늘!':'D-'+dd;
     } else {
       ddEl.textContent='—';
