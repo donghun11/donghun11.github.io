@@ -411,6 +411,14 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
     <button class="sim-btn primary" onclick="simJump()">⏭ 슈퍼문</button>
     <button class="sim-btn" onclick="simReset()">↺ 오늘</button>
   </div>
+  <div style="display:flex;gap:8px;width:100%;margin-top:6px;align-items:center">
+    <input type="date" id="simDateInput"
+      style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(242,192,64,.22);border-radius:10px;
+             padding:9px 12px;color:var(--paper);font:600 13px/1 var(--mono);outline:none;-webkit-appearance:none">
+    <button onclick="simGoDate()"
+      style="padding:9px 16px;border-radius:10px;background:rgba(242,192,64,.1);border:1px solid rgba(242,192,64,.3);
+             color:var(--gold);font:600 13px/1 var(--serif);cursor:pointer;white-space:nowrap">이동</button>
+  </div>
 
   <div class="speed-row">
     <span class="speed-lbl">⚡ 재생 배속</span>
@@ -736,8 +744,8 @@ const _SM_TABLE=[
   {d:'2028-02-10',km:356720,rdist:0.999,dp:+0.201,type:'super'},
   {d:'2028-03-11',km:359347,rdist:0.982,dp:-0.790,type:'super'},
   // ── 2029 ──
-  {d:'2029-02-09',km:359347,rdist:0.982,dp:+0.811,type:'super'},
-  {d:'2029-03-10',km:358074,rdist:0.990,dp:+0.442,type:'super'},
+  {d:'2029-01-30',km:359347,rdist:0.982,dp:+0.811,type:'super'},
+  {d:'2029-02-28',km:358074,rdist:0.990,dp:+0.442,type:'super'},
   {d:'2029-03-30',km:356683,rdist:1.000,dp:+0.134,type:'super'},
   {d:'2029-04-28',km:358500,rdist:0.988,dp:-0.435,type:'super'},
 ];
@@ -1059,9 +1067,15 @@ let simDt=new Date(),simPlaying=true,simSpd=1,simRaf=null,simLast=null;
 const DOW=['일','월','화','수','목','금','토'];
 function initSim(){
   simDt=new Date(userToday);
-  simPlaying=false; // 기본 일시정지 — 탭 진입 시 자동재생 안 함
+  simPlaying=false;
   simLast=null;
   if(simRaf){cancelAnimationFrame(simRaf);simRaf=null;}
+  // 날짜 입력 초기값
+  const inp=document.getElementById('simDateInput');
+  if(inp){
+    const d=simDt;
+    inp.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
   drawSim();updateSimUI();
   document.getElementById('btnPP').textContent='▶ 재생';
 }
@@ -1078,16 +1092,37 @@ function setSpd(btn, v){
   document.querySelectorAll('.spd-chip').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
 }
-function simReset(){simDt=new Date(userToday);simLast=null;}
+function simReset(){
+  simDt=new Date(userToday);simLast=null;
+  // 날짜 입력 초기화
+  const inp=document.getElementById('simDateInput');
+  if(inp){
+    const d=simDt;
+    inp.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  drawSim();updateSimUI();
+}
+
+function simGoDate(){
+  const val=document.getElementById('simDateInput').value;
+  if(!val) return;
+  const d=parseDate(val);
+  if(isNaN(d.getTime())) return;
+  simDt=d;
+  simPlaying=false;simLast=null;
+  document.getElementById('btnPP').textContent='▶ 재생';
+  drawSim();updateSimUI();
+}
 function simJump(){
   // 현재 날짜 다음 날부터 다음 슈퍼문 탐색 (현재 날짜 제외)
   const nextDay=new Date(simDt.getFullYear(),simDt.getMonth(),simDt.getDate()+1,12,0,0);
   let target=nextSM(nextDay);
   if(!target){
-    // 테이블 범위 초과 → 첫 번째 슈퍼문으로 리셋
-    const first=NASA_DATA.filter(s=>s.type==='super').sort((a,b)=>a.date.localeCompare(b.date))[0];
-    if(first) target=parseDate(first.date);
-    else return;
+    const lbl=document.getElementById('simDdayLabel');
+    const dd=document.getElementById('simDday');
+    if(lbl) lbl.textContent='데이터 범위 초과';
+    if(dd) dd.textContent='—';
+    return;
   }
   simDt=new Date(target.getFullYear(),target.getMonth(),target.getDate(),12,0,0);
   simPlaying=false;simLast=null;
