@@ -109,7 +109,7 @@ button{font-family:var(--serif);cursor:pointer;border:none;background:none;color
 .moon-emoji.super{filter:drop-shadow(0 0 28px rgba(242,192,64,.75)) drop-shadow(0 0 64px rgba(242,192,64,.35))}
 .moon-emoji.quasi{filter:drop-shadow(0 0 22px rgba(224,120,48,.65)) drop-shadow(0 0 52px rgba(224,120,48,.28))}
 .moon-emoji.blood{filter:drop-shadow(0 0 26px rgba(200,34,0,.75)) drop-shadow(0 0 58px rgba(200,34,0,.32))}
-.moon-emoji.normal{filter:drop-shadow(0 0 18px rgba(220,220,220,.5))}
+.moon-emoji.normal{filter:drop-shadow(0 0 18px rgba(220,220,220,.5)) grayscale(0.15) brightness(0.92)}
 
 /* ══ SIMULATION ══ */
 #p-sim{background:radial-gradient(ellipse 90% 70% at 50% 30%,#0b1326 0%,#050709 100%);
@@ -744,8 +744,8 @@ const _SM_TABLE=[
   {d:'2028-02-10',km:356720,rdist:0.999,dp:+0.201,type:'super'},
   {d:'2028-03-11',km:359347,rdist:0.982,dp:-0.790,type:'super'},
   // ── 2029 ──
-  {d:'2029-01-30',km:359347,rdist:0.982,dp:+0.811,type:'super'},
-  {d:'2029-02-28',km:358074,rdist:0.990,dp:+0.442,type:'super'},
+  {d:'2029-02-09',km:359347,rdist:0.982,dp:+0.811,type:'super'},
+  {d:'2029-03-10',km:358074,rdist:0.990,dp:+0.442,type:'super'},
   {d:'2029-03-30',km:356683,rdist:1.000,dp:+0.134,type:'super'},
   {d:'2029-04-28',km:358500,rdist:0.988,dp:-0.435,type:'super'},
 ];
@@ -764,16 +764,16 @@ function _smLookup(dt){
 }
 
 // classify: NASA_DATA 날짜 매칭 우선 (일정 탭과 동일 소스)
+// 날짜 매칭 성공 시 dayBestPhase 체크 생략 (모델 오차 회피)
 function classify(ph,dt_or_dist){
   if(dt_or_dist instanceof Date){
     const yy=dt_or_dist.getFullYear();
     const mm=String(dt_or_dist.getMonth()+1).padStart(2,'0');
     const dd=String(dt_or_dist.getDate()).padStart(2,'0');
-    const dateStr=`${yy}-${mm}-${dd}`;
-    // NASA_DATA에서 정확 매칭
+    const dateStr=yy+'-'+mm+'-'+dd;
     const nd=NASA_DATA.find(s=>s.date===dateStr);
-    if(nd) return nd.type;
-    // 위상 기반 보름달 판정
+    if(nd) return nd.type; // 날짜 매칭 → 위상 모델 무시
+    // 위상 기반 보름달 판정 (NASA_DATA에 없는 날짜)
     const bestPh=dayBestPhase(dt_or_dist);
     if(bestPh<0.47||bestPh>0.53) return'other';
     return'normal';
@@ -1181,7 +1181,11 @@ function _drawMoon(ctx,mx,my,ms,ph,type,earX,earY,moonAngle){
   ctx.save();
   ctx.translate(mx, my);
   ctx.rotate(tilt);
-  ctx.shadowColor = 'rgba(255,250,220,0.98)';
+  // 보름달(🌕)은 다른 위상 이모지와 색감 통일 — 흰빛 shadowColor
+  const shadowClr = (icon==='🌕')
+    ? 'rgba(255,255,255,0.7)'   // 보름달: 흰빛 (노란 이모지 색감 중화)
+    : 'rgba(255,250,220,0.95)'; // 기타: 크림빛
+  ctx.shadowColor = shadowClr;
   ctx.shadowBlur = ms * 2.2;
   ctx.globalAlpha = 1.0;
   ctx.font = fontSize + 'px serif';
